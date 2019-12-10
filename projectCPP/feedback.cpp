@@ -14,6 +14,7 @@ Feedback::Feedback(const Feedback &other) :buyer(other.buyer)//copy c'tor
 
 Feedback::~Feedback()//destructor
 {
+	// does we need those delete? we allocate string in static way
 	delete[]user_feedback;
 
 }

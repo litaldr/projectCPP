@@ -24,6 +24,7 @@ Product::Product(const Product & other) //copy c'tor
 
 Product::~Product() //destructor
 {
+	// does we need those delete? we allocate string in static way
 	delete[]productName;
 }
 

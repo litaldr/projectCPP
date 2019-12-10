@@ -41,6 +41,7 @@ address_user::address_user(const address_user&& other)// move c'tor
 
 address_user::~address_user() //destructor
 {
+// does we need those delete? we allocate string in static way
 	delete[]country;
 	delete[]city;
 	delete[]street;

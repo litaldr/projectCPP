@@ -21,6 +21,7 @@ buyers::buyers(const buyers &other) : address(other.address)//copy c'tor
 
 buyers::~buyers() //destructor
 {
+	// does we need those delete? we allocate string in static way
 	delete[]user_name;
 	delete[]password;
 }
@@ -28,6 +29,7 @@ buyers::~buyers() //destructor
 
 bool buyers::setName(const char* n) //להוסיף דרישה לאתחול שם המערכת במאיין של הפרויקט- לזכור להתמודד עם הערך שחוזר מהפונקציה
 {
+	//משום שאנחנו מקצות בmanager שם משתמש בגודל 20, תמיד שנקבל מהמקלדת שם הוא יהיה לכל היותר באורך 20 גם אם המשתמש הכניס 100 תווים 
 	/*
 	if (user_name != NULL)
 		delete[] user_name;

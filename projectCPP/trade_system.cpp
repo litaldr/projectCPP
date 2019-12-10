@@ -12,6 +12,7 @@ trade_system::trade_system(const char *name) //constructor
 
 trade_system::~trade_system() //destructor
 {
+	// does we need those delete? we allocate string in static way
 	delete[]system_name;
 }
 

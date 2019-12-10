@@ -38,6 +38,7 @@ sellers::sellers(const sellers &other) : address(other.address)//copy c'tor// оч
 
 sellers::~sellers() //destructor
 {
+	// does we need those delete? we allocate string in static way
 	delete[]user_name;
 	delete[]password;
 
