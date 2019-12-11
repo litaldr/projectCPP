@@ -24,6 +24,7 @@ void Feedback::setFeedback(const char * new_feedback) //feedback is given one ti
 {
 	this->user_feedback = new char[strlen(new_feedback) + 1];
 	strncpy(this->user_feedback, new_feedback, strlen(new_feedback));
+	this->user_feedback[strlen(user_feedback)] = '\0';
 }
 bool Feedback::setDate(int day, int month, int year)
 {

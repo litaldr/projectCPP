@@ -23,9 +23,9 @@ public:
 	int getCountSeller();
 	void setCountSeller(int j);
 
-	void addBuyer(buyers& buyer);
+	bool addBuyer(buyers& buyer);
 	bool addSeller(sellers &seller);
-	bool compreName(char *comperdName);
+	bool compreName(char *comperdName, bool flag);
 
 	buyers ** reallocbuyers(buyers **oldBuyersArr, int size);
 	sellers ** reallocSellers(sellers **oldSellersArr, int size);
@@ -33,9 +33,13 @@ public:
 	buyers** getBuyersArr();
 	sellers** getSellersArr();
 
+	void showProductWithIdenticalName(const char *nameProduct) const;
+
 	/*מתודות להוסיף:
 	3. הדפסת פרטי כל הקונים (לולאה שרצה על מערך הקונים ומדפיסה
 	4. הדפסת פרטי כל המוכרים (לולאה שרצה על מערך המוכרים ומדפיסה*/
+	
+	const char* categoryStr[4] = { "Children", "Electronics" , "Office", "Clothing" }; // define here the string category enum of product to use in print products with identical name #10
 private:
 	//attributes
 	char *system_name;

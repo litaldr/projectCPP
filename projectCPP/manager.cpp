@@ -84,6 +84,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		char street[MAX_NAME_SIZE] = { 0 };
 		int house_number;
 
+		cout << "Please note that the system receives at most 20 charters" << endl;
 		cout << "please enter new user name:" << endl;
 		cleanBuffer();
 		cin.getline(name, MAX_NAME_SIZE);
@@ -106,6 +107,17 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		address_user *address = new address_user(country, city, street, house_number);
 		buyers *buyer = new buyers(name, password, *address);
 		system->addBuyer(*buyer);
+		while (!(system->addBuyer(*buyer)))
+		{
+			cout << "the user name you entered is in use, please type a new name" << endl;
+			cleanBuffer();
+			cin.getline(name, MAX_NAME_SIZE);
+			while (!buyer->setName(name))
+			{
+				cout << "the user name you entered is not valid, please type a new name" << endl;
+				cin.getline(name, MAX_NAME_SIZE);
+			}
+		}
 	}
 
 
@@ -118,6 +130,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		char street[MAX_NAME_SIZE] = { 0 };
 		int house_number;
 
+		cout << "Please note that the system receives at most 20 charters" << endl;
 		cout << "please enter new user name:" << endl;
 		cleanBuffer();
 		cin.getline(name, MAX_NAME_SIZE);
@@ -155,6 +168,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 
 	if (num == 3)
 	{
+		cout << "Please note that the system receives at most 20 charters" << endl;
 		char productName[MAX_NAME_SIZE] = { 0 };
 		cout << "please enter a name for the new product:" << endl;
 		cleanBuffer();
@@ -202,11 +216,36 @@ void doAction(int num, trade_system *system) // function do the wanted action
 	*/
 	if (num == 5)
 	{
+		char buyerName[MAX_NAME_SIZE] = { 0 };
+		cout << "please enter your user name:" << endl;
+		cleanBuffer();
+		cin.getline(buyerName, MAX_NAME_SIZE);
 
+		char productName[MAX_NAME_SIZE] = { 0 };
+		cout << "please enter which product you are looking for :" << endl;
+		
+		cin.getline(productName, MAX_NAME_SIZE);
 
+		system->showProductWithIdenticalName(productName);
+		char ch;
+		int sellerIndex, productIndex;
+		cout << "please enter the ProductNumber (as it written in screen) you wish to add to your wishlist:" << endl;
+		cin >> sellerIndex >> ch >> productIndex;
+		
+		int flag = false; 
+		int indexBuyersArr;
+		for (indexBuyersArr= 0; indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
+		{
+			if (strcmp(buyerName, system->getBuyersArr()[indexBuyersArr]->getName()) == 0)
+			{
+				system->getBuyersArr()[indexBuyersArr]->addProductToWishlist((system->getSellersArr()[sellerIndex]->getProductArr()[productIndex]));
+				system->getBuyersArr()[indexBuyersArr]->getWishListArr()[system->getBuyersArr()[indexBuyersArr]->getCountProductInWishList()]->setSeller(system->getSellersArr()[sellerIndex]);
+				flag = true;
+			}
+		}
 
-
-
+		if (flag == false)
+			cout << "the user name you typed is not exist in our system" << endl;
 
 
 	}
@@ -218,8 +257,17 @@ void doAction(int num, trade_system *system) // function do the wanted action
 	case 8: // מתודה הדפסת פרטי הקונים עבור מחלקה של trade system
 	break;
 	case 9: // מתודה הדפסת פרטי המוכרים עבור מחלקה של trade system
-	break;
-	case 10: // מתודה הדפסת פרטי המוצרים שיש להם את אותו השם עבור מחלקה של מוצר
+	break;*/
+	if (num == 10)
+	{
+		char productName[MAX_NAME_SIZE] = { 0 };
+		cout << "please enter which product you are looking for :" << endl;
+		cleanBuffer();
+		cin.getline(productName, MAX_NAME_SIZE);
+
+		system->showProductWithIdenticalName(productName);
+	}
+/*
 	break;
 	case 11:
 	cout << "Goodbye :)" << endl;

@@ -7,7 +7,7 @@ trade_system::trade_system(const char *name) //constructor
 {
 	this->system_name = new char[strlen(name) + 1];
 	strcpy(this->system_name, name);
-
+	this->system_name[strlen(system_name)] = '\0';
 }
 
 trade_system::~trade_system() //destructor
@@ -73,24 +73,29 @@ sellers** trade_system::getSellersArr()
 	return sellersArr;
 }
 
-void trade_system::addBuyer(buyers& buyer)
+bool trade_system::addBuyer(buyers& buyer)
 {
 	int i = getCountBuyer() - 1;
-	if (getCountBuyer() == 0)
-		buyersArr = new buyers*;//if it is the first buyer
-	else
+	if (trade_system::compreName(buyer.getName(), false))// true define the doing comper for sellers arr in comper function
 	{
-		buyersArr = reallocbuyers(buyersArr, i + 1);//if it isn't the first buyer
+		if (getCountBuyer() == 0)
+			buyersArr = new buyers*;//if it is the first buyer
+		else
+		{
+			buyersArr = reallocbuyers(buyersArr, i + 1);//if it isn't the first buyer
+		}
+		i++;
+		(buyersArr[i]) = new buyers(buyer);
+		setCountBuyer(i + 1);
+		return true;
 	}
-	i++;
-	(buyersArr[i]) = new buyers(buyer);
-	setCountBuyer(i + 1);
+	return false;
 }
 
 bool trade_system::addSeller(sellers& seller)
 {
 	int i = getCountSeller() - 1;
-	if (trade_system::compreName(seller.getName()))// לא עובד, כי יש בעיה בקליטה של המחרוזות
+	if (trade_system::compreName(seller.getName(),true))// true define the doing comper for sellers arr in comper function
 	{
 		if (getCountSeller() == 0)
 			sellersArr = new sellers*;//if it is the first buyer
@@ -130,28 +135,46 @@ sellers ** trade_system::reallocSellers(sellers **oldSellersArr, int size)
 	return newSellersArr;
 }
 
-bool trade_system::compreName(char *comperdName) // יש בעיה לא מגיעים למוכר במקום ה- איי במערך
+bool trade_system::compreName(char *comperdName, bool flag) 
 {
-	for (int i = 0; i < count_sellers; i++)
+	if (flag)
 	{
-		if (strcmp((sellersArr[i]->getName()), comperdName) == 0) 
-			return false;
+		for (int i = 0; i < count_sellers; i++)
+		{
+			if (strcmp((sellersArr[i]->getName()), comperdName) == 0)
+				return false;
+		}
+		return true;
 	}
-	return true;
-	int j = 0;
+	else
+	{
+		for (int i = 0; i < count_buyers; i++)
+		{
+			if (strcmp((buyersArr[i]->getName()), comperdName) == 0)
+				return false;
+		}
+		return true;
+	}
+
 }
 
-
-
-/*
-bool Tribe::addSurvivor(Survivor& newSurvivor)
+void trade_system::showProductWithIdenticalName(const char *nameProduct) const
 {
-if (m_currentNumOfSurvivors < m_maxSurvivors)
-{
-m_allSurvivors[m_currentNumOfSurvivors++] = &newSurvivor;
-return true;
+	int sellerIndex, productIndex;
+	for (sellerIndex = 0; sellerIndex < count_sellers; sellerIndex++)
+	{
+		for (productIndex = 0; productIndex < sellersArr[sellerIndex]->getCountProduct(); productIndex++)
+		{
+			if ((strcmp(nameProduct, sellersArr[sellerIndex]->getProductArr()[productIndex]->getName())) == 0)
+			{
+				cout << "ProductNumber is: " << sellerIndex << "." << productIndex << endl;
+				cout << "Product name is: " << sellersArr[sellerIndex]->getProductArr()[productIndex]->getName() << endl;
+				cout << "Product category is: " <<categoryStr[sellersArr[sellerIndex]->getProductArr()[productIndex]->getCategory()] << endl;
+				cout <<"Product serial number is: " <<sellersArr[sellerIndex]->getProductArr()[productIndex]->getItemSerialNumber() << endl;
+				cout << "Product price is: " <<sellersArr[sellerIndex]->getProductArr()[productIndex]->getPrice() << endl;
+				cout << "---------------------------------" << endl;
+			}
+
+		}
+	}
 }
-else
-return false;
-}
-*/

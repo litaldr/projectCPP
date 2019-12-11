@@ -5,15 +5,15 @@ address_user::address_user(const char* country, const char* city, const char *st
 
 	this->country = new char[strlen(country) + 1];
 	strncpy(this->country, country, strlen(country));
-	this->country[strlen(country) + 1] = '\0';
+	this->country[strlen(country)] = '\0';
 
 	this->city = new char[strlen(city) + 1];
 	strncpy(this->city, city, strlen(city));
-	this->city[strlen(city) + 1] = '\0';
+	this->city[strlen(city)] = '\0';
 
 	this->street = new char[strlen(street) + 1];
 	strncpy(this->street, street, strlen(street));
-	this->street[strlen(street) + 1] = '\0';
+	this->street[strlen(street)] = '\0';
 
 	this->house_number= house_number;
 
