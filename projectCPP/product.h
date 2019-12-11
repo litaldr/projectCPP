@@ -33,7 +33,7 @@ public:
 	int getItemSerialNumber()  const;
 	double getPrice()  const;
 
-
+	friend class wishList;
 private:
 	//attributes
 	char *productName;

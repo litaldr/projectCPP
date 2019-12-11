@@ -25,7 +25,7 @@ public:
 	char * getPassword()      const;
 	address_user getAddress()      const;
 
-	void addProductToWishlist(Product * newProduct);
+	void addProductToWishlist(Product & newProduct);
 	int getCountProductInWishList() const;
 	wishList **getWishListArr() const;
 	void  setCountProductInWishList(int n);

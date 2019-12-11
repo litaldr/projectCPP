@@ -39,8 +39,8 @@ bool Product::setName(const char* n)
 	if (strlen(n) <= MAX_NAME_SIZE) //valid name
 	{
 		productName = new char[strlen(n) + 1];
-		strcpy(productName, n);
-		productName[strlen(n) + 1] = '\0';
+		strncpy(productName, n,strlen(n));
+		productName[strlen(n)] = '\0';
 	}
 	else
 		return false;

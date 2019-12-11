@@ -46,8 +46,9 @@ bool buyers::setName(const char* n) //להוסיף דרישה לאתחול שם המערכת במאיין של הפ
 	*/
 	if (strlen(n) <= MAX_NAME_SIZE) //valid name
 	{
-		user_name = new char[strlen(n) + 1];
-		strcpy_s(user_name, strlen(n), n);
+		user_name = new char[strlen(n)+1];
+		strncpy(user_name,n,strlen(n));
+		user_name[strlen(n)] = '\0';
 	}
 	
 	else
@@ -65,7 +66,9 @@ bool buyers::setPassword(const char* p) //להוסיף דרישה לאתחול שם המערכת במאיין ש
 	if ((strlen(p) >= MAX_PASSWORD_SIZE) && (strlen(p) <= MIN_PASSWORD_SIZE))// password in range 8-20
 	{
 		password = new char[strlen(p) + 1];
-		strcpy_s(password, strlen(p), p);
+		strncpy(password, p,strlen(p));
+		password[strlen(p)] = '\0';
+
 	}
 	else
 		return false;
@@ -98,7 +101,7 @@ wishList **buyers::getWishListArr() const
 {
 	return WishListArr;
 }
-void buyers::addProductToWishlist(Product * newProduct)
+void buyers::addProductToWishlist(Product & newProduct)
 {
 	int i = getCountProductInWishList() - 1;
 	if (getCountProductInWishList() == 0)
@@ -108,7 +111,7 @@ void buyers::addProductToWishlist(Product * newProduct)
 		WishListArr = reallocWishList(WishListArr, i + 1);//if it isn't the first buyer
 	}
 	i++;
-	WishListArr[i]->setProduct(newProduct);//copy const
+	WishListArr[i]=new wishList(newProduct);// c'tor product only
 
 	setCountProductInWishList(i + 1);
 }

@@ -21,21 +21,24 @@ private:
 public:
 	enum eCategory { CHILDREN, ELECTRONICS, OFFICE, CLOTHING };
 
-	wishList() = delete;// we don't allowed to create a new product without the details in the constructor below 
+	wishList() = default;// we don't allowed to create a new product without the details in the constructor below 
 	wishList(const Product & product, sellers * seller);//constructor
-	wishList(const wishList& other);// copy constructor
-	~wishList(); //destructor // defualt destructor because name allocated static
+    wishList(const Product & product);
+	
+	
 
+	~wishList(); //destructor // defualt destructor because name allocated static
+	
 	// set & get functions
 	const Product& getProduct()  const;
-	sellers * getseller() const;
-	void setProduct(Product* product);
-	void setSeller(sellers *seller);
+	const sellers * getseller() const;
+	void setSeller(const sellers & seller);
+	friend class Product;
 
 private:
 	//attributes
-	const Product* product;
-	sellers *seller;
+	Product product;
+	const sellers *seller;
 
 };
 #endif // 

@@ -6,7 +6,7 @@
 trade_system::trade_system(const char *name) //constructor
 {
 	this->system_name = new char[strlen(name) + 1];
-	strcpy(this->system_name, name);
+	strncpy(this->system_name, name,strlen(name));
 	this->system_name[strlen(system_name)] = '\0';
 }
 
@@ -31,7 +31,8 @@ bool trade_system::setName(const char* n)  //check valid name
 	if (strlen(n) <= MAX_NAME_SIZE) // check valid length name
 	{
 		system_name = new char[strlen(n) + 1];
-		strcpy(system_name, n);
+		strncpy(system_name, n, strlen(n));
+		system_name[strlen(n)] = '\0';
 	}
 	else
 		return false;

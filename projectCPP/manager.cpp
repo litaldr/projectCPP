@@ -106,7 +106,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 
 		address_user *address = new address_user(country, city, street, house_number);
 		buyers *buyer = new buyers(name, password, *address);
-		system->addBuyer(*buyer);
+		
 		while (!(system->addBuyer(*buyer)))
 		{
 			cout << "the user name you entered is in use, please type a new name" << endl;
@@ -117,6 +117,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 				cout << "the user name you entered is not valid, please type a new name" << endl;
 				cin.getline(name, MAX_NAME_SIZE);
 			}
+			cout << "your user name changed successfully" << endl;
 		}
 	}
 
@@ -163,6 +164,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 				cout << "the user name you entered is not valid, please type a new name" << endl;
 				cin.getline(name, MAX_NAME_SIZE);
 			}
+			cout << "your user name changed successfully" << endl;
 		}
 	}
 
@@ -218,6 +220,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 	{
 		char buyerName[MAX_NAME_SIZE] = { 0 };
 		cout << "please enter your user name:" << endl;
+
 		cleanBuffer();
 		cin.getline(buyerName, MAX_NAME_SIZE);
 
@@ -238,8 +241,8 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		{
 			if (strcmp(buyerName, system->getBuyersArr()[indexBuyersArr]->getName()) == 0)
 			{
-				system->getBuyersArr()[indexBuyersArr]->addProductToWishlist((system->getSellersArr()[sellerIndex]->getProductArr()[productIndex]));
-				system->getBuyersArr()[indexBuyersArr]->getWishListArr()[system->getBuyersArr()[indexBuyersArr]->getCountProductInWishList()]->setSeller(system->getSellersArr()[sellerIndex]);
+				system->getBuyersArr()[indexBuyersArr]->addProductToWishlist(*(system->getSellersArr()[sellerIndex]->getProductArr()[productIndex]));
+				system->getBuyersArr()[indexBuyersArr]->getWishListArr()[system->getBuyersArr()[indexBuyersArr]->getCountProductInWishList()]->setSeller(*(system->getSellersArr()[sellerIndex]));
 				flag = true;
 			}
 		}

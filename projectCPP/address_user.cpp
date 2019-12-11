@@ -63,7 +63,8 @@ bool address_user::setCountry(const char *c)
 	if (indicate_len && indicate_letters) //case name is valid= set name
 	{
 		this->country = new char[strlen(c) + 1];
-		strcpy_s(country, strlen(c), c);
+		strncpy(country, c, strlen(c));
+		country[strlen(c)] = '\0';
 		return true;
 	}
 	else
@@ -86,7 +87,8 @@ bool address_user::setCity(const char *c)
 	if (indicate_len && indicate_letters) //case name is valid= set name
 	{
 		this->city = new char[strlen(c) + 1];
-		strcpy_s(city, strlen(c), c);
+		strncpy(city, c,strlen(c));
+		city[strlen(c)] = '\0'; 
 		return true;
 	}
 	else
@@ -123,7 +125,8 @@ bool address_user::setStreet(const char *s)
 	if (indicate_len && indicate_letters) //case name is valid= set name
 	{
 		this->street = new char[strlen(s) + 1];
-		strcpy(street, s);
+		strncpy(street, s,strlen(s));
+		street[strlen(s)] = '\0';
 		return true;
 	}
 	else

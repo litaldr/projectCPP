@@ -2,15 +2,17 @@
 
 int wishList::countSerialNumber = 0;
 
-wishList::wishList(const Product & product, sellers * seller) : product(&product) //constructor
+wishList::wishList(const Product & product, sellers * seller) : product(product) //constructor
 {
 	this->seller = seller;
 }
+wishList::wishList(const Product & product) : product(product) {}// c'tor
 
-wishList::wishList(const wishList & other) //copy c'tor
+
+
+void wishList::setSeller(const sellers & seller) // יש בעיה בגישה למוכר לא מצליחות להכניס פויינטר למוכר בתוך העגלת קניות 
 {
-	this->product = other.product;
-	this->seller = other.seller;
+	this->seller = &seller;
 }
 
 wishList::~wishList() //destructor
@@ -22,19 +24,10 @@ wishList::~wishList() //destructor
 
 const Product& wishList::getProduct()  const
 {
-	return *product;
+	return product;
 }
-sellers * wishList::getseller() const
+const sellers * wishList::getseller() const
 {
 	return seller;
-}
-
-void wishList::setProduct(Product* product)
-{
-	this->product = product;
-}
-void wishList::setSeller(sellers *seller)
-{
-	this->seller = seller;
 }
 

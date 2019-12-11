@@ -53,8 +53,8 @@ bool sellers::setName(const char* n) //להוסיף דרישה לאתחול שם המערכת במאיין של ה
 	if (strlen(n) <= MAX_NAME_SIZE) //valid name 
 	{
 		user_name = new char[strlen(n) + 1];
-		strcpy(user_name, n);
-		user_name[strlen(n) + 1] = '\0';
+		strncpy(user_name, n,strlen(n));
+		user_name[strlen(n) ] = '\0';
 	}
 	else
 		return false;
@@ -71,8 +71,8 @@ bool sellers::setPassword(const char* p) //להוסיף דרישה לאתחול שם המערכת במאיין 
 	if ((strlen(p) >= MIN_PASSWORD_SIZE) && (strlen(p) <= MAX_PASSWORD_SIZE))// password in range 8-20
 	{
 		password = new char[strlen(p) + 1];
-		strcpy(password, p);
-		user_name[strlen(p) + 1] = '\0';
+		strncpy(password, p,strlen(p));
+		user_name[strlen(p) ] = '\0';
 	}
 	else
 		return false;
