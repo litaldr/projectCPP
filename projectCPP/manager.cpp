@@ -231,7 +231,9 @@ void doAction(int num, trade_system *system) // function do the wanted action
 
 		system->showProductWithIdenticalName(productName);
 		char ch;
-		int sellerIndex, productIndex;
+		int sellerIndex, productIndex, wishListIndex;
+		Product *tempProduct;
+		sellers *tempSellers;
 		cout << "please enter the ProductNumber (as it written in screen) you wish to add to your wishlist:" << endl;
 		cin >> sellerIndex >> ch >> productIndex;
 		
@@ -241,9 +243,15 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		{
 			if (strcmp(buyerName, system->getBuyersArr()[indexBuyersArr]->getName()) == 0)
 			{
-				system->getBuyersArr()[indexBuyersArr]->addProductToWishlist(*(system->getSellersArr()[sellerIndex]->getProductArr()[productIndex]));
-				system->getBuyersArr()[indexBuyersArr]->getWishListArr()[system->getBuyersArr()[indexBuyersArr]->getCountProductInWishList()]->setSeller(*(system->getSellersArr()[sellerIndex]));
+				tempProduct = system->getSellersArr()[sellerIndex]->getProductArr()[productIndex];
+				system->getBuyersArr()[indexBuyersArr]->addProductToWishlist(tempProduct);
+				wishListIndex=system->getBuyersArr()[indexBuyersArr]->getCountProductInWishList();
+				tempSellers = system->getSellersArr()[sellerIndex];
+				system->getBuyersArr()[indexBuyersArr]->getWishListArr()[wishListIndex]->setSeller(tempSellers);
 				flag = true;
+
+				system->getBuyersArr()[indexBuyersArr]->setCountProductInWishList(wishListIndex + 1);
+
 			}
 		}
 

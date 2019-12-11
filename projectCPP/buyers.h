@@ -12,8 +12,8 @@ public:
 
 
 	buyers() = delete; //constructor
-	buyers(char *user_name, char *password, const address_user & address); //constructor
-	buyers(char *user_name, char *password, const address_user & address, wishList **wishListArr); //constructor
+	//buyers(char *user_name, char *password, const address_user & address); //constructor
+	buyers(char *user_name, char *password, const address_user & address, wishList **wishListArr=nullptr); //constructor
 
 	buyers(const buyers &other);
 	~buyers(); // defualt destructor because names strings are allocated static
@@ -25,7 +25,7 @@ public:
 	char * getPassword()      const;
 	address_user getAddress()      const;
 
-	void addProductToWishlist(Product & newProduct);
+	void addProductToWishlist(Product * newProduct);
 	int getCountProductInWishList() const;
 	wishList **getWishListArr() const;
 	void  setCountProductInWishList(int n);

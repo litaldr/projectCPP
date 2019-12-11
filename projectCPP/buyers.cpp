@@ -1,17 +1,17 @@
 #include "buyers.h"
-
-buyers::buyers(char *user_name, char *password, const address_user & address) //constructor
-	:address(address)
-{
-	this->user_name = new char[strlen(user_name) + 1];
-	strcpy(this->user_name, user_name);
-	this->user_name[strlen(user_name)] = '\0';
-
-	this->password = new char[strlen(password) + 1];
-	strcpy(this->password, password);
-	this->password[strlen(password)] = '\0';
-
-}
+//
+//buyers::buyers(char *user_name, char *password, const address_user & address) //constructor
+//	:address(address)
+//{
+//	this->user_name = new char[strlen(user_name) + 1];
+//	strcpy(this->user_name, user_name);
+//	this->user_name[strlen(user_name)] = '\0';
+//
+//	this->password = new char[strlen(password) + 1];
+//	strcpy(this->password, password);
+//	this->password[strlen(password)] = '\0';
+//
+//}
 buyers::buyers(char *user_name, char *password, const address_user & address, wishList **WishListArr) :address(address)
 {
 	this->user_name = new char[strlen(user_name) + 1];
@@ -101,7 +101,7 @@ wishList **buyers::getWishListArr() const
 {
 	return WishListArr;
 }
-void buyers::addProductToWishlist(Product & newProduct)
+void buyers::addProductToWishlist(Product *newProduct)
 {
 	int i = getCountProductInWishList() - 1;
 	if (getCountProductInWishList() == 0)
@@ -111,10 +111,10 @@ void buyers::addProductToWishlist(Product & newProduct)
 		WishListArr = reallocWishList(WishListArr, i + 1);//if it isn't the first buyer
 	}
 	i++;
-	WishListArr[i]=new wishList(newProduct);// c'tor product only
+	WishListArr[i] = new wishList(newProduct);// c'tor product only
 
-	setCountProductInWishList(i + 1);
-}
+
+	}
 wishList ** buyers::reallocWishList(wishList **oldWishListArr, int size)
 {
 	wishList **newWishListArr = new wishList*[size + 1];
