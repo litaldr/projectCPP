@@ -32,6 +32,8 @@ public:
 	Product ** reallocProduct(Product **oldProductArr, int size);
 	void addProduct(Product& newProduct);
 
+	Product ** getProductArr() const;
+
 	void addFeedback(buyers *buyer);// choice 4 in the interactive shell
 
 private:

@@ -4,22 +4,22 @@ sellers::sellers(const char *user_name, const char *password, const address_user
 {
 	this->user_name = new char[strlen(user_name) + 1];
 	strcpy(this->user_name, user_name);
-	this->user_name[strlen(user_name) + 1] = '\0';
+	this->user_name[strlen(user_name)] = '\0';
 
 	this->password = new char[strlen(password) + 1];
 	strcpy(this->password, password);
-	this->password[strlen(password) + 1] = '\0';
+	this->password[strlen(password)] = '\0';
 
 }
 sellers::sellers(const char *user_name, const char *password, const address_user &address) : address(address)
 {
 	this->user_name = new char[strlen(user_name) + 1];
 	strcpy(this->user_name, user_name);
-	this->user_name[strlen(user_name) + 1] = '\0';
+	this->user_name[strlen(user_name)] = '\0';
 
 	this->password = new char[strlen(password) + 1];
 	strcpy(this->password, password);
-	this->password[strlen(password) + 1] = '\0';
+	this->password[strlen(password)] = '\0';
 }
 
 sellers::sellers(const sellers &other) : address(other.address)//copy c'tor// מקבל כלום other יש בעיה עם ההעתקה!!!
@@ -103,6 +103,11 @@ int sellers::getCountProduct() const
 	return CountProduct;
 }
 
+Product ** sellers::getProductArr() const
+{
+	return ProductArr;
+}
+
 void sellers::addProduct(Product &newProduct)
 {
 	int i = getCountProduct() - 1;
@@ -128,3 +133,5 @@ Product ** sellers::reallocProduct(Product **oldProductArr, int size)
 	delete[]oldProductArr;
 	return newProductArr;
 }
+
+

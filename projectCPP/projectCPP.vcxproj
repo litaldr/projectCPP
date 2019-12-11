@@ -154,6 +154,7 @@
     <ClInclude Include="product.h" />
     <ClInclude Include="sellers.h" />
     <ClInclude Include="trade_system.h" />
+    <ClInclude Include="wishList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="address_user.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="product.cpp" />
     <ClCompile Include="sellers.cpp" />
     <ClCompile Include="trade_system.cpp" />
+    <ClCompile Include="wishList.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

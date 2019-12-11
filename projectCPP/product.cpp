@@ -6,7 +6,7 @@ Product::Product(const char *productName, eCategory category, double price)  //c
 {
 	this->productName = new char[strlen(productName) + 1];
 	strncpy(this->productName, productName, strlen(productName));
-	this->productName[strlen(productName) + 1] = '\0';
+	this->productName[strlen(productName) ] = '\0';
 
 	serialNumber = ++countSerialNumber;
 	this->category = category;

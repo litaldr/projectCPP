@@ -5,12 +5,23 @@ buyers::buyers(char *user_name, char *password, const address_user & address) //
 {
 	this->user_name = new char[strlen(user_name) + 1];
 	strcpy(this->user_name, user_name);
-	this->user_name[strlen(user_name) + 1] = '\0';
+	this->user_name[strlen(user_name)] = '\0';
 
 	this->password = new char[strlen(password) + 1];
 	strcpy(this->password, password);
-	this->password[strlen(password) + 1] = '\0';
+	this->password[strlen(password)] = '\0';
 
+}
+buyers::buyers(char *user_name, char *password, const address_user & address, wishList **WishListArr) :address(address)
+{
+	this->user_name = new char[strlen(user_name) + 1];
+	strcpy(this->user_name, user_name);
+	this->user_name[strlen(user_name)] = '\0';
+
+	this->password = new char[strlen(password) + 1];
+	strcpy(this->password, password);
+	this->password[strlen(password)] = '\0';
+	this->WishListArr = nullptr;
 }
 buyers::buyers(const buyers &other) : address(other.address)//copy c'tor
 {
@@ -22,8 +33,7 @@ buyers::buyers(const buyers &other) : address(other.address)//copy c'tor
 buyers::~buyers() //destructor
 {
 	// does we need those delete? we allocate string in static way
-	delete[]user_name;
-	delete[]password;
+	delete[]WishListArr;
 }
 
 
@@ -75,4 +85,41 @@ char * buyers::getPassword() const
 address_user buyers::getAddress()  const
 {
 	return address;
+}
+int buyers::getCountProductInWishList() const
+{
+	return CountProductInWishList;
+}
+void  buyers::setCountProductInWishList(int n)
+{
+	this->CountProductInWishList = n;
+}
+wishList **buyers::getWishListArr() const
+{
+	return WishListArr;
+}
+void buyers::addProductToWishlist(Product * newProduct)
+{
+	int i = getCountProductInWishList() - 1;
+	if (getCountProductInWishList() == 0)
+		this->WishListArr = new wishList*;//if it is the first buyer
+	else
+	{
+		WishListArr = reallocWishList(WishListArr, i + 1);//if it isn't the first buyer
+	}
+	i++;
+	WishListArr[i]->setProduct(newProduct);//copy const
+
+	setCountProductInWishList(i + 1);
+}
+wishList ** buyers::reallocWishList(wishList **oldWishListArr, int size)
+{
+	wishList **newWishListArr = new wishList*[size + 1];
+	for (int i = 0; i <= size; i++)
+	{
+		newWishListArr[i] = oldWishListArr[i];
+		//delete[]oldProductArr[i]
+	}
+	delete[]oldWishListArr;
+	return newWishListArr;
 }

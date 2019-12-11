@@ -17,7 +17,6 @@ private:
 
 public:
 	enum eCategory { CHILDREN, ELECTRONICS, OFFICE, CLOTHING };
-	const char* categoryStr[4] = { "Children", "Electronics" , "Office", "Clothing" };
 
 	Product() = delete;// we don't allowed to create a new product without the details in the constructor below 
 	Product(const char *productName, eCategory category, double price);//constructor
@@ -44,6 +43,6 @@ private:
 
 
 };
-#endif // ! _ITEM_H
+#endif //
 
 
