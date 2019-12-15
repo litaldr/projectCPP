@@ -76,10 +76,10 @@ sellers** trade_system::getSellersArr()
 
 bool trade_system::addBuyer(buyers& buyer)
 {
-	int i = getCountBuyer() - 1;
+	int i = count_buyers - 1;
 	if (trade_system::compreName(buyer.getName(), false))// true define the doing comper for sellers arr in comper function
 	{
-		if (getCountBuyer() == 0)
+		if (count_buyers == 0)
 			buyersArr = new buyers*;//if it is the first buyer
 		else
 		{
@@ -87,7 +87,7 @@ bool trade_system::addBuyer(buyers& buyer)
 		}
 		i++;
 		(buyersArr[i]) = new buyers(buyer);
-		setCountBuyer(i + 1);
+		count_buyers =i + 1;
 		return true;
 	}
 	return false;
@@ -95,10 +95,10 @@ bool trade_system::addBuyer(buyers& buyer)
 
 bool trade_system::addSeller(sellers& seller)
 {
-	int i = getCountSeller() - 1;
+	int i = count_sellers - 1;
 	if (trade_system::compreName(seller.getName(),true))// true define the doing comper for sellers arr in comper function
 	{
-		if (getCountSeller() == 0)
+		if (count_sellers == 0)
 			sellersArr = new sellers*;//if it is the first buyer
 		else
 		{
@@ -106,7 +106,7 @@ bool trade_system::addSeller(sellers& seller)
 		}
 		i++;
 		(sellersArr[i]) = new sellers(seller);
-		setCountSeller(i + 1);
+		count_sellers =i + 1;
 		return true;
 	}
 	return false;
@@ -169,13 +169,8 @@ void trade_system::showProductWithIdenticalName(const char *nameProduct) const
 			if ((strcmp(nameProduct, sellersArr[sellerIndex]->getProductArr()[productIndex]->getName())) == 0)
 			{
 				cout << "ProductNumber is: " << sellerIndex << "." << productIndex << endl;
-				cout << "Product name is: " << sellersArr[sellerIndex]->getProductArr()[productIndex]->getName() << endl;
-				cout << "Product category is: " <<categoryStr[sellersArr[sellerIndex]->getProductArr()[productIndex]->getCategory()] << endl;
-				cout <<"Product serial number is: " <<sellersArr[sellerIndex]->getProductArr()[productIndex]->getItemSerialNumber() << endl;
-				cout << "Product price is: " <<sellersArr[sellerIndex]->getProductArr()[productIndex]->getPrice() << endl;
-				cout << "---------------------------------" << endl;
+				sellersArr[sellerIndex]->getProductArr()[productIndex]->show();
 			}
-
 		}
 	}
 }

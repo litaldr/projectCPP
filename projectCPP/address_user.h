@@ -30,6 +30,7 @@ public:
 	//functions check valid name
 	bool validString_name(const char *c);
 	bool validString_street(const char *s);
+	void show()  const;
 
 	// get all atributes
 	char * getCountry()    const;

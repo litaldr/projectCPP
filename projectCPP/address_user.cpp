@@ -46,6 +46,14 @@ address_user::~address_user() //destructor
 	delete[]city;
 	delete[]street;
 }
+void address_user::show()  const
+{
+	cout << "user country is: " << country << endl;
+	cout << "user city is: " << city << endl;
+	cout << "user street is: " << street << endl;
+	cout << "user house number is : " << house_number << endl;
+	cout << "---------------------------------" << endl;
+}
 
 bool address_user::setCountry(const char *c)
 {

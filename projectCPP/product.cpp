@@ -21,6 +21,14 @@ Product::Product(const Product & other) //copy c'tor
 	this->price = other.price;
 
 }
+void Product::show()  const
+{
+	cout << "Product name is: " << productName << endl;
+	cout << "Product category is: " << category << endl;
+	cout << "Product serial number is: " << serialNumber << endl;
+	cout << "Product price is: " << price << endl;
+	cout << "---------------------------------" << endl;
+}
 
 Product::~Product() //destructor
 {

@@ -1,14 +1,8 @@
 #ifndef  __PRODUCT_H
 #define __PRODUCT_H
 
-#include <iostream>
-#include <string.h>
+
 #include "address_user.h" // include the MAX_NAME_SIZE =20
-
-using namespace std;
-
-
-#pragma warning (disable: 4996)
 
 class Product
 {
@@ -32,6 +26,7 @@ public:
 	eCategory getCategory()  const;
 	int getItemSerialNumber()  const;
 	double getPrice()  const;
+	void show()  const;
 
 	friend class wishList;
 private:

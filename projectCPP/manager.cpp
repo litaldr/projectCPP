@@ -46,14 +46,13 @@ void printMenu() // function prints the menu system for the user
 	cout << "To print all sellers details press 9" << endl;
 	cout << "To print all  identical name items press 10" << endl;
 	cout << "To exit press 11" << endl;
-	// להוסיף - הוספת פידבק, הוספת מוצר
 }
 
 int getAction() // function give indicate which action the user is about to choose
 {
 	int input;
 	cin >> input; // the input is in the buffer from the printManu function
-	while (!((input <= 11) && (input >= 1))) //check input (action) validetion
+	while (!((input <= 11) && (input >= 1))) //check input (action) validation
 	{
 		cout << "Please choose one of the fllowing action:" << endl;
 		printMenu();
@@ -64,13 +63,13 @@ int getAction() // function give indicate which action the user is about to choo
 	else if (input == 11) //input exit system
 		return EXIT;
 }
-void ** pointersArr(void * arr, int size)
-{
-	void ** pointersArr = new void*[size++];
-
-	delete[]arr;
-	return pointersArr;
-}
+//void ** pointersArr(void * arr, int size)
+//{
+//	void ** pointersArr = new void*[size++];
+//
+//	delete[]arr;
+//	return pointersArr;
+//}
 
 void doAction(int num, trade_system *system) // function do the wanted action 
 {
@@ -198,7 +197,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 			cout << "there is no seller yet in our system" << endl;
 
 		int indexSellersArr;
-		int flag=false; //indicate the adding product did not succsseed - cause the seller name do not exist in our system
+		int flag=false; //indicate the adding product did not succeed - cause the seller name do not exist in our system
 		for (indexSellersArr = 0; indexSellersArr < system->getCountSeller(); indexSellersArr++)
 		{
 			if (strcmp(userName, system->getSellersArr()[indexSellersArr]->getName()) == 0)
@@ -260,15 +259,106 @@ void doAction(int num, trade_system *system) // function do the wanted action
 
 
 	}
+	if (num == 6)
+	{
+		char buyerName[MAX_NAME_SIZE] = { 0 };
+		cout << "please enter your user name:" << endl;
+
+		cleanBuffer();
+		cin.getline(buyerName, MAX_NAME_SIZE);
+		int flag = false;
+		Product *tempProduct;//we will save a temporary product that we will insert to the products arr in a specific order
+		sellers *tempSeller;//we will save a temporary seller that we will insert to the sellers arr in a specific order
+		order *tempOrder= new order;
+		double countTotalPrice=0;
+		double productPrice = 0;
+		int choosenItems;
+		int indexBuyersArr;
+		for (indexBuyersArr = 0; indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
+		{			
+			if (strcmp(buyerName, system->getBuyersArr()[indexBuyersArr]->getName()) == 0)
+			{
+				system->getBuyersArr()[indexBuyersArr]->showWishList();
+				cout << "which product from your wish list would you like to buy? enter their numbers" << endl;
+				cout << "when you finished please enter -1 " << endl;
+				cin >> choosenItems;
+				while(choosenItems!=-1)
+				{
+					tempProduct=system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems]->getProduct();//
+					tempOrder->addProductToProductArr(*tempProduct);//adding 
+					productPrice= system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems]->getProduct()->getPrice();
+					countTotalPrice = countTotalPrice + productPrice;
+					tempSeller = system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems]->getseller();
+					if (system->getBuyersArr()[indexBuyersArr]->checkIfSellerExistsInAllOrders(tempSeller))
+					//return true if the seller not exists in the buyer order
+						tempOrder->addSellerToSellersArr(*tempSeller);
+					//otherwise, the seller is already exists in the buyer order
+					cin >> choosenItems;
+				}
+				
+				system->getBuyersArr()[indexBuyersArr]->addOrderToOrdersArr(tempOrder, countTotalPrice);// adding a new order for the current buyer
+				
+			}
+		}
+		if (flag == false)
+			cout << "the user name you typed is not exist in our system" << endl;
+
+
+	}
+	if (num == 8)
+	{
+		for (int i = 0; i < system->getCountBuyer(); i++)
+		{
+			cout << "This is Buyer " << i << " of our system: " << endl;
+			cout << system->getBuyersArr()[i]->getName() << endl;
+			cout << system->getBuyersArr()[i]->getPassword() << endl;
+			system->getBuyersArr()[i]->getAddress().show();
+			
+
+			if (system->getBuyersArr()[i]->getWishListArr() != NULL)
+			{
+				cout << "This is it's current wishlist Products: " << endl;
+				for (int j = 0; j < system->getBuyersArr()[i]->getCountProductInWishList(); j++)
+				{
+					system->getBuyersArr()[i]->getWishListArr()[j]->getProduct()->show();
+				}
+			}
+			else
+				cout << "It's wishlist is Empty" << endl;
+
+			// we are not intrested in it's history order
+			cout << "-----------------------------------------------" << endl;
+		}
+	}
+	if (num == 9)
+	{
+		for (int i = 0; i < system->getCountSeller(); i++)
+		{
+			cout << "This is Seller " << i << " of our system: " << endl;
+			cout << system->getSellersArr()[i]->getName() << endl;
+			system->getSellersArr()[i]->getAddress().show();
+			
+			if (system->getSellersArr()[i]->getProductArr() != NULL)
+			{
+				cout << "This is it's current Products list: " << endl;
+				for (int j = 0; j < system->getSellersArr()[i]->getCountProduct(); j++)
+				{
+					system->getSellersArr()[i]->getProductArr()[j]->show();
+				}
+			}
+			else
+				cout << "It's Products list is Empty" << endl;
+
+			// we are not intrested in it's feedback list
+			cout << "-----------------------------------------------" << endl;
+		}
+
+	}
 	/*
-	case 6: // מתודה ביצוע הזמנה עבור מחלקה של קונה
-	break;
+	
 	case 7: // מתודת תשלום הזמנה עבור מחלקה של קונה
 	break;
-	case 8: // מתודה הדפסת פרטי הקונים עבור מחלקה של trade system
-	break;
-	case 9: // מתודה הדפסת פרטי המוכרים עבור מחלקה של trade system
-	break;*/
+	*/
 	if (num == 10)
 	{
 		char productName[MAX_NAME_SIZE] = { 0 };

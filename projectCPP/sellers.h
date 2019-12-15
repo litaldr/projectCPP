@@ -27,7 +27,7 @@ public:
 	char * getPassword() const;
 	address_user getAddress()  const;
 	int getCountProduct()   const;
-	void setCountBuyer(int n);
+	void setCountProduct(int n);
 
 	Product ** reallocProduct(Product **oldProductArr, int size);
 	void addProduct(Product& newProduct);

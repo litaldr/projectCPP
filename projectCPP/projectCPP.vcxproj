@@ -151,6 +151,7 @@
     <ClInclude Include="date.h" />
     <ClInclude Include="feedback.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="order.h" />
     <ClInclude Include="product.h" />
     <ClInclude Include="sellers.h" />
     <ClInclude Include="trade_system.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="feedback.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="order.cpp" />
     <ClCompile Include="product.cpp" />
     <ClCompile Include="sellers.cpp" />
     <ClCompile Include="trade_system.cpp" />

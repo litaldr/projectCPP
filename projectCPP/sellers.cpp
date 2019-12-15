@@ -79,7 +79,7 @@ bool sellers::setPassword(const char* p) //להוסיף דרישה לאתחול שם המערכת במאיין 
 
 	return true;
 }
-void  sellers::setCountBuyer(int n)
+void  sellers::setCountProduct(int n)
 {
 	this->CountProduct = n;
 }
@@ -91,7 +91,7 @@ char * sellers::getName() const
 
 char * sellers::getPassword() const
 {
-	return user_name;
+	return password;
 }
 
 address_user sellers::getAddress()  const
@@ -120,7 +120,7 @@ void sellers::addProduct(Product &newProduct)
 	i++;
 	ProductArr[i] = new Product(newProduct);
 
-	setCountBuyer(i + 1);
+	CountProduct=i + 1;
 }
 Product ** sellers::reallocProduct(Product **oldProductArr, int size)
 {

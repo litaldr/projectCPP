@@ -13,16 +13,16 @@ void wishList::setProduct(Product * newProduct)
 {
 	this->product = newProduct;
 }
-void wishList::setSeller(sellers *seller) // יש בעיה בגישה למוכר לא מצליחות להכניס פויינטר למוכר בתוך העגלת קניות 
+void wishList::setSeller(sellers *seller)
 {
 	this->seller = seller;
 }
 
-wishList::~wishList() //destructor
-{
-	
-	delete seller;
-}
+//wishList::~wishList() //destructor
+//{
+//	
+//	
+//}
 
 
  Product* wishList::getProduct()  const

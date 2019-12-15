@@ -42,6 +42,9 @@
     <ClInclude Include="wishList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="address_user.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="wishList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="order.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
