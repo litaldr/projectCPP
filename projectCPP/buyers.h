@@ -1,4 +1,4 @@
-#ifndef __BUYERS_H
+п»ї#ifndef __BUYERS_H
 #define __BUYERS_H
 
 #include "address_user.h"
@@ -12,13 +12,13 @@ public:
 
 
 	buyers() = delete; //constructor
-	//buyers(char *user_name, char *password, const address_user & address); //constructor
-	buyers(char *user_name, char *password, const address_user & address, wishList **wishListArr=nullptr); //constructor
+					   //buyers(char *user_name, char *password, const address_user & address); //constructor
+	buyers(char *user_name, char *password, const address_user & address, wishList **wishListArr = nullptr); //constructor
 
 	buyers(const buyers &other);
 	~buyers(); // defualt destructor because names strings are allocated static
 
-    // set & get function
+			   // set & get function
 	bool setPassword(const char* p);
 	bool setName(const char* n);
 	char * getName()          const;
@@ -37,15 +37,18 @@ private:
 	char *password;
 	address_user address;
 
-	
-	wishList **WishListArr; //твмъ чрйеъ: оцбйтйн тм оцбйтйн моецшйн одотшлйн щм доелшйн ботшлъ
+
+	wishList **WishListArr; //ГІГўГ¬Гє Г·Г°Г©ГҐГє: Г®Г¶ГЎГ©ГІГ©Г­ ГІГ¬ Г®Г¶ГЎГ©ГІГ©Г­ Г¬Г®ГҐГ¶ГёГ©Г­ Г®Г¤Г®ГІГёГ«Г©Г­ Г№Г¬ Г¤Г®ГҐГ«ГёГ©Г­ ГЎГ®ГІГёГ«Гє
 	int CountProductInWishList = 0;
-							/*
-	Product **buyProdustsArr // отшк щоцбйт моецшйн одwishlist аеън дчерд баоъ оълееп мшлещ абм ддцбтд оъбцтъ йщйшеъ моецш ема гшк wishlist
-	purchase_user purchase; //аебййчи джорд\шлйщд: олйм аъ дфший дчерд, отшк оелшйн щодн дчерд шелщ оецшйн еозйш сд"л мшлйщд 
-	purchase_user **purchase_userArr; // отшк дйсиешййъ джореъ щм дчерд- оцбйт млм дшлйщеъ щртще- отшк жд реъп айргйчцйд мдесфъ дфйгбч тбеш оелш щалп дчерд чрд ооре оецш
+	/*
+	Product **buyProdustsArr // Г®ГІГёГЄ Г№Г®Г¶ГЎГ©ГІ Г¬Г®ГҐГ¶ГёГ©Г­ Г®Г¤wishlist Г ГҐГєГ­ Г¤Г·ГҐГ°Г¤ ГЎГ Г®Гє Г®ГєГ«ГҐГҐГЇ Г¬ГёГ«ГҐГ№ Г ГЎГ¬ Г¤Г¤Г¶ГЎГІГ¤ Г®ГєГЎГ¶ГІГє Г©Г№Г©ГёГҐГє Г¬Г®ГҐГ¶Гё ГҐГ¬Г  ГЈГёГЄ wishlist
+	purchase_user purchase; //Г ГҐГЎГ©Г©Г·ГЁ Г¤Г¦Г®Г°Г¤\ГёГ«Г©Г№Г¤: Г®Г«Г©Г¬ Г Гє Г¤ГґГёГЁГ© Г¤Г·ГҐГ°Г¤, Г®ГІГёГЄ Г®ГҐГ«ГёГ©Г­ Г№Г®Г¤Г­ Г¤Г·ГҐГ°Г¤ ГёГҐГ«Г№ Г®ГҐГ¶ГёГ©Г­ ГҐГ®Г§Г©Гё Г±Г¤"Г« Г¬ГёГ«Г©Г№Г¤
+	purchase_user **purchase_userArr; // Г®ГІГёГЄ Г¤Г©Г±ГЁГҐГёГ©Г©Гє Г¤Г¦Г®Г°ГҐГє Г№Г¬ Г¤Г·ГҐГ°Г¤- Г®Г¶ГЎГ©ГІ Г¬Г«Г¬ Г¤ГёГ«Г©Г№ГҐГє Г№Г°ГІГ№ГҐ- Г®ГІГёГЄ Г¦Г¤ Г°ГҐГєГЇ Г Г©Г°ГЈГ©Г·Г¶Г©Г¤ Г¬Г¤ГҐГ±ГґГє Г¤ГґГ©ГЈГЎГ· ГІГЎГҐГё Г®ГҐГ«Гё Г№Г Г«ГЇ Г¤Г·ГҐГ°Г¤ Г·Г°Г¤ Г®Г®Г°ГҐ Г®ГҐГ¶Гё
 	*/
 };
+
+
+#endif
 
 
 #endif

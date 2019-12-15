@@ -21,7 +21,7 @@ public:
 	address_user(const address_user&& other);
 	~address_user();// defualt destructor because all names strings are allocated static
 
-	// set all atributes
+					// set all atributes
 	bool setCountry(const char *c);
 	bool setStreet(const char *s);
 	bool setCity(const char *c);

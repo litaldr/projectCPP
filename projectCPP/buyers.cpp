@@ -1,3 +1,4 @@
+п»ї
 #include "buyers.h"
 //
 //buyers::buyers(char *user_name, char *password, const address_user & address) //constructor
@@ -37,36 +38,36 @@ buyers::~buyers() //destructor
 }
 
 
-bool buyers::setName(const char* n) //мдесйу гшйщд маъзем щн дотшлъ боаййп щм дфшейчи- мжлеш мдъоегг тн дтшк щзежш одферчцйд
+bool buyers::setName(const char* n) //Г¬Г¤ГҐГ±Г©Гі ГЈГёГ©Г№Г¤ Г¬Г ГєГ§ГҐГ¬ Г№Г­ Г¤Г®ГІГёГ«Гє ГЎГ®Г Г©Г©ГЇ Г№Г¬ Г¤ГґГёГҐГ©Г·ГЁ- Г¬Г¦Г«ГҐГё Г¬Г¤ГєГ®ГҐГЈГЈ ГІГ­ Г¤ГІГёГЄ Г№Г§ГҐГ¦Гё Г®Г¤ГґГҐГ°Г·Г¶Г©Г¤
 {
-	//ощен щарзре очцеъ бmanager щн ощъощ бвегм 20, ъойг щрчбм одочмгъ щн деа йдйд млм дйеъш баешк 20 вн ан дощъощ длрйс 100 ъеейн 
+	//Г®Г№ГҐГ­ Г№Г Г°Г§Г°ГҐ Г®Г·Г¶ГҐГє ГЎmanager Г№Г­ Г®Г№ГєГ®Г№ ГЎГўГҐГЈГ¬ 20, ГєГ®Г©ГЈ Г№Г°Г·ГЎГ¬ Г®Г¤Г®Г·Г¬ГЈГє Г№Г­ Г¤ГҐГ  Г©Г¤Г©Г¤ Г¬Г«Г¬ Г¤Г©ГҐГєГё ГЎГ ГҐГёГЄ 20 ГўГ­ Г Г­ Г¤Г®Г№ГєГ®Г№ Г¤Г«Г°Г©Г± 100 ГєГҐГҐГ©Г­ 
 	/*
 	if (user_name != NULL)
-		delete[] user_name;
+	delete[] user_name;
 	*/
 	if (strlen(n) <= MAX_NAME_SIZE) //valid name
 	{
-		user_name = new char[strlen(n)+1];
-		strncpy(user_name,n,strlen(n));
+		user_name = new char[strlen(n) + 1];
+		strncpy(user_name, n, strlen(n));
 		user_name[strlen(n)] = '\0';
 	}
-	
+
 	else
 		return false;
 
 	return true;
 }
 
-bool buyers::setPassword(const char* p) //мдесйу гшйщд маъзем щн дотшлъ боаййп щм дфшейчи- мжлеш мдъоегг тн дтшк щзежш одферчцйд
+bool buyers::setPassword(const char* p) //Г¬Г¤ГҐГ±Г©Гі ГЈГёГ©Г№Г¤ Г¬Г ГєГ§ГҐГ¬ Г№Г­ Г¤Г®ГІГёГ«Гє ГЎГ®Г Г©Г©ГЇ Г№Г¬ Г¤ГґГёГҐГ©Г·ГЁ- Г¬Г¦Г«ГҐГё Г¬Г¤ГєГ®ГҐГЈГЈ ГІГ­ Г¤ГІГёГЄ Г№Г§ГҐГ¦Гё Г®Г¤ГґГҐГ°Г·Г¶Г©Г¤
 {
 	/*
 	if (password != NULL)
-		delete[] password;
-		*/
+	delete[] password;
+	*/
 	if ((strlen(p) >= MAX_PASSWORD_SIZE) && (strlen(p) <= MIN_PASSWORD_SIZE))// password in range 8-20
 	{
 		password = new char[strlen(p) + 1];
-		strncpy(password, p,strlen(p));
+		strncpy(password, p, strlen(p));
 		password[strlen(p)] = '\0';
 
 	}
@@ -114,7 +115,7 @@ void buyers::addProductToWishlist(Product *newProduct)
 	WishListArr[i] = new wishList(newProduct);// c'tor product only
 
 
-	}
+}
 wishList ** buyers::reallocWishList(wishList **oldWishListArr, int size)
 {
 	wishList **newWishListArr = new wishList*[size + 1];
