@@ -190,7 +190,7 @@ void buyers::showBuyerBasicDeatelis() const
 }
 void buyers::showBuyerorderByIndex(int index) const
 {
-	cout << "the products in order number" << index << "are:" << endl;
+	cout << "the products in order number" << index+1 << "are:" << endl;
 	for (int i = 0; i < ordersArr[index]->getCountProductInProductArr(); i++)
 	{
 		ordersArr[index]->getProductArr()[i]->show();

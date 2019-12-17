@@ -24,7 +24,7 @@ Product::Product(const Product & other) //copy c'tor
 void Product::show()  const
 {
 	cout << "Product name is: " << productName << endl;
-	cout << "Product category is: " << category << endl;
+	cout << "Product category is: " << categoryStr[category] << endl;
 	cout << "Product serial number is: " << serialNumber << endl;
 	cout << "Product price is: " << price << endl;
 	cout << "---------------------------------" << endl;

@@ -11,6 +11,7 @@ private:
 
 public:
 	enum eCategory { CHILDREN, ELECTRONICS, OFFICE, CLOTHING };
+	const char* categoryStr[4] = { "Children", "Electronics" , "Office", "Clothing" }; // define here the string category enum of product to use in print products with identical name #10
 
 	Product() = delete;// we don't allowed to create a new product without the details in the constructor below 
 	Product(const char *productName, eCategory category, double price);//constructor

@@ -34,6 +34,7 @@ void cleanBuffer()
 
 void printMenu() // function prints the menu system for the user
 {
+	cout << "--------------------------------------------------------------" << endl;
 	cout << "Welcome, please let us know which action you would like to do:" << endl;
 	cout << "For adding a buyer press 1" << endl;
 	cout << "For adding a seller press 2" << endl;
@@ -46,6 +47,8 @@ void printMenu() // function prints the menu system for the user
 	cout << "To print all sellers details press 9" << endl;
 	cout << "To print all  identical name items press 10" << endl;
 	cout << "To exit press 11" << endl;
+	cout << "--------------------------------------------------------------" << endl;
+
 }
 
 int getAction() // function give indicate which action the user is about to choose
@@ -376,7 +379,7 @@ void doAction(int num, trade_system *system) // function do the wanted action
 				cout << "the items below are the last order you made: " << endl;
 				system->getBuyersArr()[indexBuyersArr]->showBuyerorderByIndex(theLatestOrderForASpacificBuyer);
 				totalPriceForASpaCificOrder = system->getBuyersArr()[indexBuyersArr]->getOrdersArr()[theLatestOrderForASpacificBuyer]->getTotalPrice();
-				cout<<"the total price is:"<< totalPriceForASpaCificOrder << endl;
+				cout<<"the total price is: "<< totalPriceForASpaCificOrder << endl;
 				cout << "press 1 to make the approve the purchase " << endl;
 				cin >> approvepurchase;
 				if (approvepurchase)
