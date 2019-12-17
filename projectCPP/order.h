@@ -7,7 +7,7 @@ class order
 {
 public:
 
-	order();// we don't allowed to create a new product without the details in the constructor below 
+	order();
 	order(const order & myOrder);
 	~order(); // destructor because arrays allocated dinamic
 
@@ -21,7 +21,8 @@ public:
 
 	void  setCountProductInProductArr(int n); // מעדכן את מס' המוצרים בהזמנה
 	void setCountSellersInSellersArr(int n); // מעדכן את מס' המוכרים בהזמנה
-
+	void setOrderPayedTrue();
+	bool getOrderPayed()  const;
 	void setTotalPrice(double n); // מעדכן את הסכום הסופי של ההזמנה
 	double getTotalPrice();
 
@@ -31,14 +32,14 @@ public:
 
 	void addSellerToSellersArr(sellers &newSeller); // הוספת מוכר למערך המוכרים של ההזמנה
 	sellers ** reallocsellersArr(sellers **oldsellersArr, int size); // הגדלת מערך המוכרים במידת הצורך
-
+	void showSellersByCurrOrder() const;
 	bool checkIfSellerExists(const sellers *seller);
 private:
 	//attributes
 	double totalPrice;
 	Product** productArr;
 	sellers **sellersArr;
-
+	bool orderPayed;
 	int CountProductInProductArr = 0; //אינדקס עבור מספר המוצרים לרכישה שיש בהזמנה
 	int CountSellersInSellersArr = 0; // אינדקס עבור מספר המוכרים שיש עבור ההזמנה שתתבצע
 

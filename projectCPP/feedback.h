@@ -3,6 +3,7 @@
 
 #include "date.h"
 class buyers;
+static const int MAX_FEEDBACK_SIZE = 100;
 
 class Feedback
 {

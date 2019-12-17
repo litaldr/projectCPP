@@ -74,7 +74,10 @@ void  sellers::setCountProduct(int n)
 {
 	this->CountProduct = n;
 }
-
+void  sellers::setCountFeedback(int n)
+{
+	this->CountFeedback = n;
+}
 char * sellers::getName() const
 {
 	return user_name;
@@ -93,7 +96,10 @@ int sellers::getCountProduct() const
 {
 	return CountProduct;
 }
-
+int sellers::getCountFeedback() const
+{
+	return CountFeedback;
+}
 Product ** sellers::getProductArr() const
 {
 	return ProductArr;
@@ -111,14 +117,14 @@ void sellers::addProduct(Product &newProduct)
 		ProductArr = new Product*;//if it is the first buyer
 	else
 	{
-		ProductArr = reallocProduct(ProductArr, i + 1);//if it isn't the first buyer
+		ProductArr = reallocProductArr(ProductArr, i + 1);//if it isn't the first buyer
 	}
 	i++;
 	ProductArr[i] = new Product(newProduct);
 
 	CountProduct=i + 1;
 }
-Product ** sellers::reallocProduct(Product **oldProductArr, int size)
+Product ** sellers::reallocProductArr(Product **oldProductArr, int size)
 {
 	Product **newProductArr = new Product*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -128,6 +134,32 @@ Product ** sellers::reallocProduct(Product **oldProductArr, int size)
 	}
 	delete[]oldProductArr;
 	return newProductArr;
+}
+
+void sellers::addFeedback(Feedback &newFeedback)
+{
+	int i = getCountFeedback() - 1;
+	if (getCountFeedback() == 0)
+		feedbackArr = new Feedback*;//if it is the first buyer
+	else
+	{
+		feedbackArr = reallocFeedbackArr(feedbackArr, i + 1);//if it isn't the first buyer
+	}
+	i++;
+	feedbackArr[i] = new Feedback(newFeedback);
+
+	CountFeedback = i + 1;
+}
+Feedback ** sellers::reallocFeedbackArr(Feedback **oldFeedbackArr, int size)
+{
+	Feedback **newFeedbackArr = new Feedback*[size + 1];
+	for (int i = 0; i <= size; i++)
+	{
+		newFeedbackArr[i] = oldFeedbackArr[i];
+		//delete[]oldProductArr[i]
+	}
+	delete[]oldFeedbackArr;
+	return newFeedbackArr;
 }
 
 

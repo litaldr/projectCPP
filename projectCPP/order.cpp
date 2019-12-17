@@ -9,6 +9,7 @@ order::order()
 	this->sellersArr = nullptr;
 	this->CountProductInProductArr = 0;
 	this->CountSellersInSellersArr = 0;
+	this->orderPayed = false;
 }
 
 
@@ -67,13 +68,20 @@ void  order::setCountSellersInSellersArr(int n) // set number of sellers which b
 
 void order::setTotalPrice(double n) //סכימה של מחירי כל המוצרים שבהזמנה
 {
-	totalPrice = n;
+	this->totalPrice = n;
 }
 double order::getTotalPrice()
 {
 	return totalPrice;
 }
-
+void  order::setOrderPayedTrue()
+{
+	this->orderPayed = true;
+}
+bool order::getOrderPayed()  const
+{
+	return orderPayed;
+}
 void order::addProductToProductArr(Product &newProduct)//הוספת מוצר למערך המוצרים בהזמנה
 {
 	int i = getCountProductInProductArr() - 1;
@@ -130,10 +138,20 @@ sellers ** order::reallocsellersArr(sellers **oldsellersArr, int size) // הגדלת 
 bool order::checkIfSellerExists(const sellers *seller)
 {
 	int i;
-	for (i = 0; i < CountSellersInSellersArr; i++);
+	for (i = 0; i < CountSellersInSellersArr; i++)
 	{
 		if (!strcmp(seller->getName(), sellersArr[i]->getName()))//as long as the strings is not equal we will return true
 			return false;// if we will get the same name it means we already have this seller in our order sellers arr. 
 	}
 	return true;
+}
+void order::showSellersByCurrOrder() const
+{
+	int i;
+	cout << " this is the sellers that are associated to this order" << endl;
+	for (i = 0; i < CountSellersInSellersArr; i++)
+	{
+		cout << "seller number " << i + 1 <<" :"<< endl;
+		cout << sellersArr[i]->getName() << endl;
+	}
 }

@@ -3,7 +3,7 @@
 
 #include "address_user.h"
 class buyers;
-class Feedback;
+#include "feedback.h"
 #include "Product.h"
 
 
@@ -27,19 +27,21 @@ public:
 	int getCountProduct()   const;
 	void setCountProduct(int n);
 	void showSellerBasicDeatelis() const;
-	Product ** reallocProduct(Product **oldProductArr, int size);
+	Product ** reallocProductArr(Product **oldProductArr, int size);
 	void addProduct(Product& newProduct);
 
 	Product ** getProductArr() const;
-
-	void addFeedback(buyers *buyer);// choice 4 in the interactive shell
+	void addFeedback(Feedback& newFeedback);
+	Feedback ** reallocFeedbackArr(Feedback **oldFeedbackArr, int size);
+	int getCountFeedback()   const;
+	void setCountFeedback(int n);
 
 private:
 	//attributes
 	char* user_name;
 	char* password;
 	int CountProduct = 0;
-
+	int CountFeedback = 0;
 	address_user address;
 	Feedback **feedbackArr; // נוכל להוסיף פידבק רק לאחר שנבצע הזמנה עבור קונה
 	Product **ProductArr;

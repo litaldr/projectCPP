@@ -166,7 +166,7 @@ void buyers::showWishList() const
 	int productIndex;
 	for (productIndex = 0; productIndex < CountProductInWishList; productIndex++)
 	{
-		cout << "ProductNumber in wish list is: " << productIndex << endl;
+		cout << "ProductNumber in wish list is: " << productIndex+1 << endl;
 	    getWishListArr()[productIndex]->getProduct()->show();
 		
 	}
@@ -204,10 +204,13 @@ void buyers::deleteProductFromBuyerWishList(int OrderIndex)
 	{
 		for (j = 0; j < this->CountProductInWishList; j++)
 		{
-			if (ordersArr[OrderIndex]->getProductArr()[i] == WishListArr[j]->getProduct())//memcmp??
+			if (!(WishListArr[j]==NULL))
 			{
-				WishListArr[j] = nullptr;
-				countNewSizeWishList--;
+				if (ordersArr[OrderIndex]->getProductArr()[i]->getItemSerialNumber() == WishListArr[j]->getProduct()->getItemSerialNumber())
+				{
+					WishListArr[j] = NULL;
+					countNewSizeWishList--;
+				}
 			}
 		}
 	}

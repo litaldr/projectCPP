@@ -35,7 +35,6 @@ private:
 	//attributes
 	Product* product;
 	sellers *seller;
-
 };
 #endif // 
 

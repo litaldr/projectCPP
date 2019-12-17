@@ -15,7 +15,9 @@ void printMenu(); // function prints the menu system for the user
 void init_system_name(trade_system &system); //function to initialize the system name
 int getAction(); // function give indicate which action the user is about to choose
 void doAction(int num, trade_system *system); // function do the wanted action 
-											  //char * reallocForString(char  s[], int newSize);
+bool initializeDate(date & feedbackDate, int &day, int& month, int &year);
+
+
 void cleanBuffer();
 
 

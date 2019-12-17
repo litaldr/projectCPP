@@ -63,13 +63,7 @@ int getAction() // function give indicate which action the user is about to choo
 	else if (input == 11) //input exit system
 		return EXIT;
 }
-//void ** pointersArr(void * arr, int size)
-//{
-//	void ** pointersArr = new void*[size++];
-//
-//	delete[]arr;
-//	return pointersArr;
-//}
+
 
 void doAction(int num, trade_system *system) // function do the wanted action 
 {
@@ -153,7 +147,6 @@ void doAction(int num, trade_system *system) // function do the wanted action
 
 		address_user *address = new address_user(country, city, street, house_number);
 		sellers *seller = new sellers(name, password, *address);
-
 		while (!(system->addSeller(*seller)))
 		{
 			cout << "the user name you entered is in use, please type a new name" << endl;
@@ -168,7 +161,6 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		}
 		return;
 	}
-
 	if (num == 3)
 	{
 		cout << "Please note that the system receives at most 20 charters" << endl;
@@ -176,7 +168,6 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		cout << "please enter a name for the new product:" << endl;
 		cleanBuffer();
 		cin.getline(productName, MAX_NAME_SIZE);
-
 		int categoryIndex;
 		cout << "which category is the product:" <<
 			"press 0 for Children product," <<
@@ -184,53 +175,99 @@ void doAction(int num, trade_system *system) // function do the wanted action
 			"press 2 for Office product," <<
 			"press 3 for Clothing product" << endl;
 		cin >> categoryIndex;
-
 		double price;
 		cout << "please enter the price for the new product:" << endl;
 		cin >> price;
 		Product *newProduct = new Product(productName, (Product::eCategory)categoryIndex, price);
-
 		char userName[MAX_NAME_SIZE] = { 0 };
 		cout << "please enter your user name:" << endl;
 		cleanBuffer();
 		cin.getline(userName, MAX_NAME_SIZE);
-
 		if (system->getCountSeller() == 0)
 			cout << "there is no seller yet in our system" << endl;
-
+		bool sellerNotFound=true;
 		int indexSellersArr;
-		int flag=false; //indicate the adding product did not succeed - cause the seller name do not exist in our system
-		for (indexSellersArr = 0; indexSellersArr < system->getCountSeller(); indexSellersArr++)
+		bool flag=false; //indicate the adding product did not succeed - cause the seller name do not exist in our system
+		for (indexSellersArr = 0; sellerNotFound &&indexSellersArr < system->getCountSeller(); indexSellersArr++)
 		{
 			if (strcmp(userName, system->getSellersArr()[indexSellersArr]->getName()) == 0)
 			{
 				system->getSellersArr()[indexSellersArr]->addProduct(*newProduct);
 				flag = true;
+				sellerNotFound = false;
 			}
 		}
-
 		if(flag ==false)
 			cout << "the user name you typed is not exist in our system, please type a new name or create a new user" << endl;
 		return;
 	}
-/*
+
 	if (num == 4)
 	{
+		char buyerName[MAX_NAME_SIZE] = { 0 };
+		cout << "please enter your user name:" << endl;
+		int day, month, year;
+		cleanBuffer();
+		cin.getline(buyerName, MAX_NAME_SIZE);
+		bool flag = false;
+		char feedbackString[MAX_FEEDBACK_SIZE] = { 0 };
+		date feedbackDate;
+		bool BuyerNotFound = true;
+		int indexBuyersArr;
+		int orderIndex, numberOfOrdersPerBuyer, numberOfSellersPerOrder ,orderChoosen,sellerChoosen;
+		for (indexBuyersArr = 0; BuyerNotFound && indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
+		{
+			if (strcmp(buyerName, system->getBuyersArr()[indexBuyersArr]->getName()) == 0)
+			{
+				BuyerNotFound = false;
+				flag = true;
+				numberOfOrdersPerBuyer = system->getBuyersArr()[indexBuyersArr]->getCountOrders();
+				cout << "this is all of the sellers you bought from by the orders you have made:" << endl; 
+				for (orderIndex = 0; orderIndex < numberOfOrdersPerBuyer; orderIndex++) 
+				{
+					cout << "order number:" << orderIndex + 1 << endl;
+					system->getBuyersArr()[indexBuyersArr]->getOrdersArr()[orderIndex]->showSellersByCurrOrder();
+				}
+				cout << "to which one of them would you like to give feedback ? "<< endl; 
+				cout << " enter the order number: and then the seller number" << endl;
+				cin >> orderChoosen;
+				while (!(orderChoosen <= numberOfOrdersPerBuyer))// check the order exists in orders arr for this buyer
+				{
+					cout << "the order number you entered is not exists, please enter a valid order number:" << endl;
+					cin >> orderChoosen;//-1
+				}
+				cout << " enter the seller number: " << endl;
+				cin >> sellerChoosen;
+				numberOfSellersPerOrder = system->getBuyersArr()[indexBuyersArr]->getOrdersArr()[orderChoosen-1]->getCountSellersInSellersArr();
+				while (!(sellerChoosen <= numberOfSellersPerOrder))//check seller exists in the order the user choose
+				{
+					cout << "the seller number you entered is not exists, please enter a valid seller number:" << endl;
+					cin >> sellerChoosen;//-1
+				}
+				cout << "please enter your feedback for this seller: " << endl;
+				cleanBuffer();
+				cin.getline(feedbackString, MAX_FEEDBACK_SIZE);
+				do
+				{
+					cout << "please enter a valid date: " << endl;
+				} while (!initializeDate(feedbackDate, day, month, year));
+				Feedback newFeedback(feedbackDate, system->getBuyersArr()[indexBuyersArr], feedbackString);
+				system->getSellersArr()[sellerChoosen-1]->addFeedback(newFeedback);
+			}
+		}
+		if (flag == false)
+			cout << "the user name you typed is not exist in our system, please type a new name or create a new user" << endl;
+		return;
 	}
-	*/
 	if (num == 5)
 	{
 		char buyerName[MAX_NAME_SIZE] = { 0 };
 		cout << "please enter your user name:" << endl;
-
 		cleanBuffer();
 		cin.getline(buyerName, MAX_NAME_SIZE);
-
 		char productName[MAX_NAME_SIZE] = { 0 };
 		cout << "please enter which product you are looking for :" << endl;
-		
 		cin.getline(productName, MAX_NAME_SIZE);
-
 		system->showProductWithIdenticalName(productName);
 		char ch;
 		int sellerIndex, productIndex, wishListIndex;
@@ -238,10 +275,10 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		sellers *tempSellers;
 		cout << "please enter the ProductNumber (as it written in screen) you wish to add to your wishlist:" << endl;
 		cin >> sellerIndex >> ch >> productIndex;
-		
+		bool BuyerNotFound = true;
 		int flag = false; 
 		int indexBuyersArr;
-		for (indexBuyersArr= 0; indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
+		for (indexBuyersArr= 0; BuyerNotFound && indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
 		{
 			if (strcmp(buyerName, system->getBuyersArr()[indexBuyersArr]->getName()) == 0)
 			{
@@ -251,22 +288,18 @@ void doAction(int num, trade_system *system) // function do the wanted action
 				tempSellers = system->getSellersArr()[sellerIndex];
 				system->getBuyersArr()[indexBuyersArr]->getWishListArr()[wishListIndex]->setSeller(tempSellers);
 				flag = true;
-
+				BuyerNotFound = false;
 				system->getBuyersArr()[indexBuyersArr]->setCountProductInWishList(wishListIndex + 1);
-
 			}
 		}
-
 		if (flag == false)
 			cout << "the user name you typed is not exist in our system, please type a new name or create a new user" << endl;
-
 		return;
 	}
 	if (num == 6)
 	{
 		char buyerName[MAX_NAME_SIZE] = { 0 };
 		cout << "please enter your user name:" << endl;
-
 		cleanBuffer();
 		cin.getline(buyerName, MAX_NAME_SIZE);
 		int flag = false;
@@ -276,40 +309,47 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		double countTotalPrice=0;
 		double productPrice = 0;
 		int choosenItems; 
-		
+		bool BuyerNotFound = true;
 		int indexBuyersArr;
-		for (indexBuyersArr = 0; indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
+		int theLatestOrderForASpacificBuyer;//index the last order the buyer made
+		for (indexBuyersArr = 0; BuyerNotFound && indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
 		{			
 			if (!strcmp(buyerName, system->getBuyersArr()[indexBuyersArr]->getName()) )
 			{
-				system->getBuyersArr()[indexBuyersArr]->showWishList();
-				cout << "which product from your wish list would you like to buy? enter their numbers" << endl;
-				cout << "when you finished please enter -1 " << endl;
-				cin >> choosenItems;
-
-				while(choosenItems!=-1 && choosenItems<= system->getBuyersArr()[indexBuyersArr]->getCountProductInWishList())
-				{
-					tempProduct=system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems]->getProduct();//
-					newOrder->addProductToProductArr(*tempProduct);//adding product to the current order product array
-					
-					productPrice= system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems]->getProduct()->getPrice();
-					countTotalPrice = countTotalPrice + productPrice;
-					tempSeller = system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems]->getseller();
-					
-					if (system->getBuyersArr()[indexBuyersArr]->checkIfSellerExistsInAllOrders(tempSeller))
-					//return true if the seller not exists in the buyer order
-						newOrder->addSellerToSellersArr(*tempSeller);
-					//otherwise, the seller is already exists in the buyer order
+				theLatestOrderForASpacificBuyer = system->getBuyersArr()[indexBuyersArr]->getCountOrders() - 1;//index the last order the buyer made
+				if (theLatestOrderForASpacificBuyer==-1 || system->getBuyersArr()[indexBuyersArr]->getOrdersArr()[theLatestOrderForASpacificBuyer]->getOrderPayed())
+				{// the check for theLatestOrderForASpacificBuyer to be -1 is for the first order the buyer will make 
+					system->getBuyersArr()[indexBuyersArr]->showWishList();
+					cout << "which product from your wish list would you like to buy? enter their numbers" << endl;
+					cout << "when you finished please enter -1 " << endl;
 					cin >> choosenItems;
-				}
-				if (newOrder->getCountProductInProductArr()> 0)
-				{//we want to update the order array for this buyer only if he did choose product for this order
-					system->getBuyersArr()[indexBuyersArr]->addOrderToOrdersArr(newOrder, countTotalPrice);// adding a new order for the current buyer
-					system->getBuyersArr()[indexBuyersArr]->addOneToCountOrders();
+					while (choosenItems != -1 && choosenItems <= system->getBuyersArr()[indexBuyersArr]->getCountProductInWishList())
+					{
+						tempProduct = system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems - 1]->getProduct();//
+						newOrder->addProductToProductArr(*tempProduct);//adding product to the current order product array
+						productPrice = system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems - 1]->getProduct()->getPrice();
+						countTotalPrice = countTotalPrice + productPrice;
+						tempSeller = system->getBuyersArr()[indexBuyersArr]->getWishListArr()[choosenItems - 1]->getseller();
+						if (system->getBuyersArr()[indexBuyersArr]->checkIfSellerExistsInAllOrders(tempSeller))//return true if the seller not exists in the buyer order
+							newOrder->addSellerToSellersArr(*tempSeller);
+						//otherwise, the seller is already exists in the buyer order
+						cin >> choosenItems;
+					}
+					if (newOrder->getCountProductInProductArr() > 0)
+					{//we want to update the order array for this buyer only if he did choose product for this order
+						system->getBuyersArr()[indexBuyersArr]->addOrderToOrdersArr(newOrder, countTotalPrice);// adding a new order for the current buyer
+						system->getBuyersArr()[indexBuyersArr]->addOneToCountOrders();
+					}
+					else
+						cout << "you didn't add any product to the order" << endl;
 				}
 				else
-					cout << "you didn't add any product to the order" << endl;
-				flag = true;
+				{
+					cout << "please enter 7 in the interactive shell for paying on your last order, then you can make a new order as you wish :)" << endl;
+					return;
+				}
+			flag = true;
+			BuyerNotFound = false;
 			}
 		}
 		if (flag == false)
@@ -318,7 +358,6 @@ void doAction(int num, trade_system *system) // function do the wanted action
 	}
 	if (num == 7)
 	{
-
 		char buyerName[MAX_NAME_SIZE] = { 0 };
 		cout << "please enter your user name:" << endl;
 		cleanBuffer();
@@ -328,7 +367,8 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		int theLatestOrderForASpacificBuyer;
 		double totalPriceForASpaCificOrder;
 		bool approvepurchase;
-		for (indexBuyersArr = 0; indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
+		bool BuyerNotFound = true;
+		for (indexBuyersArr = 0; BuyerNotFound && indexBuyersArr < system->getCountBuyer(); indexBuyersArr++)
 		{
 			if (!strcmp(buyerName, system->getBuyersArr()[indexBuyersArr]->getName()))
 			{
@@ -342,47 +382,42 @@ void doAction(int num, trade_system *system) // function do the wanted action
 				if (approvepurchase)
 				{
 					system->getBuyersArr()[indexBuyersArr]->deleteProductFromBuyerWishList(theLatestOrderForASpacificBuyer);//print the recipe and clean the cart
+					system->getBuyersArr()[indexBuyersArr]->getOrdersArr()[theLatestOrderForASpacificBuyer]->setOrderPayedTrue();
 					cout << "purchase has done successfully " << endl;
 				}
 				else
 					cout << "purchase canceled " << endl;
+				BuyerNotFound = false;
+				flag = true;
 			}
 		}
+		if (flag == false)
+			cout << "the user name you typed is not exist in our system, please type a new name or create a new user" << endl;
 		return;
 	}
 	if (num == 8)
-	{//missing show() for orders for the specific buyer
-		
+	{
 		for (int i = 0; i < system->getCountBuyer(); i++)
 		{
 			cout << "This is Buyer " << i+1 << " of our system: " << endl;
 			system->getBuyersArr()[i]->showBuyerBasicDeatelis();
-			
-
 			if (system->getBuyersArr()[i]->getWishListArr() != nullptr)
 			{
-				cout << "This is his current wish list Products: " << endl;
+				cout << "This are Products in his current wish list: " << endl;
 				for (int j = 0; j < system->getBuyersArr()[i]->getCountProductInWishList(); j++)
-				{
 					system->getBuyersArr()[i]->getWishListArr()[j]->getProduct()->show();
-				}
 				cout << system->getBuyersArr()[i]->getName() << " has " << system->getBuyersArr()[i]->getCountProductInWishList() << " items in his wish list" << endl;
 			}
 			else
 				cout << "the buyer wish list is Empty" << endl;
-
 			if (system->getBuyersArr()[i]->getCountOrders() > 0)
 			{
 				for (int j = 0; j < system->getBuyersArr()[i]->getCountOrders(); j++)
 				{//'j' is the index for the orders array
-					cout << "This is his " << j+1 << " order in his orders history" << endl;
-					
-					for (int k = 0; k < system->getBuyersArr()[i]->getOrdersArr()[j]->getCountProductInProductArr(); k++)
-					{//'k' is the index of the product in the current order
+					cout << "This is the " << j+1 << " order in his orders history" << endl;
+					for (int k = 0; k < system->getBuyersArr()[i]->getOrdersArr()[j]->getCountProductInProductArr(); k++)//'k' is the index of the product in the current order
 						system->getBuyersArr()[i]->getOrdersArr()[j]->getProductArr()[k]->show();
-					}
 				}
-					
 			}
 			else
 				cout << "the buyer orders history is Empty" << endl;	
@@ -427,4 +462,31 @@ void doAction(int num, trade_system *system) // function do the wanted action
 		return;
 	}
 	
+}
+
+bool initializeDate(date & feedbackDate, int &day,int& month,int &year)
+{
+	
+	cout << "please enter the day number:" << endl;
+	cin >> day;
+	cout << "please enter the month number:" << endl;
+	cin >> month;
+	cout << "please enter the year number:" << endl;
+	cin >> year;
+	if (!feedbackDate.setDay(day))
+	{
+		cout << "the day number isn't valid" << endl;
+		return false;
+	}
+	if (!feedbackDate.setMonth(month))
+	{
+		cout << "the month number isn't valid" << endl;
+		return false;
+	}
+	if (!feedbackDate.setYear(year))
+	{
+		cout << "the year number isn't valid" << endl;
+		return false;
+	}
+	return true;
 }
