@@ -6,7 +6,7 @@ void run() // function run on using system
 	trade_system system;
 	init_system_name(system); // call set system name function
 	int input;
-	do // run over the user actions untill he choose to exit
+	do // run over the user actions until he choose to exit
 	{
 		printMenu();
 		input = getAction();
@@ -17,7 +17,7 @@ void run() // function run on using system
 void init_system_name(trade_system &system) //function to initialize the system name
 {
 	char system_name[MAX_NAME_SIZE] = { 0 };
-	cout << "Hello, enter your desire system name which contains maximum: " << (MAX_NAME_SIZE) << " charcters please: " << endl;
+	cout << "Hello, enter your desire system name which contains maximum: " << (MAX_NAME_SIZE) << " characters please: " << endl;
 
 	cin.getline(system_name, MAX_NAME_SIZE - 1); // cin name without a limited name size
 	system.setName(system_name);
