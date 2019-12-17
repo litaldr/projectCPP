@@ -1,17 +1,10 @@
 #ifndef  __WISHLIST_H
 #define __WISHLIST_H
 
-#include <iostream>
-#include <string.h>
-
 #include "product.h"
 
 class sellers;
 
-using namespace std;
-
-
-#pragma warning (disable: 4996)
 
 class wishList
 {
@@ -23,11 +16,12 @@ public:
 
 	wishList() = default;// we don't allowed to create a new product without the details in the constructor below 
 	wishList( Product * product);//constructor
-    //wishList(const Product & product);
+	wishList(Product * product, sellers * seller);
+ //wishList(const Product & product);
 	
 	
 
-	~wishList(); //destructor // defualt destructor because name allocated static
+	//~wishList(); //destructor // defualt destructor because name allocated static
 	
 	// set & get functions
 	Product* getProduct()  const;

@@ -14,11 +14,21 @@ order::order()
 
 order::order(const order & myOrder) //copy c'tor 
 {
-	this->productArr = new Product*;// Product is a pointer therefor it is initialized by it's address.
-	memcpy(this->productArr, myOrder.productArr, sizeof(myOrder.productArr));
-	this->sellersArr = new sellers*;
-	memcpy(this->sellersArr, myOrder.sellersArr, sizeof(myOrder.sellersArr));
+	int size = myOrder.getCountProductInProductArr();
+	this->productArr = new Product*[size];
+	for (int i = 0; i < size; i++)
+	{
+		this->productArr[i] = new Product(*(myOrder.getProductArr()[i]));
+	}
+	size = myOrder.getCountSellersInSellersArr();
+	this->sellersArr = new sellers*[size];
+	for (int i = 0; i < size; i++)
+	{
+		this->sellersArr[i] = new sellers(*(myOrder.getsellersArr()[i]));
+	}
 	this->totalPrice = myOrder.totalPrice;
+	this->CountProductInProductArr = myOrder.CountProductInProductArr;
+	this->CountSellersInSellersArr = myOrder.CountSellersInSellersArr;
 }
 order::~order() // destructor because arrays allocated dinamic
 {
@@ -76,7 +86,7 @@ void order::addProductToProductArr(Product &newProduct)//הוספת מוצר למערך המוצרי
 	i++;
 	productArr[i] = new Product(newProduct);// c'tor product only
 
-	
+	setCountProductInProductArr(i + 1);
 }
 Product ** order::reallocProductArr(Product **oldProductArr, int size) // הגדלת מערך המוצרים בהזמנה
 {

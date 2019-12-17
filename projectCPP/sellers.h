@@ -12,9 +12,7 @@ class sellers
 {
 
 public:
-	// define length valid for user details
 	sellers() = delete; //constructor defult
-	sellers(const char *user_name, const char *password, const address_user &address, Feedback **feedbackArr = nullptr, Product **ProductArr = nullptr); //להוסיף item* items=nullptr //define constructor
 	sellers(const char *user_name, const char *password, const address_user &address); //define constructor
 
 	sellers(const sellers &other);//copy c'tor
@@ -28,7 +26,7 @@ public:
 	address_user getAddress()  const;
 	int getCountProduct()   const;
 	void setCountProduct(int n);
-
+	void showSellerBasicDeatelis() const;
 	Product ** reallocProduct(Product **oldProductArr, int size);
 	void addProduct(Product& newProduct);
 

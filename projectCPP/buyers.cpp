@@ -1,30 +1,7 @@
 ﻿
 #include "buyers.h"
-//
-//buyers::buyers(char *user_name, char *password, const address_user & address) //constructor
-//	:address(address)
-//{
-//	this->user_name = new char[strlen(user_name) + 1];
-//	strcpy(this->user_name, user_name);
-//	this->user_name[strlen(user_name)] = '\0';
-//
-//	this->password = new char[strlen(password) + 1];
-//	strcpy(this->password, password);
-//	this->password[strlen(password)] = '\0';
-//
-//}
-buyers::buyers(char *user_name, char *password, const address_user & address,wishList **WishListArr = nullptr, order **ordersArr = nullptr) //constructor
-	:address(address)
-{
-	this->user_name = new char[strlen(user_name) + 1];
-	strcpy(this->user_name, user_name);
-	this->user_name[strlen(user_name)] = '\0';
 
-	this->password = new char[strlen(password) + 1];
-	strcpy(this->password, password);
-	this->password[strlen(password)] = '\0';
 
-}
 buyers::buyers(char *user_name, char *password, const address_user & address) //constructor
 	:address(address)
 {
@@ -35,13 +12,19 @@ buyers::buyers(char *user_name, char *password, const address_user & address) //
 	this->password = new char[strlen(password) + 1];
 	strcpy(this->password, password);
 	this->password[strlen(password)] = '\0';
-
+	this->WishListArr = nullptr;
+	this->ordersArr = nullptr;
+	this->CountOrders = 0;
+	this->CountProductInWishList = 0;
 }
 
-buyers::buyers(const buyers &other) : address(other.address)//copy c'tor
+buyers::buyers(const buyers &other) : address(other.address), WishListArr(other.WishListArr), ordersArr(other.ordersArr) //copy c'tor
 {
 	this->user_name = strdup(other.user_name);
 	this->password = strdup(other.password);
+	this->CountOrders = other.CountOrders;
+	this->CountProductInWishList = other.CountProductInWishList;
+
 }
 
 
@@ -117,8 +100,8 @@ wishList **buyers::getWishListArr() const
 }
 void buyers::addProductToWishlist(Product *newProduct)
 {
-	int i = getCountProductInWishList() - 1;
-	if (getCountProductInWishList() == 0)
+	int i = CountProductInWishList - 1;
+	if (CountProductInWishList == 0)
 		this->WishListArr = new wishList*;//if it is the first buyer
 	else
 	{
@@ -142,15 +125,15 @@ wishList ** buyers::reallocWishList(wishList **oldWishListArr, int size)
 //order functions
 void buyers::addOrderToOrdersArr(order *newOrder,double totalPrice)
 {
-	int i = getCountOredersInOrders() - 1;
-	if (getCountOredersInOrders() == 0)
+	int i = getCountOrders() - 1;
+	if (getCountOrders() == 0)
 		this->ordersArr = new order*;//if it is the first buyer
 	else
 	{
 		ordersArr = reallocOrdersArr(ordersArr, i + 1);//if it isn't the first buyer
 	}
 	i++;
-	ordersArr[i] = new order(*newOrder);// c'tor product only לבדוק את הקופי קונסטרקטור
+	ordersArr[i] = new order(*newOrder);// c'tor product only 
 	ordersArr[i]->setTotalPrice(totalPrice);
 }
 order ** buyers::reallocOrdersArr(order **oldOrdersArr, int size)
@@ -169,14 +152,13 @@ order** buyers::getOrdersArr() const
 {
 	return ordersArr;
 }
-int buyers::getCountOredersInOrders() const
+int buyers::getCountOrders() const
 {
-	return CountOrdersInOrders;
+	return CountOrders;
 }
-void buyers::setCountOredersInOrders(int n)
+void buyers::addOneToCountOrders()
 {
-	this->CountOrdersInOrders = n;
-
+	this->CountOrders+=1;
 }
 
 void buyers::showWishList() const
@@ -192,11 +174,64 @@ void buyers::showWishList() const
 bool buyers::checkIfSellerExistsInAllOrders(const sellers *seller)
 {// return true if the seller isn't exists the buyer order
 	int i;
-	for(i=0;i < getCountOredersInOrders(); i++)
+	for(i=0;i < getCountOrders(); i++)
 	{
 		if (!getOrdersArr()[i]->checkIfSellerExists(seller))
 			// inside the "if" we will return false if the seller is exists the buyer order, so we will enter the "if" (operator"!")
 			return false;
 	}
 	return true;
+}
+void buyers::showBuyerBasicDeatelis() const
+{
+	cout << "user name is: " << user_name << endl;
+	cout << "user password is: " << password << endl;
+	address.show();
+}
+void buyers::showBuyerorderByIndex(int index) const
+{
+	cout << "the products in order number" << index << "are:" << endl;
+	for (int i = 0; i < ordersArr[index]->getCountProductInProductArr(); i++)
+	{
+		ordersArr[index]->getProductArr()[i]->show();
+	}
+}
+void buyers::deleteProductFromBuyerWishList(int OrderIndex) 
+//this function will  delete the products that the buyer purchase from his wish list in the latest order
+{
+	int i,j,countNewSizeWishList= this->CountProductInWishList;
+	for (i = 0; i < ordersArr[OrderIndex]->getCountProductInProductArr(); i++)
+	{
+		for (j = 0; j < this->CountProductInWishList; j++)
+		{
+			if (ordersArr[OrderIndex]->getProductArr()[i] == WishListArr[j]->getProduct())//memcmp??
+			{
+				WishListArr[j] = nullptr;
+				countNewSizeWishList--;
+			}
+		}
+	}
+	if (countNewSizeWishList != 0)
+	{//if countNewSizeWishList=0 it means that the buyer  purchase all of the product he had in his wish list
+		j = 0;//initialize the index so we can use it for new wish list
+		wishList** newWishList = new wishList*[countNewSizeWishList];
+		for (i = 0; i < this->CountProductInWishList; i++)
+		{
+			if (WishListArr[i] != nullptr)
+			{
+				newWishList[j] = new wishList(WishListArr[i]->getProduct(), WishListArr[i]->getseller());
+				j++;
+			}
+
+		}
+		delete[]WishListArr;
+		WishListArr = newWishList;
+		this->CountProductInWishList=countNewSizeWishList;
+	}
+	else
+	{//there is no product in the wish list
+		delete[]WishListArr;
+		this->CountProductInWishList=0;
+
+	}
 }

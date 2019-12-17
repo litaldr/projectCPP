@@ -1,16 +1,5 @@
 #include "sellers.h"
 
-sellers::sellers(const char *user_name, const char *password, const address_user &address, Feedback **feedbackArr, Product **ProductArr) : address(address)// constructor
-{
-	this->user_name = new char[strlen(user_name) + 1];
-	strcpy(this->user_name, user_name);
-	this->user_name[strlen(user_name)] = '\0';
-
-	this->password = new char[strlen(password) + 1];
-	strcpy(this->password, password);
-	this->password[strlen(password)] = '\0';
-
-}
 sellers::sellers(const char *user_name, const char *password, const address_user &address) : address(address)
 {
 	this->user_name = new char[strlen(user_name) + 1];
@@ -20,9 +9,11 @@ sellers::sellers(const char *user_name, const char *password, const address_user
 	this->password = new char[strlen(password) + 1];
 	strcpy(this->password, password);
 	this->password[strlen(password)] = '\0';
+	this->ProductArr = nullptr;
+	this->feedbackArr = nullptr;
 }
 
-sellers::sellers(const sellers &other) : address(other.address)//copy c'tor// מקבל כלום other יש בעיה עם ההעתקה!!!
+sellers::sellers(const sellers &other) : address(other.address)//copy c'tor
 {
 	this->user_name = strdup(other.user_name);
 	this->password = strdup(other.password);
@@ -107,7 +98,12 @@ Product ** sellers::getProductArr() const
 {
 	return ProductArr;
 }
-
+void sellers::showSellerBasicDeatelis() const
+{
+	cout << "user name is: " << user_name << endl;
+	cout << "user password is: " << password << endl;
+	address.show();
+}
 void sellers::addProduct(Product &newProduct)
 {
 	int i = getCountProduct() - 1;

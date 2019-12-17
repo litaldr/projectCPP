@@ -9,12 +9,9 @@ class buyers
 {
 
 public:
-	// define length valid for user details
-	//buyers(char *user_name, char *password, const address_user & address, wishList **WishListArr, order **ordersArr);
+	
 	buyers() = delete; //constructor
-	buyers(char *user_name, char *password, const address_user & address); //constructor
-	buyers(char *user_name, char *password, const address_user & address, wishList **wishListArr, order **ordersArr); //constructor
-
+	buyers(char *user_name, char *password,const address_user & address); //constructor
 	buyers(const buyers &other);
 	~buyers(); // default destructor because names strings are allocated static
 
@@ -29,18 +26,21 @@ public:
 	void addProductToWishlist(Product * newProduct);
 	wishList **reallocWishList(wishList **oldWishListArr, int size);
 	wishList **getWishListArr() const;
+	
 	int getCountProductInWishList() const;
-	void  setCountProductInWishList(int n);
+	void setCountProductInWishList(int n);
 
 	// functions for  orders of buyer
 	void addOrderToOrdersArr(order *newOrder, double totalPrice);
 	order **reallocOrdersArr(order **oldOrdersArr, int size);
 	order **getOrdersArr() const;
-	int getCountOredersInOrders() const;
-	void setCountOredersInOrders(int n);
-
+	int getCountOrders() const;
+	void addOneToCountOrders();
+	void showBuyerBasicDeatelis() const;
 	void showWishList() const;
 	bool checkIfSellerExistsInAllOrders(const sellers *seller);
+	void deleteProductFromBuyerWishList(int OrderIndex);
+	void showBuyerorderByIndex(int index) const;
 private:
 	//attributes
 	char *user_name;
@@ -48,11 +48,11 @@ private:
 	address_user address;
 
 	wishList **WishListArr; 
-	int CountProductInWishList = 0;
+	int CountProductInWishList;
 
 	
-	order **ordersArr; //ההקצאה לא עובדת בגלל הקופי קונסטרקטור צריך לתקן
-	int CountOrdersInOrders = 0;
+	order **ordersArr; 
+	int CountOrders;
 
 	/*
 	purchase_user **purchase_userArr; // מערך היסטוריית הזמנות של הקונה- מצביע לכל הרכישות שנעשו- מערך זה נותן אינדיקציה להוספת הפידבק עבור מוכר שאכן הקונה קנה ממנו מוצר

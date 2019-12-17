@@ -8,6 +8,7 @@ wishList::wishList( Product * product) : product(product) //constructor
 }
 //wishList::wishList(const Product & product) : product(product) {}// c'tor
 
+wishList::wishList(Product * product, sellers * seller) : product(product), seller(seller) {}
 
 void wishList::setProduct(Product * newProduct)
 {
