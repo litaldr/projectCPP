@@ -15,7 +15,7 @@ public:
 	~trade_system(); // defualt destructor because feedback name allocated static
 
 	bool setName(const char* n);
-	char * getName()  const;
+	//char * getName()  const;
 
 	int getCountBuyer();
 	void setCountBuyer(int i);
@@ -25,7 +25,7 @@ public:
 
 	bool addBuyer(buyers& buyer);
 	bool addSeller(sellers &seller);
-	bool compreName(char *comperdName, bool flag);
+	bool nameAvailable(char *comperdName, bool flag);
 
 	buyers ** reallocbuyers(buyers **oldBuyersArr, int size);
 	sellers ** reallocSellers(sellers **oldSellersArr, int size);
@@ -35,9 +35,6 @@ public:
 
 	void showProductWithIdenticalName(const char *nameProduct) const;
 
-	/*מתודות להוסיף:
-	3. הדפסת פרטי כל הקונים (לולאה שרצה על מערך הקונים ומדפיסה
-	4. הדפסת פרטי כל המוכרים (לולאה שרצה על מערך המוכרים ומדפיסה*/
 	
 	const char* categoryStr[4] = { "Children", "Electronics" , "Office", "Clothing" }; // define here the string category enum of product to use in print products with identical name #10
 private:

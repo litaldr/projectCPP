@@ -3,41 +3,48 @@
 //order::order(Product ** productArr = NULL, sellers **sellersArr = NULL, double totalPrice = 0)
 // {}//constructor 
 
-order::order()
+order::order(double totalPrice)
 {
 	this->productArr = nullptr;
 	this->sellersArr = nullptr;
 	this->CountProductInProductArr = 0;
 	this->CountSellersInSellersArr = 0;
 	this->orderPayed = false;
+	this->totalPrice = totalPrice;
 }
 
 
 order::order(const order & myOrder) //copy c'tor 
 {
-	int size = myOrder.getCountProductInProductArr();
-	this->productArr = new Product*[size];
-	for (int i = 0; i < size; i++)
+	int sizeProducts = myOrder.CountProductInProductArr;
+	this->productArr = new Product*[sizeProducts];
+	for (int i = 0; i < sizeProducts; i++)
 	{
 		this->productArr[i] = new Product(*(myOrder.getProductArr()[i]));
 	}
-	size = myOrder.getCountSellersInSellersArr();
-	this->sellersArr = new sellers*[size];
-	for (int i = 0; i < size; i++)
+	int sizeSellers = myOrder.CountSellersInSellersArr;
+	this->sellersArr = new sellers*[sizeSellers];
+	for (int i = 0; i < sizeSellers; i++)
 	{
 		this->sellersArr[i] = new sellers(*(myOrder.getsellersArr()[i]));
 	}
 	this->totalPrice = myOrder.totalPrice;
-	this->CountProductInProductArr = myOrder.CountProductInProductArr;
-	this->CountSellersInSellersArr = myOrder.CountSellersInSellersArr;
+	this->CountProductInProductArr = sizeProducts;
+	this->CountSellersInSellersArr = sizeSellers;
 }
 order::~order() // destructor because arrays allocated dinamic
 {
+	for (int i = 0; i < CountProductInProductArr; i++)
+	{
+		productArr[i]=nullptr;
+	}
 	delete[]productArr;
+	for (int i = 0; i < CountSellersInSellersArr; i++)
+	{
+		sellersArr[i]=nullptr;
+	}
 	delete[]sellersArr;
 }
-
-
 Product** order::getProductArr()  const
 {
 	return productArr;
@@ -66,9 +73,9 @@ void  order::setCountSellersInSellersArr(int n) // set number of sellers which b
 	this->CountSellersInSellersArr = n;
 }
 
-void order::setTotalPrice(double n) //סכימה של מחירי כל המוצרים שבהזמנה
+void order::setTotalPrice(double n) 
 {
-	this->totalPrice = n;
+	this->totalPrice += n;
 }
 double order::getTotalPrice()
 {
@@ -110,18 +117,20 @@ Product ** order::reallocProductArr(Product **oldProductArr, int size) // הגדלת 
 
 void order::addSellerToSellersArr(sellers &newSeller) // הוספת מוכר למערך המוכרים בהזמנה
 {
-	int i = getCountSellersInSellersArr() - 1;
-	if (getCountSellersInSellersArr() == 0)
-		this->sellersArr = new sellers*;//if it is the first seller
-	else
+	if (!checkIfSellerExists(&newSeller))
 	{
-		sellersArr = reallocsellersArr(sellersArr, i + 1);//if it isn't the first seller
+		int i = getCountSellersInSellersArr() - 1;
+		if (getCountSellersInSellersArr() == 0)
+			this->sellersArr = new sellers*;//if it is the first seller
+		else
+		{
+			sellersArr = reallocsellersArr(sellersArr, i + 1);//if it isn't the first seller
+		}
+		i++;
+		sellersArr[i] = new sellers(newSeller);// c'tor seller only
+
+		setCountSellersInSellersArr(i + 1);
 	}
-	i++;
-	sellersArr[i] = new sellers(newSeller);// c'tor seller only
-
-	setCountSellersInSellersArr(i + 1);
-
 }
 sellers ** order::reallocsellersArr(sellers **oldsellersArr, int size) // הגדלת מערך המוכרים בהזמנה
 {
@@ -141,9 +150,9 @@ bool order::checkIfSellerExists(const sellers *seller)
 	for (i = 0; i < CountSellersInSellersArr; i++)
 	{
 		if (!strcmp(seller->getName(), sellersArr[i]->getName()))//as long as the strings is not equal we will return true
-			return false;// if we will get the same name it means we already have this seller in our order sellers arr. 
+			return true;// if we will get the same name it means we already have this seller in our order sellers arr. 
 	}
-	return true;
+	return false;
 }
 void order::showSellersByCurrOrder() const
 {

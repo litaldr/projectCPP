@@ -33,7 +33,7 @@ void Product::show()  const
 Product::~Product() //destructor
 {
 	// does we need those delete? we allocate string in static way
-	delete[]productName;
+	delete[] productName;
 }
 
 

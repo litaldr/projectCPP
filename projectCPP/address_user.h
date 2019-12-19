@@ -7,40 +7,52 @@
 
 using namespace std;
 
-static const int MAX_NAME_SIZE = 20; //maximun name length
-static const int MIN_PASSWORD_SIZE = 8;
-static const int MAX_PASSWORD_SIZE = 20;
-/* the use of the max & min const size is for limiting the password users (sellers& buyers),
-we choose to initialize those const's in this class for revent multiple initializtion in both sellers & buyers class */
+/* the use of the max & min const size below is for limiting the password users (sellers& buyers),
+we choose to initialize those const's in this class for prevent multiple initialization in both sellers & buyers class */
+
+static const int MAX_NAME_SIZE = 20; //maximum name length
+static const int MIN_PASSWORD_SIZE = 8; //maximum password length
+static const int MAX_PASSWORD_SIZE = 20;//minimum password length
+
 class address_user
 {
 public:
-	address_user() = default; //constructor delete
+	
+	
+	address_user() = default; //default constructor
 	address_user(const char* country, const char* city, const char *street, int house_number); //constructor
-	address_user(const address_user& other);
-	address_user(const address_user&& other);
-	~address_user();// defualt destructor because all names strings are allocated static
+	address_user(const address_user& other); //copy constructor
+	~address_user();// default destructor because all names strings are allocated static
+    
+	void show()  const;
 
-					// set all atributes
+	//-----------------------not in use yet----------------------//
+
+	address_user(const address_user&& other); 
+	//move constructor- we know it is not in use in this stage of the project
+
+// --------------------set all attributes------------------------------//
 	bool setCountry(const char *c);
 	bool setStreet(const char *s);
 	bool setCity(const char *c);
 	void setHouse_number(int n);
 
-	//functions check valid name
+//----------------------functions check valid name--------------//
 	bool validString_name(const char *c);
 	bool validString_street(const char *s);
-	void show()  const;
 
-	// get all atributes
+	
+
+	// ---------------------get all attributes-------------------//
 	char * getCountry()    const;
 	char * getCity()       const;
 	char * getStreet()     const;
 	int getHouse_number() const;
+	//-----------------------------------------------------------------//
 
 
 private:
-	//attributes
+	//-------------------------attributes----------------------------//
 	char* country;
 	char* city;
 	char* street;

@@ -9,12 +9,12 @@ class Feedback
 {
 public:
 	Feedback() = delete;
-	Feedback(const date& newdate, buyers *buyer, const char* userFeedback);//constructor
+	Feedback(const date& newdate, buyers *buyer, char* userFeedback);//constructor
 	Feedback(const Feedback &other);//copy constructor
 	~Feedback(); // defualt destructor because feedback string allocated static
 
-	void setFeedback(const char * user_feedback);
-	bool setDate(int day, int month, int year);
+	//void setFeedback(char * user_feedback);
+	//bool setDate(int day, int month, int year);
 
 	buyers* getBuyer() const;
 	date getDate()     const;

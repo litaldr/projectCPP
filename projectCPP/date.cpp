@@ -7,13 +7,15 @@ date::date(int day, int month, int year) //constructor
 	this->year = year;
 
 }
-date::date(const date& other)// copy c'tor
-{
+date::~date() {} //destructor
 
-	this->day = other.day;
-	this->month = other.month;
-	this->year = other.year;
-}
+//date::date(const date& other)// copy c'tor
+//{
+//
+//	this->day = other.day;
+//	this->month = other.month;
+//	this->year = other.year;
+//}
 bool date::setDay(int day)
 {
 	if (!((day >= 1) && (day <= 31)))

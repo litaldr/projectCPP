@@ -17,7 +17,10 @@ public:
 	wishList() = default;// we don't allowed to create a new product without the details in the constructor below 
 	wishList( Product * product);//constructor
 	wishList(Product * product, sellers * seller);
- //wishList(const Product & product);
+	wishList(const wishList& other);
+	~wishList();
+ 
+	//wishList(const Product & product);
 	
 	
 
@@ -35,7 +38,8 @@ private:
 	//attributes
 	Product* product;
 	sellers *seller;
-};
+	
+}; 
 #endif // 
 
 

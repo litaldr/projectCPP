@@ -27,25 +27,14 @@ address_user::address_user(const address_user& other)// copy c'tor
 	this->house_number = other.house_number;
 	
 }
-address_user::address_user(const address_user&& other)// move c'tor
-{
-
-	this->country = other.country;
-	country = nullptr;
-	this->city = other.city;
-	city = nullptr;
-	this->street = other.street;
-	street = nullptr;
-	this->house_number = other.house_number;
-}
 
 address_user::~address_user() //destructor
 {
-// does we need those delete? we allocate string in static way
 	delete[]country;
 	delete[]city;
 	delete[]street;
 }
+
 void address_user::show()  const
 {
 	cout << "user country is: " << country << endl;
@@ -55,6 +44,8 @@ void address_user::show()  const
 	cout << "---------------------------------" << endl;
 }
 
+//-----------------------not in use----------------------///
+
 bool address_user::setCountry(const char *c)
 {
 	bool indicate_len = true, indicate_letters = true;
@@ -63,7 +54,7 @@ bool address_user::setCountry(const char *c)
 		cout << "The name must contain " << (MAX_NAME_SIZE - 1) << " letters or less." << endl;
 		indicate_len = false;
 	}
-	if (!validString_name(c)) //case charcter is not valid
+	if (!validString_name(c)) //case character is not valid
 	{
 		indicate_letters = false;
 		cout << "The name must contains only letters or spaces." << endl;
@@ -87,7 +78,7 @@ bool address_user::setCity(const char *c)
 		cout << "The name must contain " << (MAX_NAME_SIZE - 1) << " letters or less." << endl;
 		indicate_len = false;
 	}
-	if (!validString_name(c)) //case charcter is not valid
+	if (!validString_name(c)) //case character is not valid
 	{
 		indicate_letters = false;
 		cout << "The name must contains only letters or spaces." << endl;
@@ -109,13 +100,12 @@ bool address_user::validString_name(const char *c) //function indicate a valid i
 
 	while (c[i] != '\0') //run over the string name
 	{
-		if (!((c[i] <= 'a'&&c[i] >= 'z') || (c[i] <= 'A'&&c[i] >= 'Z') || c[i] == ' ')) //case charcter is not valid
+		if (!((c[i] <= 'a'&&c[i] >= 'z') || (c[i] <= 'A'&&c[i] >= 'Z') || c[i] == ' ')) //case character is not valid
 			return false;
 		i++;
 	}
 	return true;
 }
-
 
 bool address_user::setStreet(const char *s)
 {
@@ -125,7 +115,7 @@ bool address_user::setStreet(const char *s)
 		cout << "The name must contain " << (MAX_NAME_SIZE - 1) << " letters or less." << endl;
 		indicate_len = false;
 	}
-	if (!validString_street(s)) //case charcter is not valid
+	if (!validString_street(s)) //case character is not valid
 	{
 		cout << "The name must contains only letters or spaces." << endl;
 		indicate_letters = false;
@@ -154,12 +144,6 @@ bool address_user::validString_street(const char *s) //function indicate a valid
 	return true;
 }
 
-void address_user::setHouse_number(int n)
-{
-	this->house_number = n;
-}
-
-
 char * address_user::getCountry() const
 {
 	return country;
@@ -178,4 +162,21 @@ char * address_user::getStreet() const
 int address_user::getHouse_number() const
 {
 	return house_number;
+}
+
+void address_user::setHouse_number(int n)
+{
+	this->house_number = n;
+}
+
+address_user::address_user(const address_user&& other)// move c'tor
+{
+
+	this->country = other.country;
+	country = nullptr;
+	this->city = other.city;
+	city = nullptr;
+	this->street = other.street;
+	street = nullptr;
+	this->house_number = other.house_number;
 }

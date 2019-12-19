@@ -15,17 +15,16 @@ private:
 
 public:
 	date(int day = 1, int month = 1, int year = 2001);
-	date(const date& other);// copy c'tor
-	// defualt destructor because all variables are integers
-
+	~date();
+	
 	bool setDay(int day);
 	bool setMonth(int month);
 	bool setYear(int year);
+	
+	//---------------------not in use-----------------------//
 	int getDay()   const;
 	int getMonth() const;
 	int getYear()  const;
-
-
 };
 
 #endif

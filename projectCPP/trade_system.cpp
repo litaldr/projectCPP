@@ -1,7 +1,7 @@
 #include "trade_system.h"
-//להוסיף דרישה לאתחול שם המערכת במאיין של הפרויקט- לזכור להתמודד עם הערך שחוזר מהפונקציה
 
 
+//-----------------------not in use----------------------///
 
 trade_system::trade_system(const char *name) //constructor
 {
@@ -10,24 +10,26 @@ trade_system::trade_system(const char *name) //constructor
 	this->system_name[strlen(system_name)] = '\0';
 }
 
-trade_system::~trade_system() //destructor
-{
-	// does we need those delete? we allocate string in static way
-	delete[]system_name;
-}
 
 
 trade_system::trade_system(const trade_system & other)//copy c'tor
 {
 	this->system_name = strdup(other.system_name);
 }
+//char * trade_system::getName() const
+//{
+//	return system_name;
+//}
+//-------------------------------------------------------------//
 
+
+//---------------------//in use//-----------------------------
 bool trade_system::setName(const char* n)  //check valid name
 {
-	
+
 	if (system_name != NULL) // initialize the system name as nullptr 
 		delete[] system_name;
-		
+
 	if (strlen(n) <= MAX_NAME_SIZE) // check valid length name
 	{
 		system_name = new char[strlen(n) + 1];
@@ -39,6 +41,25 @@ bool trade_system::setName(const char* n)  //check valid name
 
 	return true;
 }
+
+trade_system::~trade_system() //destructor
+{
+	// does we need those delete? we allocate string in static way
+	delete[]system_name;
+
+	for (int i = 0; i < count_buyers; i++)
+	{
+		delete buyersArr[i];
+	}
+	delete[]buyersArr;
+	for (int i = 0; i < count_sellers; i++)
+	{
+		delete sellersArr[i];
+	}
+	delete[]sellersArr;
+}
+//need to work on
+
 void trade_system::setCountBuyer(int i)
 {
 	count_buyers = i;
@@ -47,11 +68,6 @@ void trade_system::setCountBuyer(int i)
 void trade_system::setCountSeller(int j)
 {
 	count_sellers = j;
-}
-
-char * trade_system::getName() const
-{
-	return system_name;
 }
 
 int trade_system::getCountBuyer()
@@ -77,7 +93,7 @@ sellers** trade_system::getSellersArr()
 bool trade_system::addBuyer(buyers& buyer)
 {
 	int i = count_buyers - 1;
-	if (trade_system::compreName(buyer.getName(), false))// true define the doing comper for sellers arr in comper function
+	if (trade_system::nameAvailable(buyer.getName(), false))// this function will return true if the name is not in use for other buyer
 	{
 		if (count_buyers == 0)
 			buyersArr = new buyers*;//if it is the first buyer
@@ -96,7 +112,7 @@ bool trade_system::addBuyer(buyers& buyer)
 bool trade_system::addSeller(sellers& seller)
 {
 	int i = count_sellers - 1;
-	if (trade_system::compreName(seller.getName(),true))// true define the doing comper for sellers arr in comper function
+	if (trade_system::nameAvailable(seller.getName(),true))// this function will return true if the name is not in use for other seller
 	{
 		if (count_sellers == 0)
 			sellersArr = new sellers*;//if it is the first buyer
@@ -136,9 +152,9 @@ sellers ** trade_system::reallocSellers(sellers **oldSellersArr, int size)
 	return newSellersArr;
 }
 
-bool trade_system::compreName(char *comperdName, bool flag) 
+bool trade_system::nameAvailable(char *comperdName, bool flag) 
 {
-	if (flag)
+	if (flag)//if flag value is true we'll check if the user seller name is taken
 	{
 		for (int i = 0; i < count_sellers; i++)
 		{
@@ -147,11 +163,11 @@ bool trade_system::compreName(char *comperdName, bool flag)
 		}
 		return true;
 	}
-	else
+	else//if flag value is false we'll check if the user seller name is taken
 	{
 		for (int i = 0; i < count_buyers; i++)
 		{
-			if (strcmp((buyersArr[i]->getName()), comperdName) == 0)
+			if (strcmp((buyersArr[i]->getName()), comperdName) == 0)// 
 				return false;
 		}
 		return true;

@@ -7,7 +7,7 @@ class order
 {
 public:
 
-	order();
+	order(double totalPrice=0);
 	order(const order & myOrder);
 	~order(); // destructor because arrays allocated dinamic
 
@@ -42,9 +42,5 @@ private:
 	bool orderPayed;
 	int CountProductInProductArr = 0; //אינדקס עבור מספר המוצרים לרכישה שיש בהזמנה
 	int CountSellersInSellersArr = 0; // אינדקס עבור מספר המוכרים שיש עבור ההזמנה שתתבצע
-
-
-
-
 };
 #endif 

@@ -11,28 +11,40 @@ sellers::sellers(const char *user_name, const char *password, const address_user
 	this->password[strlen(password)] = '\0';
 	this->ProductArr = nullptr;
 	this->feedbackArr = nullptr;
+	this->CountProduct = 0;
+	this->CountFeedback = 0;
 }
 
-sellers::sellers(const sellers &other) : address(other.address)//copy c'tor
-{
-	this->user_name = strdup(other.user_name);
-	this->password = strdup(other.password);
-
-	this->CountProduct = other.CountProduct;
-
-	this->feedbackArr = new Feedback*;// feedback is a pointer therefor it is initialized by it's address.
-	memcpy(this->feedbackArr, feedbackArr, sizeof(feedbackArr));
-	this->ProductArr = new Product*;// Product is a pointer therefor it is initialized by it's address.
-	memcpy(this->ProductArr, ProductArr, sizeof(ProductArr));
-
-}
+//sellers::sellers(const sellers &other) : address(other.address)//copy c'tor
+//{
+//	this->user_name = strdup(other.user_name);
+//	this->password = strdup(other.password);
+//
+//	this->CountProduct = other.CountProduct;
+//
+//	this->feedbackArr = new Feedback*;// feedback is a pointer therefor it is initialized by it's address.
+//	memcpy(this->feedbackArr, other.feedbackArr, sizeof(other.feedbackArr));
+//	this->ProductArr = new Product*;// Product is a pointer therefor it is initialized by it's address.
+//	memcpy(this->ProductArr, other.ProductArr, sizeof(other.ProductArr));
+//
+//}
 
 sellers::~sellers() //destructor
 {
 	// does we need those delete? we allocate string in static way
+	
 	delete[]user_name;
 	delete[]password;
-
+	for (int i = 0; i < CountFeedback; i++)
+	{
+		delete feedbackArr[i];
+	}
+	delete[]feedbackArr;
+	for (int i = 0; i < CountProduct; i++)
+	{
+		delete ProductArr[i];
+	}
+	delete[]ProductArr;
 	//we also need to delete the feedback & products arr's- חשובבב
 }
 bool sellers::setName(const char* n) //להוסיף דרישה לאתחול שם המערכת במאיין של הפרויקט- לזכור להתמודד עם הערך שחוזר מהפונקציה
@@ -112,8 +124,8 @@ void sellers::showSellerBasicDeatelis() const
 }
 void sellers::addProduct(Product &newProduct)
 {
-	int i = getCountProduct() - 1;
-	if (getCountProduct() == 0)
+	int i = CountProduct - 1;
+	if (CountProduct == 0)
 		ProductArr = new Product*;//if it is the first buyer
 	else
 	{
@@ -136,7 +148,7 @@ Product ** sellers::reallocProductArr(Product **oldProductArr, int size)
 	return newProductArr;
 }
 
-void sellers::addFeedback(Feedback &newFeedback)
+void sellers::addFeedback(Feedback &newFeedback)  
 {
 	int i = getCountFeedback() - 1;
 	if (getCountFeedback() == 0)
