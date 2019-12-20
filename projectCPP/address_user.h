@@ -16,8 +16,8 @@ static const int MAX_PASSWORD_SIZE = 20;//minimum password length
 
 class address_user
 {
+
 public:
-	
 	
 	address_user() = default; //default constructor
 	address_user(const char* country, const char* city, const char *street, int house_number); //constructor
@@ -26,12 +26,11 @@ public:
     
 	void show()  const;
 
-	//-----------------------not in use yet----------------------//
+//------------------------------not in use yet------------------------------//
 
-	address_user(const address_user&& other); 
-	//move constructor- we know it is not in use in this stage of the project
+	address_user(const address_user&& other); //move constructor- we know it is not in use in this stage of the project
 
-// --------------------set all attributes------------------------------//
+//--------------------set attributes---------------------------//
 	bool setCountry(const char *c);
 	bool setStreet(const char *s);
 	bool setCity(const char *c);
@@ -41,18 +40,14 @@ public:
 	bool validString_name(const char *c);
 	bool validString_street(const char *s);
 
-	
-
-	// ---------------------get all attributes-------------------//
+// ---------------------get attributes-------------------//
 	char * getCountry()    const;
 	char * getCity()       const;
 	char * getStreet()     const;
 	int getHouse_number() const;
-	//-----------------------------------------------------------------//
-
 
 private:
-	//-------------------------attributes----------------------------//
+//-----------------------attributes----------------------//
 	char* country;
 	char* city;
 	char* street;

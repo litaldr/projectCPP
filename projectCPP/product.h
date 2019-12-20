@@ -1,13 +1,13 @@
 #ifndef  __PRODUCT_H
 #define __PRODUCT_H
 
-
-#include "address_user.h" // include the MAX_NAME_SIZE =20
+#include "address_user.h" // include the MAX_NAME_SIZE = 20 for the product name
 
 class Product
 {
+
 private:
-	static int countSerialNumber;// static variable initialized  with 0
+	static int countSerialNumber;// static variable initialized  with 0 - gives serial number to each new product added to the whole system
 
 public:
 	enum eCategory { CHILDREN, ELECTRONICS, OFFICE, CLOTHING };
@@ -16,29 +16,34 @@ public:
 	Product() = delete;// we don't allowed to create a new product without the details in the constructor below 
 	Product(const char *productName, eCategory category, double price);//constructor
 	Product(const Product& other);// copy constructor
-	~Product(); //destructor // defualt destructor because name allocated static
+	~Product(); //destructor 
 
-    // set & get functions
-	bool setName(const char *n);//אנחנו לא רוצות  לאפשר שינויים?
-	bool setCategory(int i);
-    void setPrice(double p);
-			   
+	void show()  const; // function show all product details
+
+ //---------------------------------set & get functions------------------------------//
 	char * getName()  const;
-	eCategory getCategory()  const;
 	int getItemSerialNumber()  const;
 	double getPrice()  const;
-	void show()  const;
 
-	friend class wishList;
+ //--------------------not in use--------------------//
+	bool setName(const char *n);
+	bool setCategory(int i);
+    void setPrice(double p);
+			
+	eCategory getCategory()  const;
+//-------------------------------------------------//
+
+	
+	friend class wishList; 
+
 private:
-	//attributes
+	//--------------------attributes--------------------//
 	char *productName;
 	eCategory category;
 	double price;
 	int serialNumber;
 
-
 };
-#endif //
+#endif 
 
 

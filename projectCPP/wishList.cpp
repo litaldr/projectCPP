@@ -2,33 +2,42 @@
 
 int wishList::countSerialNumber = 0;
 
-wishList::wishList( Product * product) : product(product) //constructor
+
+wishList::wishList(Product * product, sellers * seller) : product(product), seller(seller) {} // constructor
+
+wishList::wishList(const wishList& other) : product(other.product), seller(other.seller) {} // copy constructor
+
+//-------------not in use---------------//
+wishList::wishList(Product * product) : product(product) //constructor
 {
 	this->seller = nullptr;
 }
-//wishList::wishList(const Product & product) : product(product) {}// c'tor
-wishList::wishList(const wishList& other) : product(other.product), seller(other.seller) {}
+//-------------not in use---------------//
 
-wishList::wishList(Product * product, sellers * seller) : product(product), seller(seller) {}
+wishList::~wishList() {} // destructor
 
-wishList::~wishList() {}
 
+//----------------------set & get functions---------------------//
+
+Product* wishList::getProduct()  const
+{
+	return product;
+}
+
+sellers * wishList::getseller() const
+{
+	return seller;
+}
+
+//-------------not in use---------------//
 void wishList::setProduct(Product * newProduct)
 {
 	this->product = newProduct;
 }
+
 void wishList::setSeller(sellers *seller)// not in use
 {
 	this->seller = seller;
 }
-
-
- Product* wishList::getProduct()  const
-{
-	return product;
-}
- sellers * wishList::getseller() const
-{
-	return seller;
-}
+//-------------not in use---------------//
 

@@ -5,44 +5,54 @@ class buyers;
 #include "feedback.h"
 #include "Product.h"
 
-
-
 class sellers
 {
 
 public:
-	sellers() = delete; 
-	sellers(const char *user_name, const char *password, const address_user &address); //define constructor
+	sellers() = delete; //delete constructor- we don't allow default constructor of seller
+	sellers(const char *user_name, const char *password, const address_user &address); // constructor
+	 //not intrested in copy constructor- we dont copy a seller(person)
+	~sellers(); //destructor 
 
-	//sellers(const sellers &other);//copy c'tor
-	~sellers(); //destructor // defualt destructor because strings allocated static
+	void showSellerBasicDeatelis() const;// function show basic details of seller
 
-	// set & get function
-	bool setPassword(const char* p);
+//------------------------------set & get function-------------------------------//
 	bool setName(const char* n);
-	char * getName()     const;
-	char * getPassword() const;
-	address_user getAddress()  const;
-	int getCountProduct()   const;
 	void setCountProduct(int n);
-	void showSellerBasicDeatelis() const;
-	Product ** reallocProductArr(Product **oldProductArr, int size);
-	void addProduct(Product& newProduct);
-
-	Product ** getProductArr() const;
-	void addFeedback(Feedback& newFeedback);
-	Feedback ** reallocFeedbackArr(Feedback **oldFeedbackArr, int size);
-	int getCountFeedback()   const;
 	void setCountFeedback(int n);
 
+	char * getName()     const;
+	int getCountProduct()   const;
+	int getCountFeedback()   const;
+	Product ** getProductArr() const;
+	//----------------not in use-----------------//
+	Feedback ** getFeedbackArr() const;
+	char * getPassword() const;
+	address_user getAddress()  const;
+
+	bool setPassword(const char* p);
+	//----------------not in use-----------------//
+
+
+
+	//------------------------------add product and feedback functions-------------------------------//
+	void addProduct(Product& newProduct);
+	Product ** reallocProductArr(Product **oldProductArr, int size);
+
+	void addFeedback(Feedback& newFeedback);
+	Feedback ** reallocFeedbackArr(Feedback **oldFeedbackArr, int size);
+
 private:
-	//attributes
+//----------------attributes-----------------//
 	char* user_name;
 	char* password;
-	int CountProduct;
-	int CountFeedback;
 	address_user address;
-	Feedback **feedbackArr; 
-	Product **ProductArr;
+
+	Feedback **feedbackArr; // pointers array to feedback objects
+	int CountFeedback; // index counts feedback in feedback array per seller (not a static variable)
+
+	Product **ProductArr; // pointers array to products objects
+	int CountProduct; // index counts product in product array per seller (not a static variable)
+
 };
 #endif

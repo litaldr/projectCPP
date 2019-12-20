@@ -8,9 +8,6 @@ using namespace std;
 
 void main()
 {
-	
 	manager systemManager;
-		
 	systemManager.run();
-
 }

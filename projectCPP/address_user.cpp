@@ -19,7 +19,7 @@ address_user::address_user(const char* country, const char* city, const char *st
 
 }
 
-address_user::address_user(const address_user& other)// copy c'tor
+address_user::address_user(const address_user& other)// copy constructor
 {
 	this->country = strdup(other.country);
 	this->city = strdup(other.city);
@@ -35,21 +35,33 @@ address_user::~address_user() //destructor
 	delete[]street;
 }
 
-void address_user::show()  const
+void address_user::show()  const // print titles for address details
 {
-	cout << "user country is: " << country << endl;
-	cout << "user city is: " << city << endl;
-	cout << "user street is: " << street << endl;
-	cout << "user house number is : " << house_number << endl;
+	cout << "User country is: " << country << endl;
+	cout << "User city is: " << city << endl;
+	cout << "User street is: " << street << endl;
+	cout << "User house number is : " << house_number << endl;
 	cout << "---------------------------------" << endl;
 }
 
 //-----------------------not in use----------------------///
 
+address_user::address_user(const address_user&& other)// move constructor
+{
+
+	this->country = other.country;
+	country = nullptr;
+	this->city = other.city;
+	city = nullptr;
+	this->street = other.street;
+	street = nullptr;
+	this->house_number = other.house_number;
+}
+
 bool address_user::setCountry(const char *c)
 {
 	bool indicate_len = true, indicate_letters = true;
-	if (strlen(c) > MAX_NAME_SIZE) //case length is not valid
+	if (strlen(c) > MAX_NAME_SIZE) //case length is not valid (program assume input length is valid)
 	{
 		cout << "The name must contain " << (MAX_NAME_SIZE - 1) << " letters or less." << endl;
 		indicate_len = false;
@@ -73,7 +85,7 @@ bool address_user::setCountry(const char *c)
 bool address_user::setCity(const char *c)
 {
 	bool indicate_len = true, indicate_letters = true;
-	if (strlen(c) >= MAX_NAME_SIZE) //case length is not valid
+	if (strlen(c) >= MAX_NAME_SIZE) //case length is not valid (program assume input length is valid)
 	{
 		cout << "The name must contain " << (MAX_NAME_SIZE - 1) << " letters or less." << endl;
 		indicate_len = false;
@@ -110,7 +122,7 @@ bool address_user::validString_name(const char *c) //function indicate a valid i
 bool address_user::setStreet(const char *s)
 {
 	bool indicate_len = true, indicate_letters = true;
-	if (strlen(s) > MAX_NAME_SIZE) //case length is not valid
+	if (strlen(s) > MAX_NAME_SIZE) //case length is not valid (program assume input length is valid)
 	{
 		cout << "The name must contain " << (MAX_NAME_SIZE - 1) << " letters or less." << endl;
 		indicate_len = false;
@@ -144,6 +156,11 @@ bool address_user::validString_street(const char *s) //function indicate a valid
 	return true;
 }
 
+void address_user::setHouse_number(int n)
+{
+	this->house_number = n;
+}
+
 char * address_user::getCountry() const
 {
 	return country;
@@ -164,19 +181,4 @@ int address_user::getHouse_number() const
 	return house_number;
 }
 
-void address_user::setHouse_number(int n)
-{
-	this->house_number = n;
-}
 
-address_user::address_user(const address_user&& other)// move c'tor
-{
-
-	this->country = other.country;
-	country = nullptr;
-	this->city = other.city;
-	city = nullptr;
-	this->street = other.street;
-	street = nullptr;
-	this->house_number = other.house_number;
-}

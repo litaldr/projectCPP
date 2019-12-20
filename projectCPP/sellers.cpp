@@ -1,6 +1,6 @@
 #include "sellers.h"
 
-sellers::sellers(const char *user_name, const char *password, const address_user &address) : address(address)
+sellers::sellers(const char *user_name, const char *password, const address_user &address) : address(address) // constructor
 {
 	this->user_name = new char[strlen(user_name) + 1];
 	strcpy(this->user_name, user_name);
@@ -15,24 +15,8 @@ sellers::sellers(const char *user_name, const char *password, const address_user
 	this->CountFeedback = 0;
 }
 
-//sellers::sellers(const sellers &other) : address(other.address)//copy c'tor
-//{
-//	this->user_name = strdup(other.user_name);
-//	this->password = strdup(other.password);
-//
-//	this->CountProduct = other.CountProduct;
-//
-//	this->feedbackArr = new Feedback*;// feedback is a pointer therefor it is initialized by it's address.
-//	memcpy(this->feedbackArr, other.feedbackArr, sizeof(other.feedbackArr));
-//	this->ProductArr = new Product*;// Product is a pointer therefor it is initialized by it's address.
-//	memcpy(this->ProductArr, other.ProductArr, sizeof(other.ProductArr));
-//
-//}
-
 sellers::~sellers() //destructor
-{
-	// does we need those delete? we allocate string in static way
-	
+{	
 	delete[]user_name;
 	delete[]password;
 	for (int i = 0; i < CountFeedback; i++)
@@ -45,14 +29,20 @@ sellers::~sellers() //destructor
 		delete ProductArr[i];
 	}
 	delete[]ProductArr;
-	//we also need to delete the feedback & products arr's- חשובבב
 }
-bool sellers::setName(const char* n) //להוסיף דרישה לאתחול שם המערכת במאיין של הפרויקט- לזכור להתמודד עם הערך שחוזר מהפונקציה
+
+void sellers::showSellerBasicDeatelis() const
 {
-	/*
-	if (user_name != NULL)
-	   delete[] user_name;
-	*/
+	cout << "User name is: " << user_name << endl;
+	cout << "User password is: " << password << endl;
+	address.show();
+}
+
+//------------------------------set & get function-------------------------------//
+
+bool sellers::setName(const char* n) 
+{
+
 	if (strlen(n) <= MAX_NAME_SIZE) //valid name 
 	{
 		user_name = new char[strlen(n) + 1];
@@ -65,34 +55,41 @@ bool sellers::setName(const char* n) //להוסיף דרישה לאתחול שם המערכת במאיין של ה
 	return true;
 }
 
-bool sellers::setPassword(const char* p) //להוסיף דרישה לאתחול שם המערכת במאיין של הפרויקט- לזכור להתמודד עם הערך שחוזר מהפונקציה
-{
-	/*
-	if (password != NULL)
-		delete[] password;
-		*/
-	if ((strlen(p) >= MIN_PASSWORD_SIZE) && (strlen(p) <= MAX_PASSWORD_SIZE))// password in range 8-20
-	{
-		password = new char[strlen(p) + 1];
-		strncpy(password, p,strlen(p));
-		user_name[strlen(p) ] = '\0';
-	}
-	else
-		return false;
-
-	return true;
-}
 void  sellers::setCountProduct(int n)
 {
 	this->CountProduct = n;
 }
+
 void  sellers::setCountFeedback(int n)
 {
 	this->CountFeedback = n;
 }
+
+
 char * sellers::getName() const
 {
 	return user_name;
+}
+
+int sellers::getCountProduct() const
+{
+	return CountProduct;
+}
+
+int sellers::getCountFeedback() const
+{
+	return CountFeedback;
+}
+
+Product ** sellers::getProductArr() const
+{
+	return ProductArr;
+}
+
+//----------------not in use-----------------//
+Feedback ** sellers::getFeedbackArr() const
+{
+	return feedbackArr;
 }
 
 char * sellers::getPassword() const
@@ -104,45 +101,46 @@ address_user sellers::getAddress()  const
 {
 	return address;
 }
-int sellers::getCountProduct() const
+
+
+bool sellers::setPassword(const char* p)
 {
-	return CountProduct;
+	if ((strlen(p) >= MIN_PASSWORD_SIZE) && (strlen(p) <= MAX_PASSWORD_SIZE))// password in range 8-20
+	{
+		password = new char[strlen(p) + 1];
+		strncpy(password, p, strlen(p));
+		user_name[strlen(p)] = '\0';
+	}
+	else
+		return false;
+
+	return true;
 }
-int sellers::getCountFeedback() const
-{
-	return CountFeedback;
-}
-Product ** sellers::getProductArr() const
-{
-	return ProductArr;
-}
-void sellers::showSellerBasicDeatelis() const
-{
-	cout << "user name is: " << user_name << endl;
-	cout << "user password is: " << password << endl;
-	address.show();
-}
+//----------------not in use-----------------//
+
+//------------------------------add product and feedback functions-------------------------------//
+
 void sellers::addProduct(Product &newProduct)
 {
 	int i = CountProduct - 1;
-	if (CountProduct == 0)
-		ProductArr = new Product*;//if it is the first buyer
+	if (CountProduct == 0) //if it is the first buyer
+		ProductArr = new Product*;
 	else
 	{
-		ProductArr = reallocProductArr(ProductArr, i + 1);//if it isn't the first buyer
+		ProductArr = reallocProductArr(ProductArr, i + 1); //if it isn't the first buyer
 	}
 	i++;
 	ProductArr[i] = new Product(newProduct);
 
-	CountProduct=i + 1;
+	CountProduct=i + 1; // increase the counter of products in product array
 }
-Product ** sellers::reallocProductArr(Product **oldProductArr, int size)
+
+Product ** sellers::reallocProductArr(Product **oldProductArr, int size) // function increase by one the products array for the new product
 {
 	Product **newProductArr = new Product*[size + 1];
 	for (int i = 0; i <= size; i++)
 	{
 		newProductArr[i] = oldProductArr[i];
-		//delete[]oldProductArr[i]
 	}
 	delete[]oldProductArr;
 	return newProductArr;
@@ -151,8 +149,8 @@ Product ** sellers::reallocProductArr(Product **oldProductArr, int size)
 void sellers::addFeedback(Feedback &newFeedback)  
 {
 	int i = getCountFeedback() - 1;
-	if (getCountFeedback() == 0)
-		feedbackArr = new Feedback*;//if it is the first buyer
+	if (getCountFeedback() == 0) //if it is the first buyer
+		feedbackArr = new Feedback*;
 	else
 	{
 		feedbackArr = reallocFeedbackArr(feedbackArr, i + 1);//if it isn't the first buyer
@@ -160,15 +158,15 @@ void sellers::addFeedback(Feedback &newFeedback)
 	i++;
 	feedbackArr[i] = new Feedback(newFeedback);
 
-	CountFeedback = i + 1;
+	CountFeedback = i + 1; // increase the counter of feedback in feedback array
 }
-Feedback ** sellers::reallocFeedbackArr(Feedback **oldFeedbackArr, int size)
+
+Feedback ** sellers::reallocFeedbackArr(Feedback **oldFeedbackArr, int size) // function increase by one the feedback array for the new feedback
 {
 	Feedback **newFeedbackArr = new Feedback*[size + 1];
 	for (int i = 0; i <= size; i++)
 	{
 		newFeedbackArr[i] = oldFeedbackArr[i];
-		//delete[]oldProductArr[i]
 	}
 	delete[]oldFeedbackArr;
 	return newFeedbackArr;

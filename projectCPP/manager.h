@@ -3,53 +3,50 @@
 #pragma warning (disable: 4996) 
 
 #include "trade_system.h"
-//#include "Product.h"
 
-#define EXIT 11 //define the input of exiting program
+#define EXIT 11 //define the input of exiting iteractive shell
 class manager // class Intended to contact with the user of the system which gives commands to the system manager 
 {
 public:
-	manager();
-	~manager();
+	manager(); // defualt constructor
+	~manager(); // destructor
+
 	void run(); // function run on using system
 	void printMenu(); // function prints the menu system for the user
-	void init_system_name(); //function to initialize the system name
+	void init_system_name(); //function to initialize the system name by having input from user who is the manager's system
 	int getAction(); // function give indicate which action the user is about to choose
-	void doAction(int *num); // function do the wanted action 
-	bool userLogOut();
+	void doAction(int *num); // function do the demanded action 
+	bool userLogOut(); // function indicate if the user wants to log out of system
 	void cleanBuffer();
 
 	//----------------------------------related to option 1&2 -add new buyer\seller---------------// 
-
-	void addBuyerToTradeSystem();
-	address_user* createAddress();
 	buyers* createBuyer();
-	void addSellerToTradeSystem();
 	sellers* createSeller();
-	
+	address_user* createAddress();
+	void addBuyerToTradeSystem(); // function adds buyer to buyer array in attributes of trade system
+	void addSellerToTradeSystem(); // function adds seller to sellers array in attributes of trade system
+
 	//----------------------------------related to option 3 -add new Product---------------// 
-	void addProductToSeller();
 	Product* createProduct();
+	void addProductToSeller(); //function adds product to products array's seller
 	bool findSellerInSystem(int & indexSellersArr);
 	
 	//----------------------------------related to option 4 -create a feedback---------------// 
+	bool findBuyerInSystem(int &indexBuyerArr); // function finds in system the buyer who wants to give a feedback
+	char *chooseSeller(int & indexBuyersArr); // function gives the name of the seller who will receive feedback
+	bool initializeDate(date & feedbackDate); // date of given feedback
 	void addFeedbackToASeller();
-	
-	char *chooseSeller(int & indexBuyersArr);
-	
-	bool initializeDate(date & feedbackDate);
-	void insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback);
-	bool findBuyerInSystem(int &indexBuyerArr);
+	void insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback); // function insert feeedback to feedback array's seller
 	
 	//----------------------------------related to option 5 -create a wish list---------------// 
-	void addToWishlist();
+	void addToWishlist(); // function adds wish list object which contains prouduct ans seller of the product to wishlist array's buyer
 	
 	//----------------------------------related to option 6 -add order---------------// 
-	void addOrderToBuyer();
-	order* createNewOrder(int &indexBuyersArr);
+	order* createNewOrder(int &indexBuyersArr); 
+	void addOrderToBuyer(); // function adds order to orders array's buyer
 
 	//----------------------------------related to option 7 payment---------------// 
-	void payment();
+	void payment(); // paymant for last order he made
 
 	//----------------------------------related to option 8 print buyers---------------// 
 	void printBuyers();
@@ -59,7 +56,9 @@ public:
 	
 	//----------------------------------related to option 10 (and 5) - print products---------------// 
 	void printProductsByName();
+
 private:
+//----------------attributes: manager manage the trade system-----------------//
 	trade_system system;
 };
 #endif

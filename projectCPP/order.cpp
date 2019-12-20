@@ -1,9 +1,6 @@
-#include "order.h"
+#include "order.h" 
 
-//order::order(Product ** productArr = NULL, sellers **sellersArr = NULL, double totalPrice = 0)
-// {}//constructor 
-
-order::order(double totalPrice)
+order::order(double totalPrice) // constructor
 {
 	this->productArr = nullptr;
 	this->sellersArr = nullptr;
@@ -13,8 +10,7 @@ order::order(double totalPrice)
 	this->totalPrice = totalPrice;
 }
 
-
-order::order(const order & myOrder) //copy c'tor 
+order::order(const order & myOrder) //copy constructor 
 {
 	int sizeProducts = myOrder.CountProductInProductArr;
 	this->productArr = new Product*[sizeProducts];
@@ -28,11 +24,13 @@ order::order(const order & myOrder) //copy c'tor
 	{
 		this->sellersArr[i] = new sellers(*(myOrder.getsellersArr()[i]));
 	}
+
 	this->totalPrice = myOrder.totalPrice;
 	this->CountProductInProductArr = sizeProducts;
 	this->CountSellersInSellersArr = sizeSellers;
 }
-order::~order() // destructor because arrays allocated dinamic
+
+order::~order() // destructor
 {
 	for (int i = 0; i < CountProductInProductArr; i++)
 	{
@@ -45,22 +43,38 @@ order::~order() // destructor because arrays allocated dinamic
 	}
 	delete[]sellersArr;
 }
+
+//----------------------set & get functions------------------------------//
+
 Product** order::getProductArr()  const
 {
 	return productArr;
 }
+
 sellers ** order::getsellersArr() const
 {
 	return sellersArr;
 
 }
+
 int order::getCountProductInProductArr() const
 {
 	return CountProductInProductArr;
 }
+
 int order::getCountSellersInSellersArr() const
 {
 	return CountSellersInSellersArr;
+}
+
+double order::getTotalPrice() const
+{
+	return totalPrice;
+}
+
+bool order::getOrderPayed()  const
+{
+	return orderPayed;
 }
 
 void  order::setCountProductInProductArr(int n) // set number of product to pay for
@@ -77,90 +91,87 @@ void order::setTotalPrice(double n)
 {
 	this->totalPrice += n;
 }
-double order::getTotalPrice()
-{
-	return totalPrice;
-}
+
 void  order::setOrderPayedTrue()
 {
 	this->orderPayed = true;
 }
-bool order::getOrderPayed()  const
-{
-	return orderPayed;
-}
-void order::addProductToProductArr(Product &newProduct)//הוספת מוצר למערך המוצרים בהזמנה
+
+//----------------------adding order to buyer functions------------------------------//
+
+void order::addProductToProductArr(Product &newProduct)// function add product to products array in order object of buayer
 {
 	int i = getCountProductInProductArr() - 1;
-	if (getCountProductInProductArr() == 0)
-		this->productArr = new Product*;//if it is the first product
+	if (getCountProductInProductArr() == 0) //if it is the first product
+		this->productArr = new Product*;
 	else
 	{
-		productArr = reallocProductArr(productArr, i + 1);//if it isn't the first product
+		productArr = reallocProductArr(productArr, i + 1); //if it isn't the first product
 	}
 	i++;
-	productArr[i] = new Product(newProduct);// c'tor product only
+	productArr[i] = new Product(newProduct);// constructor
 
-	setCountProductInProductArr(i + 1);
+	setCountProductInProductArr(i + 1); // increase counter of product in product array
 }
-Product ** order::reallocProductArr(Product **oldProductArr, int size) // הגדלת מערך המוצרים בהזמנה
+
+Product ** order::reallocProductArr(Product **oldProductArr, int size) // function increase product array by one for the new product buyer wants to buy
 {
 	Product **newProductArr = new Product*[size + 1];
 	for (int i = 0; i <= size; i++)
 	{
 		newProductArr[i] = oldProductArr[i];
-		//delete[]oldProductArr[i]
 	}
 	delete[]oldProductArr;
 	return newProductArr;
 }
 
-void order::addSellerToSellersArr(sellers &newSeller) // הוספת מוכר למערך המוכרים בהזמנה
+void order::addSellerToSellersArr(sellers &newSeller) // function add seller to sellers array in order object of buayer
 {
 	if (!checkIfSellerExists(&newSeller))
 	{
 		int i = getCountSellersInSellersArr() - 1;
-		if (getCountSellersInSellersArr() == 0)
-			this->sellersArr = new sellers*;//if it is the first seller
+		if (getCountSellersInSellersArr() == 0) //if it is the first seller
+			this->sellersArr = new sellers*;
 		else
 		{
 			sellersArr = reallocsellersArr(sellersArr, i + 1);//if it isn't the first seller
 		}
 		i++;
-		sellersArr[i] = new sellers(newSeller);// c'tor seller only
+		sellersArr[i] = new sellers(newSeller);// constructor
 
-		setCountSellersInSellersArr(i + 1);
+		setCountSellersInSellersArr(i + 1); // increase counter of seller in sellers array
 	}
 }
-sellers ** order::reallocsellersArr(sellers **oldsellersArr, int size) // הגדלת מערך המוכרים בהזמנה
+
+sellers ** order::reallocsellersArr(sellers **oldsellersArr, int size) // function increase seller array by one, for the new seller that the buyer wants to buy from 
 {
 	sellers **newSellersArr = new sellers*[size + 1];
 	for (int i = 0; i <= size; i++)
 	{
 		newSellersArr[i] = oldsellersArr[i];
-		//delete[]oldProductArr[i]
 	}
 	delete[]oldsellersArr;
 	return newSellersArr;
 }
 
-bool order::checkIfSellerExists(const sellers *seller)
+bool order::checkIfSellerExists(const sellers *seller) // function checks that seller is adding only one time to sellers array of order to prevent duplicates
 {
 	int i;
 	for (i = 0; i < CountSellersInSellersArr; i++)
 	{
 		if (!strcmp(seller->getName(), sellersArr[i]->getName()))//as long as the strings is not equal we will return true
-			return true;// if we will get the same name it means we already have this seller in our order sellers arr. 
+			return true;// if we will get the same name it means we already have this seller in our order sellers arr 
 	}
 	return false;
 }
-void order::showSellersByCurrOrder() const
+
+void order::showSellersByCurrOrder() const // print sellers of specific order
 {
 	int i;
-	cout << " this is the sellers that are associated to this order" << endl;
+	cout << " This is the sellers that are associated to this order" << endl;
 	for (i = 0; i < CountSellersInSellersArr; i++)
 	{
-		cout << "seller number " << i + 1 <<" :"<< endl;
+		cout << "Seller number " << i + 1 <<" :"<< endl;
 		cout << sellersArr[i]->getName() << endl;
 	}
 }

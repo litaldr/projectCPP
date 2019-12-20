@@ -3,26 +3,29 @@
 
 #include "date.h"
 class buyers;
-static const int MAX_FEEDBACK_SIZE = 100;
+static const int MAX_FEEDBACK_SIZE = 100; // static varible for maximum feedback size
 
 class Feedback
 {
+
 public:
-	Feedback() = delete;
+	Feedback() = delete; //not intrested in defualt constructor 
 	Feedback(const date& newdate, buyers *buyer, char* userFeedback);//constructor
 	Feedback(const Feedback &other);//copy constructor
-	~Feedback(); // defualt destructor because feedback string allocated static
+	~Feedback(); // destructor
 
-	//void setFeedback(char * user_feedback);
-	//bool setDate(int day, int month, int year);
-
+ //---------------------set & get functions-----------------------//
 	buyers* getBuyer() const;
 	date getDate()     const;
 	char * getUserFeedback() const;
 
+//-----------not in use--------------//
+
+	void setFeedback(char * user_feedback);
+	bool setDate(int day, int month, int year);
 
 private:
-
+//-----------------------attributes----------------------//
 	date myDate;
 	char *user_feedback;
 	buyers *buyer;

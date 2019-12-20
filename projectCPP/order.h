@@ -7,40 +7,41 @@ class order
 {
 public:
 
-	order(double totalPrice=0);
-	order(const order & myOrder);
-	~order(); // destructor because arrays allocated dinamic
+	order(double totalPrice=0); // defualt constructor
+	order(const order & myOrder); // copy constructor
+	~order(); // destructor
 
-
-	// set & get functions
+//----------------------set & get functions------------------------------//
 	Product** getProductArr()  const;
 	sellers ** getsellersArr() const;
 
-	int getCountProductInProductArr() const; // מחזיר את מס' המוצרים בהזמנה
-	int getCountSellersInSellersArr() const; // מחזיר את מס' המוכרים בהזמנה
-
-	void  setCountProductInProductArr(int n); // מעדכן את מס' המוצרים בהזמנה
-	void setCountSellersInSellersArr(int n); // מעדכן את מס' המוכרים בהזמנה
-	void setOrderPayedTrue();
+	int getCountProductInProductArr() const; 
+	int getCountSellersInSellersArr() const; 
 	bool getOrderPayed()  const;
-	void setTotalPrice(double n); // מעדכן את הסכום הסופי של ההזמנה
-	double getTotalPrice();
+	double getTotalPrice() const;
 
-public:
-	void addProductToProductArr(Product &newProduct); // הוספת מוצר למערך המוצרים של ההזמנה
-	Product ** reallocProductArr(Product **oldProductArr, int size); // הגדלת מערך המוצרים במידת הצורך
+	void setCountProductInProductArr(int n); 
+	void setCountSellersInSellersArr(int n); 
+	void setOrderPayedTrue();
+	void setTotalPrice(double n); 
 
-	void addSellerToSellersArr(sellers &newSeller); // הוספת מוכר למערך המוכרים של ההזמנה
-	sellers ** reallocsellersArr(sellers **oldsellersArr, int size); // הגדלת מערך המוכרים במידת הצורך
-	void showSellersByCurrOrder() const;
-	bool checkIfSellerExists(const sellers *seller);
+//----------------------adding order to buyer functions------------------------------//
+	void addProductToProductArr(Product &newProduct); // function adds product to products array's buyer
+	Product ** reallocProductArr(Product **oldProductArr, int size); // function increase products array by one, for a new order, to add to the order array's buyer 
+
+	void addSellerToSellersArr(sellers &newSeller);// function adds seller to sellers array's buyer
+	sellers ** reallocsellersArr(sellers **oldsellersArr, int size); // function increase sellers array by one, for a new seller, to add to the order array's buyer 
+	
+	void showSellersByCurrOrder() const; // function shows sellers in specific order
+	bool checkIfSellerExists(const sellers *seller); // function checks that seller is adding only one time to sellers array of order to prevent duplicates
+
 private:
-	//attributes
+//----------------------------attributes----------------------------//
 	double totalPrice;
 	Product** productArr;
 	sellers **sellersArr;
-	bool orderPayed;
-	int CountProductInProductArr = 0; //אינדקס עבור מספר המוצרים לרכישה שיש בהזמנה
-	int CountSellersInSellersArr = 0; // אינדקס עבור מספר המוכרים שיש עבור ההזמנה שתתבצע
+	bool orderPayed; // indicate if specific order has payed
+	int CountProductInProductArr = 0; // index counts product in oreder per buyer (not a static variable)
+	int CountSellersInSellersArr = 0; // index counts seller in oreder per buyer (not a static variable)
 };
 #endif 
