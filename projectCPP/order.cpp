@@ -99,7 +99,7 @@ void  order::setOrderPayedTrue()
 
 //----------------------adding order to buyer functions------------------------------//
 
-void order::addProductToProductArr(Product &newProduct)// function add product to products array in order object of buayer
+void order::addProductToProductArr(Product &newProduct)// function add product to products array in order object of buyer
 {
 	int i = getCountProductInProductArr() - 1;
 	if (getCountProductInProductArr() == 0) //if it is the first product

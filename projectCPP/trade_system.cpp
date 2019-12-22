@@ -39,7 +39,7 @@ trade_system::trade_system(const trade_system & other)//copy constructor
 bool trade_system::setName(const char* n)  //check valid name
 {
 
-	if (system_name != NULL) // initialize the system name as nullptr 
+	if (system_name != NULL) // initialize the system name as null-ptr 
 		delete[] system_name;
 
 	if (strlen(n) <= MAX_NAME_SIZE) // check valid length name

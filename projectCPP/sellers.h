@@ -11,7 +11,7 @@ class sellers
 public:
 	sellers() = delete; //delete constructor- we don't allow default constructor of seller
 	sellers(const char *user_name, const char *password, const address_user &address); // constructor
-	 //not intrested in copy constructor- we dont copy a seller(person)
+	 //not interested in copy constructor- we don't copy a seller(person)
 	~sellers(); //destructor 
 
 	void showSellerBasicDeatelis() const;// function show basic details of seller

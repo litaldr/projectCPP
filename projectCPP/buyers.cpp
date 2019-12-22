@@ -92,6 +92,7 @@ wishList ** buyers::reallocWishList(wishList **oldWishListArr, int size) // func
 void buyers::showWishList() const
 {
 	int productIndex;
+	cout << "This is your current wish list:" << endl;
 	for (productIndex = 0; productIndex < CountProductInWishList; productIndex++)
 	{
 		cout << "ProductNumber in wish list is: " << productIndex+1 << endl;
@@ -170,13 +171,13 @@ void buyers::addOrderToOrdersArr(order *newOrder) // function adds order object 
 		this->ordersArr = new order*;
 	else
 	{
-		ordersArr = reallocOrdersArr(ordersArr, i + 1); // incraese orders array for one new order objet
+		ordersArr = reallocOrdersArr(ordersArr, i + 1); // increase orders array for one new order object
 	}
 	i++;
 	ordersArr[i] = new order(*newOrder);//order constructor 
 }
 
-order ** buyers::reallocOrdersArr(order **oldOrdersArr, int size) // function incraeses orders array for one new order objet
+order ** buyers::reallocOrdersArr(order **oldOrdersArr, int size) // function increases orders array for one new order object
 {
 	order **newOrdersArr = new order*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -189,7 +190,7 @@ order ** buyers::reallocOrdersArr(order **oldOrdersArr, int size) // function in
 
 void buyers::showBuyerorderByIndex(int index) const //print the products of order at index "i" in orders array 
 {
-	cout << "The products in order number" << index + 1 << "are:" << endl;
+	cout << "The products in order number " << index + 1 << " are:" << endl;
 	for (int i = 0; i < ordersArr[index]->getCountProductInProductArr(); i++)
 	{
 		ordersArr[index]->getProductArr()[i]->show();

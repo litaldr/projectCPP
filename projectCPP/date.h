@@ -17,8 +17,8 @@ private:
 
 public:
 
-	date(int day = 1, int month = 1, int year = 2001); // defualt constructor
-	//not intrested in copy constructor - each date is set for a specific feedback
+	date(int day = 1, int month = 1, int year = 2001); // default constructor
+	//not interested in copy constructor - each date is set for a specific feedback
 	~date(); // destructor
 	
 //---------------------set & get functions-----------------------//

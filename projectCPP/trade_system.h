@@ -15,7 +15,7 @@ private:
 
 public:
 
-	trade_system() = default; // constructor defualt
+	trade_system() = default; // constructor default
 	~trade_system(); // destructor 
 
 //--------not in usr---------//

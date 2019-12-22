@@ -1,13 +1,13 @@
 #include "Feedback.h"
 
-Feedback::Feedback(const date& newdate, buyers *buyer,  char* userFeedback) : myDate(newdate), buyer(buyer) // costructor
+Feedback::Feedback(const date& newdate, buyers *buyer,  char* userFeedback) : myDate(newdate), buyer(buyer) // constructor
 {
 	this->user_feedback = new char[strlen(userFeedback) + 1];
 	strcpy(this->user_feedback, userFeedback);
 	this->user_feedback[strlen(userFeedback)] = '\0';
 }
 
-Feedback::Feedback(const Feedback &other) :buyer(other.buyer)//copy costructor
+Feedback::Feedback(const Feedback &other) :buyer(other.buyer)//copy constructor
 {
 	this->user_feedback = strdup(other.user_feedback);
 	this->myDate = other.myDate;

@@ -10,7 +10,7 @@ public:
 	
 	buyers() = delete; //delete constructor- we don't allow default constructor of buyer
 	buyers(char *user_name, char *password,const address_user & address); //constructor
-	//not intrested in copy constructor- we dont copy a buyer(person)
+	//not interested in copy constructor- we don't copy a buyer(person)
 	~buyers(); //  destructor 
 	
 	void showBuyerBasicDeatelis() const;

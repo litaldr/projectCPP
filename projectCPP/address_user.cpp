@@ -149,7 +149,7 @@ bool address_user::validString_street(const char *s) //function indicate a valid
 
 	while (s[i] != '\0') //run over the string name
 	{
-		if (!((s[i] <= 'a'&&s[i] >= 'z') || (s[i] <= 'A'&&s[i] >= 'Z') || s[i] == ' ' || (s[i] >= '0' && s[i] <= '9'))) //case charcter is not valid
+		if (!((s[i] <= 'a'&&s[i] >= 'z') || (s[i] <= 'A'&&s[i] >= 'Z') || s[i] == ' ' || (s[i] >= '0' && s[i] <= '9'))) //case character is not valid
 			return false;
 		i++;
 	}

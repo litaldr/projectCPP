@@ -3,13 +3,13 @@
 
 #include "date.h"
 class buyers;
-static const int MAX_FEEDBACK_SIZE = 100; // static varible for maximum feedback size
+static const int MAX_FEEDBACK_SIZE = 100; // static variable for maximum feedback size
 
 class Feedback
 {
 
 public:
-	Feedback() = delete; //not intrested in defualt constructor 
+	Feedback() = delete; //not interested in default constructor 
 	Feedback(const date& newdate, buyers *buyer, char* userFeedback);//constructor
 	Feedback(const Feedback &other);//copy constructor
 	~Feedback(); // destructor

@@ -7,7 +7,7 @@ class order
 {
 public:
 
-	order(double totalPrice=0); // defualt constructor
+	order(double totalPrice=0); // default constructor
 	order(const order & myOrder); // copy constructor
 	~order(); // destructor
 
@@ -41,7 +41,7 @@ private:
 	Product** productArr;
 	sellers **sellersArr;
 	bool orderPayed; // indicate if specific order has payed
-	int CountProductInProductArr = 0; // index counts product in oreder per buyer (not a static variable)
-	int CountSellersInSellersArr = 0; // index counts seller in oreder per buyer (not a static variable)
+	int CountProductInProductArr = 0; // index counts product in order per buyer (not a static variable)
+	int CountSellersInSellersArr = 0; // index counts seller in order per buyer (not a static variable)
 };
 #endif 

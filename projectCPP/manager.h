@@ -4,11 +4,11 @@
 
 #include "trade_system.h"
 
-#define EXIT 11 //define the input of exiting iteractive shell
+#define EXIT 11 //define the input of exiting interactive shell
 class manager // class Intended to contact with the user of the system which gives commands to the system manager 
 {
 public:
-	manager(); // defualt constructor
+	manager(); // default constructor
 	~manager(); // destructor
 
 	void run(); // function run on using system
@@ -36,17 +36,17 @@ public:
 	char *chooseSeller(int & indexBuyersArr); // function gives the name of the seller who will receive feedback
 	bool initializeDate(date & feedbackDate); // date of given feedback
 	void addFeedbackToASeller();
-	void insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback); // function insert feeedback to feedback array's seller
+	void insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback); // function insert feedback to feedback array's seller
 	
 	//----------------------------------related to option 5 -create a wish list---------------// 
-	void addToWishlist(); // function adds wish list object which contains prouduct ans seller of the product to wishlist array's buyer
-	
+	void addToWishlist(); // function adds wish list object which contains product ans seller of the product to wish list array's buyer
+	void checkValidIndex(int &sellerIndex, int& productIndex);
 	//----------------------------------related to option 6 -add order---------------// 
 	order* createNewOrder(int &indexBuyersArr); 
 	void addOrderToBuyer(); // function adds order to orders array's buyer
-
+	void checkValidChoosenItem(int &choosenItem, int indexBuyersArr, int countProductInWishList);
 	//----------------------------------related to option 7 payment---------------// 
-	void payment(); // paymant for last order he made
+	void payment(); // payment for last order he made
 
 	//----------------------------------related to option 8 print buyers---------------// 
 	void printBuyers();
