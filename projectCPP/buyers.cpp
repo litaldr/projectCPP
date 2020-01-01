@@ -1,26 +1,15 @@
-﻿
-#include "buyers.h"
+﻿#include "buyers.h"
 
-buyers::buyers(char *user_name, char *password, const address_user & address) //constructor
-	:address(address)
-{
-	this->user_name = new char[strlen(user_name) + 1];
-	strcpy(this->user_name, user_name);
-	this->user_name[strlen(user_name)] = '\0';
-
-	this->password = new char[strlen(password) + 1];
-	strcpy(this->password, password);
-	this->password[strlen(password)] = '\0';
+buyers::buyers(char *user_name, char *password, const address_user & address) : user(user_name, password, address) //constructor
+{	
+	
 	this->WishListArr = nullptr;
 	this->ordersArr = nullptr;
 	this->CountOrders = 0;
 	this->CountProductInWishList = 0;
 }
-
 buyers::~buyers() //destructor
 {
-	delete[]user_name;
-	delete[]password;
 	if (CountProductInWishList)//if wish list is empty it means we didn't allocate it, so no need to delete it
 	{
 		for (int i = 0; i < CountProductInWishList; i++) // run over wish list array and free memory
@@ -36,17 +25,6 @@ buyers::~buyers() //destructor
 	delete[]ordersArr;
 }
 
-char * buyers::getName() const // get name function
-{
-	return user_name;
-} 
-
-void buyers::showBuyerBasicDeatelis() const // print titles for buyer details
-{
-	cout << "User name is: " << user_name << endl;
-	cout << "User password is: " << password << endl;
-	address.show();
-}
 
 //-----------------------------wish list functions---------------------------//
 
@@ -220,45 +198,3 @@ bool buyers::checkIfSellerExistsInAllOrders(const sellers *seller) // function r
 	return false;
 }
 
-//-----------------------------------not in use yet-----------------------------//
-
-bool buyers::setName(const char* n)
-{//not in use yet - we assume input length is valid
-	if (strlen(n) <= MAX_NAME_SIZE) //valid name
-	{
-		user_name = new char[strlen(n) + 1];
-		strncpy(user_name, n, strlen(n));
-		user_name[strlen(n)] = '\0';
-	}
-
-	else
-		return false;
-
-	return true;
-}
-
-bool buyers::setPassword(const char* p)
-{
-
-	if ((strlen(p) >= MAX_PASSWORD_SIZE) && (strlen(p) <= MIN_PASSWORD_SIZE))// password in range 8-20
-	{
-		password = new char[strlen(p) + 1];
-		strncpy(password, p, strlen(p));
-		password[strlen(p)] = '\0';
-
-	}
-	else
-		return false;
-
-	return true;
-}
-
-char * buyers::getPassword() const
-{
-	return user_name;
-}
-
-address_user buyers::getAddress()  const
-{
-	return address;
-}

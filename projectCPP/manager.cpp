@@ -82,93 +82,86 @@ void manager::doAction(int *num) // function do the wanted action
 {
 	if (*num == 1)//if the user wants to add a buyer
 	{
-		addBuyerToTradeSystem();
+		addUserToTradeSystem();
+		
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return;
+		return;
 	}
-	if (*num == 2) //if the user wants to add a seller
-	{
-		addSellerToTradeSystem();
-		if (userLogOut())
-			*num = EXIT;
-		else
-			return;
-	}
-	if (*num == 3)
+	
+	if (*num == 4)
 	{
 		addProductToSeller();
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return; 
+		return; 
 	}
-	if (*num == 4)
+	if (*num == 5)
 	{
 		addFeedbackToASeller();
 		
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return;
+		return;
 	}
-	if (*num == 5)
+	if (*num == 6)
 	{
 		addToWishlist();
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return;
+		return;
 	}
-	if (*num == 6)
+	if (*num == 7)
 	{
 		addOrderToBuyer();
 		
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return;
+		return;
 	}
-	if (*num == 7)
+	if (*num == 8)
 	{
 		payment();
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return;
+		return;
 	}
-	if (*num == 8)
+	if (*num == 9)
 	{
 		printBuyers();
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return;
+		return;
 	}
-	if (*num == 9)
+	if (*num == 10)
 	{//missing show() for feedback for the specific seller- we decided it's not relevance
 		
 		printSellers();
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return;
+		return;
 	}
-	if (*num == 10)
+	if (*num == 11)
+	{
+		//print seller&buyer
+
+		if (userLogOut())
+			*num = EXIT;
+		return;
+	}
+
+	if (*num == 12)
 	{
 		printProductsByName();
 		
 		if (userLogOut())
 			*num = EXIT;
-		else
-			return;
+		return;
 	}
-	if (*num == 11)
+	if (*num == 13)
 	{
 		cout << "Logging out..... Goodbye :)" << endl;
 		cin.get();// pause the console
-		
 	}
 
 }
@@ -195,42 +188,30 @@ address_user* manager::createAddress()
 	return new address_user(country, city, street, house_number);
 }
 
-buyers* manager::createBuyer()
+
+
+void manager::addUserToTradeSystem()
 {
-	char name[MAX_NAME_SIZE] = { 0 };
-	char password[MAX_PASSWORD_SIZE] = { 0 };
-
-	cout << "Please note that the system receives at most 20 charters" << endl;
-	cout << "Please enter new user name:" << endl;
-	cleanBuffer();
-	cin.getline(name, MAX_NAME_SIZE);
-
-	cout << "Please enter new user password:" << endl;
-	cin.getline(password, MAX_PASSWORD_SIZE);
-
-	address_user *address = createAddress();
-	return new buyers(name, password, *address);
-
-}
-
-void manager::addBuyerToTradeSystem()
-{
-	buyers *buyer = createBuyer();
-	while (!(system.addBuyer(*buyer)))
-	{//we want to make sure the buyer didn't enter a user name that is already in use
+	int type;
+	cout << "type 1 to add buyer, type 2 to add seller, type 3 to add buyer which is also a seller:" << endl;
+	cin >> type;
+	user * newUser = createUser(type);
+	while (!(system.addUser(*newUser)))
+	{//we want to make sure the user didn't enter a user name that is already in use
 		cout << "The user name you entered is in use, please type a new name" << endl;
 		cleanBuffer();// we will ask from him to change it to a new available name
-		cin.getline(buyer->getName(), MAX_NAME_SIZE);
-		while (!buyer->setName(buyer->getName()))
+		cin.getline(newUser->getName(), MAX_NAME_SIZE);
+		while (!newUser->setName(newUser->getName()))
 		{
 			cout << "The user name you entered is not valid, please type a new name" << endl;
-			cin.getline(buyer->getName(), MAX_NAME_SIZE);//receive a new user name from the user
+			cin.getline(newUser->getName(), MAX_NAME_SIZE);//receive a new user name from the user
 		}
 		cout << "Your user name changed successfully" << endl;
 	}
 }
 
-sellers* manager::createSeller()
+
+user* manager::createUser(int num)
 {
 	char name[MAX_NAME_SIZE] = { 0 };
 	char password[MAX_PASSWORD_SIZE] = { 0 };
@@ -243,28 +224,18 @@ sellers* manager::createSeller()
 	cin.getline(password, MAX_PASSWORD_SIZE);
 
 	address_user *address = createAddress();
-	return new sellers(name, password, *address);
-}
-
-void  manager::addSellerToTradeSystem()
-{
-	sellers *seller = createSeller();
-	while (!(system.addSeller(*seller)))
-	{//we want to make sure the seller didn't enter a user name that is already in use
-		cout << "The user name you entered is in use, please type a new name" << endl;
-		cleanBuffer(); // we will ask from him to change it to a new available name
-		cin.getline(seller->getName(), MAX_NAME_SIZE);
-		while (!seller->setName(seller->getName()))
-		{
-			cout << "The user name you entered is not valid, please type a new name " << endl;
-			cin.getline(seller->getName(), MAX_NAME_SIZE); //receive a new user name from the user
-		}
-		cout << "Your user name changed successfully" << endl;
+	switch (num)
+	{
+	case 1:return new sellers(name, password, *address);
+	case 2:return new buyers(name, password, *address);
+	case 3:return new buyerAndSeller(name, password, *address);
+	default: cout << "invalid option" << endl;
+		break;
 	}
-
 }
 
-//----------------------------------related to option 3 -add new Product---------------// 
+
+//----------------------------------related to option 4 -add new Product---------------// 
 
 Product* manager::createProduct()
 {
@@ -319,7 +290,7 @@ void manager::addProductToSeller()
 		cout << "The user name you typed is not exist in our system, please type a new name or create a new user" << endl;
 }
 
-//----------------------------------related to option 4 -create a feedback---------------// 
+//----------------------------------related to option 5 -create a feedback---------------// 
 
 void  manager::addFeedbackToASeller()
 {
@@ -430,7 +401,7 @@ void manager::insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeed
 	}
 }
 
-//----------------------------------related to option 5 -create a wish list---------------// 
+//----------------------------------related to option 6 -create a wish list---------------// 
 
 void manager::addToWishlist()
 {
@@ -480,7 +451,7 @@ void manager::checkValidIndex(int &sellerIndex, int& productIndex)
 	}
 }
 
-//----------------------------------related to option 6 -add order------------------------// 
+//----------------------------------related to option 7 -add order------------------------// 
 
 order* manager::createNewOrder(int &indexBuyersArr)
 {
@@ -558,7 +529,7 @@ void manager::addOrderToBuyer()
 		cout << "The user name you typed is not exist in our system, please type a new name or create a new user" << endl;
 }
 
-//----------------------------------related to option 7 payment---------------// 
+//----------------------------------related to option 8 payment---------------// 
 
 void manager::payment()
 {
@@ -588,7 +559,7 @@ bool approvepurchase;
 		cout << "The user name you typed is not exist in our system, please type a new name or create a new user" << endl;
 }
 
-//----------------------------------related to option 8 print buyers---------------// 
+//----------------------------------related to option 9 print buyers---------------// 
 
 void manager::printBuyers()
 {
@@ -596,7 +567,7 @@ void manager::printBuyers()
 	{
 		//print basic details
 		cout << "This is Buyer " << i + 1 << " of our system: " << endl;
-		system.getBuyersArr()[i]->showBuyerBasicDeatelis();
+		system.getBuyersArr()[i]->showUserBasicDeatelis();
 		if (system.getBuyersArr()[i]->getWishListArr() != nullptr) // print his wish list
 		{
 			cout << "This are Products in his current wish list: " << endl;
@@ -621,7 +592,7 @@ void manager::printBuyers()
 	}
 }
 
-//----------------------------------related to option 9 print sellers---------------// 
+//----------------------------------related to option 10 print sellers---------------// 
 
 void manager::printSellers()
 {
@@ -629,7 +600,7 @@ void manager::printSellers()
 	{
 		// print basic details
 		cout << "This is Seller " << i + 1 << " of our system: " << endl;
-		system.getSellersArr()[i]->showSellerBasicDeatelis();
+		system.getSellersArr()[i]->showUserBasicDeatelis();
 
 		if (system.getSellersArr()[i]->getProductArr() != nullptr) // print his products
 		{
@@ -645,7 +616,10 @@ void manager::printSellers()
 	}
 }
 
-//----------------------------------related to option 10 (and 5) - print products---------------// 
+//----------------------------------related to option 11 print buyerSeller's---------------// 
+
+
+//----------------------------------related to option 12 (and 5) - print products---------------// 
 
 void manager::printProductsByName() // print all products in system by demanded name
 {

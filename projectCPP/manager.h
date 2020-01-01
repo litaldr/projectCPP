@@ -4,7 +4,7 @@
 
 #include "trade_system.h"
 
-#define EXIT 11 //define the input of exiting interactive shell
+#define EXIT 13 //define the input of exiting interactive shell
 class manager // class Intended to contact with the user of the system which gives commands to the system manager 
 {
 public:
@@ -21,11 +21,11 @@ public:
 
 	//----------------------------------related to option 1&2 -add new buyer\seller---------------// 
 	buyers* createBuyer();
-	sellers* createSeller();
+	user* createUser(int num);
 	address_user* createAddress();
-	void addBuyerToTradeSystem(); // function adds buyer to buyer array in attributes of trade system
-	void addSellerToTradeSystem(); // function adds seller to sellers array in attributes of trade system
-
+	buyerAndSeller *createBuyerSeller();
+	void addUserToTradeSystem();// function adds user to users array in attributes of trade system
+	
 	//----------------------------------related to option 3 -add new Product---------------// 
 	Product* createProduct();
 	void addProductToSeller(); //function adds product to products array's seller
