@@ -11,7 +11,9 @@ class trade_system
 private:
 	// static variable initialized  with 0 - gives serial number to each new product added to the whole system
 	static int count_users;
-
+	static int count_sellers;
+	static int count_buyers;
+	static int count_sellersAndBuyers;
 public:
 
 	trade_system() = default; // constructor default
@@ -24,10 +26,17 @@ public:
 
  //------------------------------set & get function-------------------------------//
 	int getCountUsers();
+	void setCountSellers();
+	int getCountSellers();
+	void setCountBuyers();
+	int getCountBuyers();
+	void setCountBuyersSellers();
+	int getCountBuyersSellers();
 	user** getUsersArr();
 	
 	bool setName(const char* n);
-	void setCountUsers(int i);
+	void setCountUsers();
+	
 	
 	//-------- not in use----------//
 	char * getName()  const;

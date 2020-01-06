@@ -1,6 +1,9 @@
 #include "trade_system.h"
 
-int trade_system::count_users = 0; // init
+int trade_system::count_users = 0; 
+int trade_system::count_sellers = 0; 
+int trade_system::count_buyers = 0; 
+int trade_system::count_sellersAndBuyers = 0;
 
 trade_system::~trade_system() //destructor
 {
@@ -48,9 +51,9 @@ bool trade_system::setName(const char* n)  //check valid name
 	return true;
 }
 
-void trade_system::setCountUsers(int i)
+void trade_system::setCountUsers()
 {
-	count_users = i;
+	count_users +=1;
 }
 
 int trade_system::getCountUsers()
@@ -58,6 +61,33 @@ int trade_system::getCountUsers()
 	return count_users;
 }
 
+void trade_system::setCountSellers()
+{
+	count_sellers+=1;
+}
+
+int trade_system::getCountSellers()
+{
+	return count_sellers;
+}
+void trade_system::setCountBuyers()
+{
+	count_buyers +=1;
+}
+
+int trade_system::getCountBuyers()
+{
+	return count_buyers;
+}
+void trade_system::setCountBuyersSellers()
+{
+	count_sellersAndBuyers +=1;
+}
+
+int trade_system::getCountBuyersSellers()
+{
+	return count_sellersAndBuyers;
+}
 
 user** trade_system::getUsersArr()
 {
@@ -85,7 +115,7 @@ bool trade_system::addUser(user& newUser)
 			usersArr = reallocUsersArr(usersArr, i + 1); //if it isn't the first buyer
 		}
 		i++;
-		(usersArr[i]) = new user(newUser);
+		usersArr[i] = &newUser;
 		count_users =i + 1;
 		return true;
 	}
@@ -120,14 +150,18 @@ bool trade_system::nameAvailable(char *comperdName) // function checks that all 
 void trade_system::showProductWithIdenticalName(const char *nameProduct) const
 {
 	int sellerIndex, productIndex;
-	for (sellerIndex = 0; sellerIndex < count_sellers; sellerIndex++)
+	for (sellerIndex = 0; sellerIndex < count_users; sellerIndex++)
 	{
-		for (productIndex = 0; productIndex < sellersArr[sellerIndex]->getCountProduct(); productIndex++)
-		{
-			if ((strcmp(nameProduct, sellersArr[sellerIndex]->getProductArr()[productIndex]->getName())) == 0)
+		buyerAndSeller *temp1 = dynamic_cast<buyerAndSeller*>(usersArr[sellerIndex]);
+		sellers *temp2 = dynamic_cast<sellers*>(usersArr[sellerIndex]);
+		if (temp1 || temp2)
+		{	for (productIndex = 0; productIndex < usersArr[sellerIndex]->getCountProduct(); productIndex++)
 			{
-				cout << "ProductNumber is: " << sellerIndex << "." << productIndex << endl;
-				sellersArr[sellerIndex]->getProductArr()[productIndex]->show();
+				if ((strcmp(nameProduct, usersArr[sellerIndex]->getProductArr()[productIndex]->getName())) == 0)
+				{
+					cout << "ProductNumber is: " << sellerIndex << "." << productIndex << endl;
+					usersArr[sellerIndex]->getProductArr()[productIndex]->show();
+				}
 			}
 		}
 	}
