@@ -19,18 +19,6 @@ public:
 	bool setPassword(const char* newPassword);
 	
 	
-	virtual void addProduct(Product &newProduct) = 0;
-	virtual void setCountProduct(int n) = 0;
-	virtual int getCountProduct()   const = 0;
-	virtual Product ** getProductArr() const = 0;
-
-	virtual void setCountFeedback(int n) = 0;
-	virtual int getCountFeedback()   const = 0;
-	virtual void showAllSellersInBuyerorder() const = 0; // show all the sellers that the buyer has bought from
-	virtual int getCountOrders() const = 0;
-	virtual order **getOrdersArr() const = 0;
-	virtual void addFeedback(Feedback &newFeedback) = 0;
-
 
 protected:
 	char* user_name;
