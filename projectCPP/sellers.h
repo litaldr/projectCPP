@@ -17,20 +17,20 @@ public:
 
 
 //------------------------------set & get function-------------------------------//
-	void setCountProduct(int n);
-	void setCountFeedback(int n);
+	virtual void setCountProduct(int n) override;
+	virtual void setCountFeedback(int n) override;
 
-	int getCountProduct()   const;
-	int getCountFeedback()   const;
-	Product ** getProductArr() const;
+	virtual int getCountProduct()   const override;
+	virtual int getCountFeedback()   const override;
+	virtual Product ** getProductArr() const   override;
 	//----------------not in use-----------------//
 	Feedback ** getFeedbackArr() const;
 	
 	//------------------------------add product and feedback functions-------------------------------//
-	void addProduct(Product& newProduct);
+	virtual void addProduct(Product& newProduct) override;
 	Product ** reallocProductArr(Product **oldProductArr, int size);
 
-	void addFeedback(Feedback& newFeedback);
+	virtual void addFeedback(Feedback& newFeedback) override;
 	Feedback ** reallocFeedbackArr(Feedback **oldFeedbackArr, int size);
 
 protected:
