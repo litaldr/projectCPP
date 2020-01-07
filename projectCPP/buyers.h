@@ -31,9 +31,9 @@ public:
 	order **reallocOrdersArr(order **oldOrdersArr, int size); // using this function in "addOrderToOrdersArr" for increasing the orders array
 	
 	void showBuyerorderByIndex(int index) const;//shows a specific order for a specific buyer
-	virtual void showAllSellersInBuyerorder() const override; // show all the sellers that the buyer has bought from
-	virtual order **getOrdersArr() const override;
-	virtual int getCountOrders() const override;
+	void showAllSellersInBuyerorder() const; // show all the sellers that the buyer has bought from
+	order **getOrdersArr() const;
+	int getCountOrders() const;
 
 	void addOneToCountOrders();// increase by one count orders per buyer
 	bool checkIfSellerExistsInAllOrders(const sellers *seller); // this function prevents duplicate sellers in the sellers array of orders,if the buyer bought more then once from a seller

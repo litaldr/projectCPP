@@ -282,9 +282,14 @@ bool manager::findSellerInSystem(int &indexUsersArr)
 		buyerAndSeller *temp1 = dynamic_cast<buyerAndSeller*>(system.getUsersArr()[indexUsersArr]);
 		sellers *temp2 = dynamic_cast<sellers*>(system.getUsersArr()[indexUsersArr]);
 		//temp1 & temp2 indicate if the user is either a seller or a buyer which is also a seller
-			if (temp1 || temp2)
+			if (temp1)
 			{
-				if (strcmp(userName, system.getUsersArr()[indexUsersArr]->getName()) == 0) // indicate user is find
+				if (strcmp(userName, temp1->getName()) == 0) // indicate user is find
+					return true;
+			}
+			if (temp2)
+			{
+				if (strcmp(userName, temp1->getName()) == 0) // indicate user is find
 					return true;
 			}
 	}
@@ -304,7 +309,7 @@ void manager::addProductToSeller()
 		//the value indexUsersArr returns by reference
 	{
 		indexUsersArr--;
-		system.getUsersArr()[indexUsersArr]->addProduct(*newProduct);
+		system.getUsersArr()[indexUsersArr]->addProduct(*newProduct);//צריך לעשות דיאנמיק קאסט ואז לשלוח את הטמפ שיחזור
 	}
 	else // case seller is not fount in system
 		cout << "The user name you typed is not exist in our system" << endl;
