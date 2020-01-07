@@ -304,7 +304,7 @@ void manager::addProductToSeller()
 		//the value indexUsersArr returns by reference
 	{
 		indexUsersArr--;
-		system.getUsersArr()[indexUsersArr]->addProduct(*newProduct);
+		system.getUsersArr()[indexUsersArr]->addProduct(*newProduct);//
 	}
 	else // case seller is not fount in system
 		cout << "The user name you typed is not exist in our system" << endl;
