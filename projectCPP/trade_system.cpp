@@ -149,18 +149,19 @@ bool trade_system::nameAvailable(char *comperdName) // function checks that all 
 
 void trade_system::showProductWithIdenticalName(const char *nameProduct) const
 {
-	int sellerIndex, productIndex;
-	for (sellerIndex = 0; sellerIndex < count_users; sellerIndex++)
+	int sellerIndex, productIndex, countTotalSellers=0;
+	for (sellerIndex = 0; sellerIndex < count_users && countTotalSellers<count_sellers+count_sellersAndBuyers; sellerIndex++)
 	{
-		buyerAndSeller *temp1 = dynamic_cast<buyerAndSeller*>(usersArr[sellerIndex]);
-		sellers *temp2 = dynamic_cast<sellers*>(usersArr[sellerIndex]);
-		if (temp1 || temp2)
-		{	for (productIndex = 0; productIndex < usersArr[sellerIndex]->getCountProduct(); productIndex++)
+		sellers *temp= dynamic_cast<sellers*>(usersArr[sellerIndex]);
+		if (temp)
+		{	
+			countTotalSellers++;
+			for (productIndex = 0; productIndex < temp->getCountProduct(); productIndex++)
 			{
-				if ((strcmp(nameProduct, usersArr[sellerIndex]->getProductArr()[productIndex]->getName())) == 0)
+				if ((strcmp(nameProduct, temp->getProductArr()[productIndex]->getName())) == 0)
 				{
 					cout << "ProductNumber is: " << sellerIndex << "." << productIndex << endl;
-					usersArr[sellerIndex]->getProductArr()[productIndex]->show();
+					temp->getProductArr()[productIndex]->show();
 				}
 			}
 		}

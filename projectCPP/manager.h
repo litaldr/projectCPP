@@ -33,18 +33,18 @@ public:
 	
 	//----------------------------------related to option 4 -create a feedback---------------// 
 	bool findBuyerInSystem(int &indexBuyerArr); // function finds in system the buyer who wants to give a feedback
-	char *chooseSeller(int & indexBuyersArr); // function gives the name of the seller who will receive feedback
+	sellers *chooseSeller(int & indexBuyersArr); // function gives the name of the seller who will receive feedback
 	bool initializeDate(date & feedbackDate); // date of given feedback
 	void addFeedbackToASeller();
-	void insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback); // function insert feedback to feedback array's seller
+	//void insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback); // function insert feedback to feedback array's seller
 	
 	//----------------------------------related to option 5 -create a wish list---------------// 
 	void addToWishlist(); // function adds wish list object which contains product ans seller of the product to wish list array's buyer
 	void checkValidIndex(int &sellerIndex, int& productIndex);
 	//----------------------------------related to option 6 -add order---------------// 
-	order* createNewOrder(int &indexBuyersArr); 
+	order* createNewOrder(int &indexBuyersArr);
+	void checkValidChoosenItem(int & choosenItem, int countProductInWishList);
 	void addOrderToBuyer(); // function adds order to orders array's buyer
-	void checkValidChoosenItem(int &choosenItem, int indexBuyersArr, int countProductInWishList);
 	//----------------------------------related to option 7 payment---------------// 
 	void payment(); // payment for last order he made
 
