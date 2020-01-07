@@ -1,28 +1,17 @@
 ﻿#ifndef __BUYERS_H
 #define __BUYERS_H
 
-
+#include "user.h"
 #include "wishList.h"
 #include "order.h"
-class buyers
+class buyers : virtual public user
 {
 public:
 	
 	buyers() = delete; //delete constructor- we don't allow default constructor of buyer
 	buyers(char *user_name, char *password,const address_user & address); //constructor
 	//not interested in copy constructor- we don't copy a buyer(person)
-	~buyers(); //  destructor 
-	
-	void showBuyerBasicDeatelis() const;
-
-	// --------------------------set & get function--------------------------//
-	char * getName()          const;
-	
-	//----not in use yet-------//
-	bool setPassword(const char* p);
-	bool setName(const char* n);
-	char * getPassword()      const;
-	address_user getAddress()      const;
+	virtual ~buyers(); //  destructor 
 
 	// ------------------------functions of wish list's buyer-----------------//
 
@@ -38,22 +27,19 @@ public:
 
 	// --------------------------functions of orders's buyer-----------------//
 	
-	void addOrderToOrdersArr(order *newOrder); // add a new order to a order array of specific buyer
+	void addOrderToOrdersArr(order *newOrder) ; // add a new order to a order array of specific buyer
 	order **reallocOrdersArr(order **oldOrdersArr, int size); // using this function in "addOrderToOrdersArr" for increasing the orders array
 	
 	void showBuyerorderByIndex(int index) const;//shows a specific order for a specific buyer
-	void showAllSellersInBuyerorder() const; // show all the sellers that the buyer has bought from
+	void showAllSellersInBuyerorder() const ; // show all the sellers that the buyer has bought from
 	order **getOrdersArr() const;
 	int getCountOrders() const;
 
 	void addOneToCountOrders();// increase by one count orders per buyer
 	bool checkIfSellerExistsInAllOrders(const sellers *seller); // this function prevents duplicate sellers in the sellers array of orders,if the buyer bought more then once from a seller
 	
-private:
+protected:
 //-----------------------attributes----------------------//
-	char *user_name;
-	char *password;
-	address_user address;
 
 	wishList **WishListArr; // pointers array to wish list objects
 	int CountProductInWishList;// index counts product in wish list per buyer (not a static variable)
