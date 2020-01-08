@@ -35,6 +35,17 @@ address_user::~address_user() //destructor
 	delete[]street;
 }
 
+ostream& operator<<(ostream& os, const address_user& a) // operator print address
+{
+	os << "User country is: " << a.country << endl;
+	os << "User city is: " << a.city << endl;
+	os << "User street is: " << a.street << endl;
+	os << "User house number is : " << a.house_number << endl;
+	os << "---------------------------------" << endl;
+	
+	return os;
+}
+
 void address_user::show()  const // print titles for address details
 {
 	cout << "User country is: " << country << endl;

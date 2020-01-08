@@ -14,12 +14,23 @@ user::~user()
 	delete[]user_name;
 	delete[]password;
 }
+ostream& operator<<(ostream& os, const user& u) // operator print user details include his address
+{
+	os << "User name is: " << u.user_name << endl;
+	os << "User password is: " << u.password << endl;
+	os << "User address is: " << u.address << endl; //זה סינטקס לקריאת האופרטור הדפסה של הכתובת של האוביקש הנוכחי?
 
+	return os;
+}
 void user::showUserBasicDeatelis() const
 {
 	cout << "User name is: " << user_name << endl;
 	cout << "User password is: " << password << endl;
 	address.show();
+}
+bool user::operator>(ostream & os, const user & u1, const user & u2) const
+{
+	return false;
 }
 bool user::setName(const char* name)
 {
@@ -33,7 +44,7 @@ bool user::setName(const char* name)
 		return false;
 	return true;
 }
-char* user::getName() const
+const char* user::getName() const
 {
 	return user_name;
 }
@@ -54,7 +65,7 @@ bool user::setPassword(const char* newPassword)
 	return true;
 	
 }
-address_user user::getAddress()  const
+const address_user& user::getAddress()  const
 {
 	return address;
 }

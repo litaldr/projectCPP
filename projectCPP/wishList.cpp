@@ -14,7 +14,7 @@ wishList::wishList(Product * product) : product(product) //constructor
 }
 //-------------not in use---------------//
 
-wishList::~wishList() {} // destructor
+//wishList::~wishList() {} // destructor
 
 
 //----------------------set & get functions---------------------//

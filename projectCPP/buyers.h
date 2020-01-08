@@ -25,6 +25,8 @@ public:
 	void addOneToWishListArr(); // using this function to update the current size of wish list array after adding a wish list object to wish list array 
 	void deleteProductFromBuyerWishList(int OrderIndex); // using function to update wish list array after payment (option 7 in interactive shell)
 
+	bool operator>(const buyers&other) const; // operator comper between currPriceInWishList of buyer to other buyer
+	double getCurrPriceInWishList() const;
 	// --------------------------functions of orders's buyer-----------------//
 	
 	void addOrderToOrdersArr(order *newOrder) ; // add a new order to a order array of specific buyer
@@ -43,7 +45,8 @@ protected:
 
 	wishList **WishListArr; // pointers array to wish list objects
 	int CountProductInWishList;// index counts product in wish list per buyer (not a static variable)
-	
+	double currPriceInWishList; // sum price of products in wishlist
+
 	order **ordersArr; // pointers array to order objects- represent the history transactions
 	int CountOrders; // index counts orders in order array per buyer (not a static variable)
 

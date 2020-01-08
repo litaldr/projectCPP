@@ -24,6 +24,7 @@ public:
 	address_user(const address_user& other); //copy constructor
 	~address_user();// default destructor because all names strings are allocated static
     
+	friend ostream& operator<<(ostream& os, const address_user& a); // operator print address
 	void show()  const;
 
 //------------------------------not in use yet------------------------------//

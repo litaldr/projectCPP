@@ -19,6 +19,7 @@ public:
 	~Product(); //destructor 
 
 	void show()  const; // function show all product details
+	friend ostream& operator<<(ostream& os, const Product& p); // operator print product
 
  //---------------------------------set & get functions------------------------------//
 	char * getName()  const;
@@ -28,7 +29,7 @@ public:
  //--------------------not in use--------------------//
 	bool setName(const char *n);
 	bool setCategory(int i);
-    void setPrice(double p);
+    bool setPrice(double p);
 			
 	eCategory getCategory()  const;
 //-------------------------------------------------//

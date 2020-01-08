@@ -38,17 +38,18 @@ void manager::printMenu() // function prints the menu system for the user
 {
 	cout << "--------------------------------------------------------------" << endl;
 	cout << "Welcome, please let us know which action you would like to do:" << endl;
-	cout << "For adding a buyer press 1" << endl;
-	cout << "For adding a seller press 2" << endl;
-	cout << "For adding an item for a seller press 3" << endl;
-	cout << "For adding a feedback to a seller press 4" << endl;
-	cout << "For adding an item to a buyer shopping cart press 5" << endl;
-	cout << "To make an order to a buyer press 6" << endl;
-	cout << "To pay for an order of a buyer press 7" << endl;
-	cout << "To print all buyers details press 8" << endl;
-	cout << "To print all sellers details press 9" << endl;
+	cout << "For adding a usr press 1" << endl;
+	cout << "For adding an item for a seller press 2" << endl;
+	cout << "For adding a feedback to a seller press 3" << endl;
+	cout << "For adding an item to a buyer shopping cart press 4" << endl;
+	cout << "To make an order to a buyer press 5" << endl;
+	cout << "To pay for an order of a buyer press 6" << endl;
+	cout << "To print all users who are buyers type press 7" << endl;
+	cout << "To print all users who are sellers type press 8" << endl;
+	cout << "To print all users who are sellers and buyers type details press 9" << endl;
 	cout << "To print all  identical name items press 10" << endl;
-	cout << "To exit press 11" << endl;
+	cout << "To function check operators press 11" << endl;
+	cout << "To exit press 12" << endl;
 	cout << "--------------------------------------------------------------" << endl;
 
 }
@@ -64,9 +65,9 @@ int manager::getAction() // function give indicate which action the user is abou
 	
 		cin >> input;
 	}
-	if ((input <= 10) && (input >= 1))
+	if ((input <= 11) && (input >= 1))
 		return input;
-	else if (input == 11) //input exit system
+	else if (input == 12) //input exit system
 		return EXIT;
 }
 
@@ -89,14 +90,14 @@ void manager::doAction(int *num) // function do the wanted action
 		return;
 	}
 	
-	if (*num == 4)
+	if (*num == 2)
 	{
 		addProductToSeller();
 		if (userLogOut())
 			*num = EXIT;
 		return; 
 	}
-	if (*num == 5)
+	if (*num == 3)
 	{
 		addFeedbackToASeller();
 		
@@ -104,14 +105,14 @@ void manager::doAction(int *num) // function do the wanted action
 			*num = EXIT;
 		return;
 	}
-	if (*num == 6)
+	if (*num == 4)
 	{
 		addToWishlist();
 		if (userLogOut())
 			*num = EXIT;
 		return;
 	}
-	if (*num == 7)
+	if (*num == 5)
 	{
 		addOrderToBuyer();
 		
@@ -119,21 +120,21 @@ void manager::doAction(int *num) // function do the wanted action
 			*num = EXIT;
 		return;
 	}
-	if (*num == 8)
+	if (*num == 6)
 	{
 		payment();
 		if (userLogOut())
 			*num = EXIT;
 		return;
 	}
-	if (*num == 9)
+	if (*num == 7)
 	{
 		printBuyers();
 		if (userLogOut())
 			*num = EXIT;
 		return;
 	}
-	if (*num == 10)
+	if (*num == 8)
 	{//missing show() for feedback for the specific seller- we decided it's not relevance
 		
 		printSellers();
@@ -141,9 +142,26 @@ void manager::doAction(int *num) // function do the wanted action
 			*num = EXIT;
 		return;
 	}
+	if (*num == 9)
+	{
+		printBuyersAndSellers();
+
+		if (userLogOut())
+			*num = EXIT;
+		return;
+	}
+
+	if (*num == 10)
+	{
+		printProductsByName();
+		
+		if (userLogOut())
+			*num = EXIT;
+		return;
+	}
 	if (*num == 11)
 	{
-		//print seller&buyer
+		checkOperators();
 
 		if (userLogOut())
 			*num = EXIT;
@@ -152,21 +170,13 @@ void manager::doAction(int *num) // function do the wanted action
 
 	if (*num == 12)
 	{
-		printProductsByName();
-		
-		if (userLogOut())
-			*num = EXIT;
-		return;
-	}
-	if (*num == 13)
-	{
 		cout << "Logging out..... Goodbye :)" << endl;
 		cin.get();// pause the console
 	}
 
 }
 
-//----------------------------------related to option 1&2 -add new buyer\seller---------------// 
+//----------------------------------related to option 1 -add new user: buyer\seller\buyerSeller---------------// 
 
 address_user* manager::createAddress()
 {
@@ -245,7 +255,7 @@ user* manager::createUser(int num)
 }
 
 
-//----------------------------------related to option 4 -add new Product---------------// 
+//----------------------------------related to option 2 -add new Product---------------// 
 
 Product* manager::createProduct()
 {
@@ -309,30 +319,36 @@ void manager::addProductToSeller()
 		cout << "The user name you typed is not exist in our system" << endl;
 }
 
-//----------------------------------related to option 5 -create a feedback---------------// 
+//----------------------------------related to option 3 -create a feedback---------------// 
 
 void  manager::addFeedbackToASeller()
 {
 	int indexUsersArr = 0;
 	if (findBuyerInSystem(indexUsersArr)) // "findBuyerInSystem" function returns true when finding the buyer who demanded to write the feedback
 	{//findBuyerInSystem returns by refrence the index of the buyer in the users array- so for sure the user in this index is a buyer
-		sellers *tempSeller = chooseSeller(indexUsersArr); // "chooseSeller" function returns seller name to give for the feedback
-
-		// enter feedback
-		char feedbackString[MAX_FEEDBACK_SIZE] = { 0 };
-		cout << "Please enter your feedback for this seller: " << endl;
-		cleanBuffer();
-		cin.getline(feedbackString, MAX_FEEDBACK_SIZE);
-
-		// enter given feedback date
-		date feedbackDate;
-		do
-		{
-			cout << "Please enter a valid date: " << endl;
-		} while (!initializeDate(feedbackDate)); // check valid date
 		buyers *temp = dynamic_cast<buyers*>(system.getUsersArr()[indexUsersArr]);
-		Feedback newFeedback(feedbackDate, temp, feedbackString); // constructor
-		tempSeller->addFeedback(newFeedback); // add new feedback to feedback array of the seller
+		if (temp->getCountOrders()>0)
+		{
+			sellers *tempSeller = chooseSeller(indexUsersArr); // "chooseSeller" function returns seller name to give for the feedback
+
+			// enter feedback
+			char feedbackString[MAX_FEEDBACK_SIZE] = { 0 };
+			cout << "Please enter your feedback for this seller: " << endl;
+			cleanBuffer();
+			cin.getline(feedbackString, MAX_FEEDBACK_SIZE);
+
+			// enter given feedback date
+			date feedbackDate;
+			do
+			{
+				cout << "Please enter a valid date: " << endl;
+			} while (!initializeDate(feedbackDate)); // check valid date
+			Feedback newFeedback(feedbackDate, temp, feedbackString); // constructor
+			tempSeller->addFeedback(newFeedback); // add new feedback to feedback array of the seller
+		}
+		else
+			cout << "The buyer you typed has not made any orders yet, please type a new buyer who alredy have done at least one order" << endl;
+
 	}
 	else
 		cout << "The user name you typed is not exist in our system, please type a new name or create a new user" << endl;
@@ -428,7 +444,7 @@ bool manager::initializeDate(date & feedbackDate)// use in option 4
 //	}
 //}
 
-//----------------------------------related to option 6 -create a wish list---------------// 
+//----------------------------------related to option 4 -create a wish list---------------// 
 
 void manager::addToWishlist()
 {
@@ -479,7 +495,7 @@ void manager::checkValidIndex(int &sellerIndex, int& productIndex)
 	}
 }
 
-//----------------------------------related to option 7 -add order------------------------// 
+//----------------------------------related to option 5 -add order------------------------// 
 
 order* manager::createNewOrder(int &indexBuyersArr)
 {
@@ -561,7 +577,7 @@ void manager::addOrderToBuyer()
 		cout << "The user name you typed is not exist in our system, please type a new name or create a new user" << endl;
 }
 
-//----------------------------------related to option 8 payment---------------// 
+//----------------------------------related to option 6 payment---------------// 
 
 void manager::payment()
 {
@@ -592,7 +608,7 @@ bool approvepurchase;
 		cout << "The user name you typed is not exist in our system, please type a new name or create a new user" << endl;
 }
 
-//----------------------------------related to option 9 print buyers---------------// 
+//----------------------------------related to option 7 print buyers---------------// 
 //////////////////////////////////////////////////////////////
 void manager::printBuyers()
 {
@@ -628,7 +644,7 @@ void manager::printBuyers()
 	}
 }
 
-//----------------------------------related to option 10 print sellers---------------// 
+//----------------------------------related to option 8 print sellers---------------// 
 
 void manager::printSellers()
 {
@@ -652,10 +668,14 @@ void manager::printSellers()
 	}
 }
 
-//----------------------------------related to option 11 print buyerSeller's---------------// 
+//----------------------------------related to option 9 print buyerSeller's---------------// 
+void manager::printBuyersAndSellers()
+{
+
+}
 
 
-//----------------------------------related to option 12 (and 5) - print products---------------// 
+//----------------------------------related to option 10 (and 5) - print products---------------// 
 
 void manager::printProductsByName() // print all products in system by demanded name
 {
@@ -664,4 +684,13 @@ void manager::printProductsByName() // print all products in system by demanded 
 	cin.getline(productName, MAX_NAME_SIZE);
 	system.showProductWithIdenticalName(productName);
 	
+}
+
+//----------------------------------related to option 11 - check operators---------------// 
+void manager::checkOperators()
+{
+	//בדיקת הוספת קונה או הוספת מוכר
+	// בדיקת השוואת סכום עגלת קניות של שני קונים
+	// בדיקת הדפסת מוכר : פרטים, כתובת, מוצרים 
+
 }

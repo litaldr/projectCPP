@@ -7,6 +7,7 @@ buyers::buyers(char *user_name, char *password, const address_user & address) : 
 	this->ordersArr = nullptr;
 	this->CountOrders = 0;
 	this->CountProductInWishList = 0;
+	this->currPriceInWishList = 0;
 }
 buyers::~buyers() //destructor
 {
@@ -54,6 +55,7 @@ void buyers::addProductSellerToWishlist(Product *newProduct, sellers * newSeller
 	}
 	i++;
 	WishListArr[i] = new wishList(newProduct, newSeller);// constructor wish list objet- both attributs: product and selller
+	currPriceInWishList += newProduct->getPrice(); // sum price of products in wishlist
 }
 
 wishList ** buyers::reallocWishList(wishList **oldWishListArr, int size) // function incraeses wish list array for one new wish list objet
@@ -92,6 +94,7 @@ void buyers::deleteProductFromBuyerWishList(int OrderIndex) //this function will
 				{
 					WishListArr[j] = NULL;// changing the pointer, instead of a pointer to a wish list object, puts NULL 
 					countNewSizeWishList--;//descended the amount of wish list objects in wish list array
+					currPriceInWishList -= ordersArr[OrderIndex]->getProductArr()[i]->getPrice(); // update the cuurent price of products in wishlist
 				}
 			}
 		}
@@ -123,6 +126,18 @@ void buyers::deleteProductFromBuyerWishList(int OrderIndex) //this function will
 		delete[]WishListArr;
 		this->CountProductInWishList = 0; // no producr\ wish list object in wish list array 
 	}
+}
+double buyers::getCurrPriceInWishList() const
+{
+	return currPriceInWishList;
+}
+
+bool buyers::operator>(const buyers&other) const // operator comper between currPriceInWishList of buyer to other buyer
+{
+	if (other.getCurrPriceInWishList > this->currPriceInWishList)
+		return true;
+	else
+		return false;
 }
 
 //-----------------------------order functions------------------------------//

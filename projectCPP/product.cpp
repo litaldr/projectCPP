@@ -27,6 +27,16 @@ Product::~Product() //destructor
 	delete[] productName;
 }
 
+ostream& operator<<(ostream& os, const Product& p) // operator print address
+{
+	os << "Product name is: " << p.productName << endl;
+	os << "Product category is: " << p.categoryStr[p.category] << endl;
+	os << "Product serial number is: " << p.serialNumber << endl;
+	os << "Product price is: " << p.price << endl;
+	os << "---------------------------------" << endl;
+
+	return os;
+}
 
 void Product::show()  const // function prints product details
 {
@@ -71,23 +81,32 @@ bool Product::setName(const char* n)
 
 bool Product::setCategory(int i)
 {
-	if (i == 0)
+	eCategory category = static_cast<eCategory>(i);
+	if (category)
+		return true;
+	/*if (i == 0)
 		eCategory category = CHILDREN;
 	else if (i == 1)
 		eCategory category = ELECTRONICS;
 	else if (i == 2)
 		eCategory category = OFFICE;
 	else if (i == 3)
-		eCategory category = CLOTHING;
+		eCategory category = CLOTHING;*/
 	else
 		return false;
 
-	return true;
+	//return true;
 }
 
-void Product::setPrice(double p)
+bool Product::setPrice(double p)
 {
-	this->price = p;
+	if (p >= 0)
+	{
+		this->price = p;
+		return true;
+	}
+	else
+		return false;
 }
 
 Product::eCategory Product::getCategory()  const

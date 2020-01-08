@@ -19,43 +19,48 @@ public:
 	bool userLogOut(); // function indicate if the user wants to log out of system
 	void cleanBuffer();
 
-	//----------------------------------related to option 1&2 -add new buyer\seller---------------// 
-	buyers* createBuyer();
+	//----------------------------------related to option 1 -add new buyer\seller---------------// 
+	//buyers* createBuyer();
 	user* createUser(int num);
 	address_user* createAddress();
-	buyerAndSeller *createBuyerSeller();
+	//buyerAndSeller *createBuyerSeller();
 	void addUserToTradeSystem();// function adds user to users array in attributes of trade system
 	
-	//----------------------------------related to option 3 -add new Product---------------// 
+	//----------------------------------related to option 2 -add new Product---------------// 
 	Product* createProduct();
 	void addProductToSeller(); //function adds product to products array's seller
 	bool findSellerInSystem(int & indexSellersArr);
 	
-	//----------------------------------related to option 4 -create a feedback---------------// 
+	//----------------------------------related to option 3 -create a feedback---------------// 
 	bool findBuyerInSystem(int &indexBuyerArr); // function finds in system the buyer who wants to give a feedback
 	sellers *chooseSeller(int & indexBuyersArr); // function gives the name of the seller who will receive feedback
 	bool initializeDate(date & feedbackDate); // date of given feedback
 	void addFeedbackToASeller();
 	//void insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback); // function insert feedback to feedback array's seller
 	
-	//----------------------------------related to option 5 -create a wish list---------------// 
+	//----------------------------------related to option 4 -create a wish list---------------// 
 	void addToWishlist(); // function adds wish list object which contains product ans seller of the product to wish list array's buyer
 	void checkValidIndex(int &sellerIndex, int& productIndex);
-	//----------------------------------related to option 6 -add order---------------// 
+	//----------------------------------related to option 5 -add order---------------// 
 	order* createNewOrder(int &indexBuyersArr);
 	void checkValidChoosenItem(int & choosenItem, int countProductInWishList);
 	void addOrderToBuyer(); // function adds order to orders array's buyer
-	//----------------------------------related to option 7 payment---------------// 
+	//----------------------------------related to option 6 payment---------------// 
 	void payment(); // payment for last order he made
 
-	//----------------------------------related to option 8 print buyers---------------// 
+	//----------------------------------related to option 7 print buyers---------------// 
 	void printBuyers();
 
-	//----------------------------------related to option 9 print sellers---------------// 
+	//----------------------------------related to option 8 print sellers---------------// 
 	void printSellers();
 	
+	//----------------------------------related to option 9 print buyersAdndSellers---------------// 
+	void printBuyersAndSellers();
+
 	//----------------------------------related to option 10 (and 5) - print products---------------// 
 	void printProductsByName();
+	//----------------------------------related to option 11 - check operators---------------// 
+	void checkOperators();
 
 private:
 //----------------attributes: manager manage the trade system-----------------//

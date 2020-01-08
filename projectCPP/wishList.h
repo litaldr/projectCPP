@@ -18,7 +18,7 @@ public:
 	wishList() = delete;// we don't allowed to create a new product without the details in the constructor below 
 	wishList(Product * product, sellers * seller); //constructor
 	wishList(const wishList& other); //copy constructor
-	~wishList(); //destructor
+	//~wishList(); //destructor
 
  //-------------not in use---------------//
 	wishList(Product * product);//constructor product only 	
