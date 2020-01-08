@@ -22,6 +22,35 @@ seller::~seller() //destructor
 	delete[]ProductArr;
 }
 
+void seller::toOs(ostream & os) const
+{
+	os << "count of feedbacks: " << CountFeedback << endl;
+	if (CountProduct > 0) // print his wish list
+	{
+		cout << "This are his products: " << endl;
+		for (int j = 0; j < CountProduct; j++)
+		{
+			os << "product number: " << j + 1 << endl;
+			os << *ProductArr[j] << endl;
+			os << "---------------------------------" << endl;
+		}
+	}
+	else
+		os << "The seller has no products" << endl;
+	if (CountFeedback> 0) // print his wish list
+	{
+		cout << "This is the feedbacks that users wrote about him: " << endl;
+		for (int j = 0; j < CountFeedback; j++)
+		{
+			os << "feedback number: " << j + 1 << endl;
+			os << *feedbackArr[j] << endl;
+			os << "---------------------------------" << endl;
+		}
+	}
+	else
+		os << "The seller has no feedbacks" << endl;
+}
+
 //------------------------------set & get function-------------------------------//
 
 void  seller::setCountProduct(int n)

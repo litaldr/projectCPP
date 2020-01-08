@@ -7,6 +7,7 @@ buyer::buyer(char *user_name, char *password, const address_user & address) : us
 	this->ordersArr = nullptr;
 	this->CountOrders = 0;
 	this->CountProductInWishList = 0;
+	this->WishListTotalCost = 0;
 }
 buyer::~buyer() //destructor
 {
@@ -23,6 +24,42 @@ buyer::~buyer() //destructor
 		delete ordersArr[i];
 	}
 	delete[]ordersArr;
+}
+
+
+
+bool buyer::operator>(const buyer & other) const
+{
+	if(this->WishListTotalCost>other.WishListTotalCost)
+		return true;
+	return false;
+}
+
+void buyer::toOs(ostream & os) const
+{
+	if (CountProductInWishList>0) // print his wish list
+	{
+		cout << "This are the products in his current wish list: " << endl;
+		for (int j = 0; j < CountProductInWishList; j++)
+		{
+			os << "product number: "<<j+1 << endl;
+			os << *WishListArr[j] << endl;
+			os <<"---------------------------------"<< endl;
+		}
+	}
+	else
+		os << "The buyer wish list is Empty" << endl;
+	if (CountOrders > 0) // print his orders
+	{
+		for (int j = 0; j < CountOrders; j++)
+		{
+			os << "This is the " << j + 1 << " order in his orders history" << endl;
+			os << *ordersArr[j] << endl;
+		}
+	}
+	else
+		os << "The buyer orders history is Empty" << endl;
+	
 }
 
 
@@ -43,7 +80,7 @@ wishList **buyer::getWishListArr() const
 	return WishListArr;
 }
 
-void buyer::addProductSellerToWishlist(Product *newProduct, sellers * newSeller) // function adds product ansd seller(=wish list object) to wish list array's buyer
+void buyer::addProductSellerToWishlist(Product *newProduct, seller * newSeller) // function adds product ansd seller(=wish list object) to wish list array's buyer
 {
 	int i = CountProductInWishList - 1;
 	if (CountProductInWishList == 0) //if it's the first wish list object for the buyer
@@ -56,7 +93,7 @@ void buyer::addProductSellerToWishlist(Product *newProduct, sellers * newSeller)
 	WishListArr[i] = new wishList(newProduct, newSeller);// constructor wish list objet- both attributs: product and selller
 }
 
-const wishList ** buyer::reallocWishList(wishList **oldWishListArr, int size) // function incraeses wish list array for one new wish list objet
+wishList ** buyer::reallocWishList(wishList **oldWishListArr, int size) // function incraeses wish list array for one new wish list objet
 {
 	wishList **newWishListArr = new wishList*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -70,11 +107,11 @@ const wishList ** buyer::reallocWishList(wishList **oldWishListArr, int size) //
 void buyer::showWishList() const
 {
 	int productIndex;
-	cout << "This is your current wish list:" << endl;
+	cout << "Current wish list:" << endl;
 	for (productIndex = 0; productIndex < CountProductInWishList; productIndex++)
 	{
-		cout << "ProductNumber in wish list is: " << productIndex+1 << endl;
-	    getWishListArr()[productIndex]->getProduct()->show();	
+		cout << "Product number"<< productIndex+1 << "in wish list:"<< endl;
+	    cout<<getWishListArr()[productIndex];	
 	}
 }
 
@@ -92,6 +129,8 @@ void buyer::deleteProductFromBuyerWishList(int OrderIndex) //this function will 
 				{
 					WishListArr[j] = NULL;// changing the pointer, instead of a pointer to a wish list object, puts NULL 
 					countNewSizeWishList--;//descended the amount of wish list objects in wish list array
+					updateWishListTotalCost(SUB, WishListArr[j]->getProduct()->getPrice());//subtract the price from wish list total cost
+				
 				}
 			}
 		}
@@ -122,7 +161,16 @@ void buyer::deleteProductFromBuyerWishList(int OrderIndex) //this function will 
 			WishListArr[i] = NULL;
 		delete[]WishListArr;
 		this->CountProductInWishList = 0; // no product\ wish list object in wish list array 
+		this->WishListTotalCost = 0;
 	}
+}
+
+void buyer::updateWishListTotalCost(int num, double priceToAdd)
+{
+	if(num==SUM)
+		WishListTotalCost += priceToAdd;
+	else if(num == SUB)
+		WishListTotalCost -= priceToAdd;
 }
 
 //-----------------------------order functions------------------------------//
@@ -155,7 +203,7 @@ void buyer::addOrderToOrdersArr(order *newOrder) // function adds order object t
 	ordersArr[i] = new order(*newOrder);//order constructor 
 }
 
-const order ** buyer::reallocOrdersArr(order **oldOrdersArr, int size) // function increases orders array for one new order object
+order ** buyer::reallocOrdersArr(order **oldOrdersArr, int size) // function increases orders array for one new order object
 {
 	order **newOrdersArr = new order*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -171,7 +219,7 @@ void buyer::showBuyerorderByIndex(int index) const //print the products of order
 	cout << "The products in order number " << index + 1 << " are:" << endl;
 	for (int i = 0; i < ordersArr[index]->getCountProductInProductArr(); i++)
 	{
-		ordersArr[index]->getProductArr()[i]->show();
+		cout << ordersArr[index]->getProductArr()[i] << endl;
 	}
 }
 
@@ -186,7 +234,7 @@ void buyer::showAllSellersInBuyerorder() const //print the sellers of order at i
 
 }
 
-bool buyer::checkIfSellerExistsInAllOrders(const sellers *seller) // function return false if the seller isn't exists in the buyer previous orders
+bool buyer::checkIfSellerExistsInAllOrders(const seller *seller) // function return false if the seller isn't exists in the buyer previous orders
 {
 	int i;
 	for(i=0;i < getCountOrders(); i++)

@@ -8,3 +8,9 @@ seller(seller) { }
 buyerAndSeller::buyerAndSeller(char *user_name, char *password, const address_user & address) :
 	user(user_name, password, address), buyer(user_name, password, address), seller(user_name, password, address) {}
 
+void buyerAndSeller::toOs(ostream & os) const
+{
+	buyer::toOs(os);
+	seller::toOs(os);
+}
+

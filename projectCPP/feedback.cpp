@@ -1,13 +1,13 @@
 #include "Feedback.h"
 
-Feedback::Feedback(const date& newdate,buyer *Buyer,  char* userFeedback) : myDate(newdate), theBuyer(Buyer) // constructor
+Feedback::Feedback(const date& newdate, buyer *buyer,  char* userFeedback) : myDate(newdate), theBuyer(buyer) // constructor
 {
 	this->user_feedback = strdup(userFeedback);
 }
 
 
 
-Feedback::Feedback(const Feedback &other) :buyer(other.buyer)//copy constructor
+Feedback::Feedback(const Feedback &other) :theBuyer(other.theBuyer)//copy constructor
 {
 	this->user_feedback = strdup(other.user_feedback);
 	this->myDate = other.myDate;
@@ -49,4 +49,11 @@ bool Feedback::setDate(int day, int month, int year)
 		return true;
 	else 
 		return false;
+}
+
+ostream & operator<<(ostream & os, const Feedback & feedback)
+{
+	os << feedback.myDate << endl;
+	os << feedback.user_feedback<<endl;
+	return os;
 }

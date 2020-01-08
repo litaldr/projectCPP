@@ -18,7 +18,7 @@ public:
 	Product(const Product& other);// copy constructor
 	~Product(); //destructor 
 
-	void show()  const; // function show all product details
+	friend ostream& operator<<(ostream& os, const Product& theProduct);
 
  //---------------------------------set & get functions------------------------------//
 	const char * getName()  const;
@@ -30,7 +30,7 @@ public:
 	bool setCategory(eCategory type);
     void setPrice(double p);
 			
-	const char * getCategory()  const;
+	
 //-------------------------------------------------//
 
 	
@@ -39,7 +39,7 @@ public:
 private:
 	//--------------------attributes--------------------//
 	char *productName;
-	const char * category;
+	eCategory category;
 	double price;
 	int serialNumber;
 

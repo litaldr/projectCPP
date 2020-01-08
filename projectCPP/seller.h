@@ -12,25 +12,26 @@ class seller: virtual public user
 public:
 	seller() = delete; //delete constructor- we don't allow default constructor of seller
 	seller(const char *user_name, const char *password, const address_user &address); // constructor
-	 //not interested in copy constructor- we don't copy a seller(person)
+	 
 	virtual ~seller(); //destructor 
 
+	virtual void toOs(ostream& os) const override;
 
 //------------------------------set & get function-------------------------------//
-	void setCountProduct(int n) ;
-	void setCountFeedback(int n) ;
+	void setCountProduct(int n);
+	void setCountFeedback(int n);
 
-	int getCountProduct()   const ;
-	int getCountFeedback()   const ;
-	Product ** getProductArr() const   ;
+	int getCountProduct()   const;
+	int getCountFeedback()   const;
+	Product ** getProductArr() const;
 	//----------------not in use-----------------//
 	Feedback ** getFeedbackArr() const;
 	
 	//------------------------------add product and feedback functions-------------------------------//
-	 void addProduct(Product& newProduct) ;
+	void addProduct(Product& newProduct);
 	Product ** reallocProductArr(Product **oldProductArr, int size);
 
-	 void addFeedback(Feedback& newFeedback) ;
+	void addFeedback(Feedback& newFeedback);
 	Feedback ** reallocFeedbackArr(Feedback **oldFeedbackArr, int size);
 
 protected:

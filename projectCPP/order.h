@@ -34,6 +34,7 @@ public:
 	
 	void showSellersByCurrOrder() const; // function shows sellers in specific order
 	bool checkIfSellerExists(const seller *seller); // function checks that seller is adding only one time to sellers array of order to prevent duplicates
+	friend ostream& operator<<(ostream& os, const order& theOrder);
 
 private:
 //----------------------------attributes----------------------------//

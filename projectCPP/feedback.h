@@ -2,17 +2,21 @@
 #define __FEEDBACK_H
 
 #include "date.h"
-#include "buyer.h";
-static const int MAX_FEEDBACK_SIZE = 100; // static variable for maximum feedback size
+class buyer;
+
+#define MAX_FEEDBACK_SIZE  100 // static variable for maximum feedback size
+
+
 
 class Feedback
 {
 
 public:
 	Feedback() = delete; //not interested in default constructor 
-	Feedback(const date& newdate, buyer *Buyer, char* userFeedback);//constructor
+	Feedback(const date& newdate, buyer *buyer, char* userFeedback);//constructor
 	Feedback(const Feedback &other);//copy constructor
 	~Feedback(); // destructor
+	friend ostream& operator<<(ostream& os, const Feedback& feedback);
 
  //---------------------set & get functions-----------------------//
 	const buyer* getBuyer() const;

@@ -59,3 +59,9 @@ int date::getYear() const
 {
 	return year;
 }
+
+ostream & operator<<(ostream & os, const date & date)
+{
+	os << date.day << "/" << date.month << "/" << date.year << endl;
+	return os;
+}

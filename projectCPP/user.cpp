@@ -13,12 +13,7 @@ user::~user()
 	delete[]password;
 }
 
-void user::showUserBasicDeatelis() const
-{
-	cout << "User name is: " << user_name << endl;
-	cout << "User password is: " << password << endl;
-	address.show();
-}
+
 bool user::setName(const char* name)
 {
 	if (strlen(name) <= MAX_NAME_SIZE) //valid name 
@@ -55,4 +50,14 @@ bool user::setPassword(const char* newPassword)
 const address_user& user::getAddress()  const
 {
 	return address;
+}
+
+ostream & operator<<(ostream & os, const user & theUser)
+{
+	cout << "in operator<<(base&)\n";
+	os << "user name: "<< theUser.user_name << endl;
+	os << "user password: " << theUser.password << endl;
+	os << "user address: " << theUser.address << endl;
+	theUser.toOs(os);
+	return os;
 }

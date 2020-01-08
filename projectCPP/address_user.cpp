@@ -35,26 +35,27 @@ address_user::~address_user() //destructor
 	delete[]street;
 }
 
-void address_user::show()  const // print titles for address details
-{
-	cout << "User country is: " << country << endl;
-	cout << "User city is: " << city << endl;
-	cout << "User street is: " << street << endl;
-	cout << "User house number is : " << house_number << endl;
-	cout << "---------------------------------" << endl;
-}
 
+ostream & operator<<(ostream & os, const address_user & address)
+{
+	os << "User country is: " << address.country << endl;
+	os << "User city is: " << address.city << endl;
+	os << "User street is: " << address.street << endl;
+	os << "User house number is : " << address.house_number << endl;
+	os << "---------------------------------" << endl;
+	return os;
+}
 //-----------------------not in use----------------------///
 
-address_user::address_user(const address_user&& other)// move constructor
+address_user::address_user(address_user&& other)// move constructor
 {
 
 	this->country = other.country;
-	country = nullptr;
+	other.country = nullptr;
 	this->city = other.city;
-	city = nullptr;
+	other.city = nullptr;
 	this->street = other.street;
-	street = nullptr;
+	other.street = nullptr;
 	this->house_number = other.house_number;
 }
 
@@ -180,5 +181,4 @@ const int address_user::getHouse_number() const
 {
 	return house_number;
 }
-
 

@@ -6,14 +6,14 @@ Product::Product(const char *productName, eCategory category, double price)  //c
 {
 	this->productName = strdup(productName);
 	serialNumber = ++countSerialNumber;
-	this->category = categoryStr[category];
+	this->category = category;
 	this->price = price;
 }
 
 Product::Product(const Product & other) //copy constructor
 {
 	this->productName = strdup(other.productName);
-	this->category = strdup(category);
+	this->category = other.category;
 	this->serialNumber = other.serialNumber;
 	this->price = other.price;
 
@@ -24,15 +24,17 @@ Product::~Product() //destructor
 	delete[] productName;
 }
 
-
-void Product::show()  const // function prints product details
+ostream & operator<<(ostream & os, const Product & theProduct)
 {
-	cout << "Product name is: " << productName << endl;
-	cout << "Product category is: " << category << endl;
-	cout << "Product serial number is: " << serialNumber << endl;
-	cout << "Product price is: " << price << endl;
-	cout << "---------------------------------" << endl;
-} 
+	os << "Product name is: " << theProduct.productName << endl;
+	os << "Product category is: " << theProduct.categoryStr[theProduct.category] << endl;
+	os << "Product serial number is: " << theProduct.serialNumber << endl;
+	os << "Product price is: " << theProduct.price << endl;
+	
+	return os;
+}
+
+ 
 
 
 //---------------------------------set & get functions------------------------------//
@@ -70,7 +72,7 @@ bool Product::setCategory(eCategory type)
 {
 	if (type >= 0 && type <= 3)
 	{
-		category = categoryStr[type];
+		category = type;
 		return true;
 	}
 		return false;
@@ -81,7 +83,4 @@ void Product::setPrice(double p)
 	this->price = p;
 }
 
-const char* Product::getCategory()  const
-{
-	return category;
-}
+

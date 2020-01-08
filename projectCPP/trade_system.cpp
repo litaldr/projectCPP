@@ -22,11 +22,6 @@ trade_system::trade_system(const char *name) //constructor
 	this->system_name = strdup(name);
 }
 
-trade_system::trade_system(const trade_system & other)//copy constructor
-{
-	this->system_name = strdup(other.system_name);
-}
-
 //-------------------------------------------------------------//
 
 //------------------------------set & get function-------------------------------//
@@ -51,7 +46,7 @@ bool trade_system::setName(const char* n)  //check valid name
 
 void trade_system::setCountUsers()
 {
-	count_users +=1;
+	count_users= count_users +1;
 }
 
 int trade_system::getCountUsers()
@@ -61,7 +56,7 @@ int trade_system::getCountUsers()
 
 void trade_system::setCountSellers()
 {
-	count_sellers+=1;
+	count_sellers= count_sellers +1;
 }
 
 int trade_system::getCountSellers()
@@ -70,7 +65,7 @@ int trade_system::getCountSellers()
 }
 void trade_system::setCountBuyers()
 {
-	count_buyers +=1;
+	count_buyers = count_buyers +1;
 }
 
 int trade_system::getCountBuyers()
@@ -79,7 +74,7 @@ int trade_system::getCountBuyers()
 }
 void trade_system::setCountBuyersSellers()
 {
-	count_sellersAndBuyers +=1;
+	count_sellersAndBuyers = count_sellersAndBuyers +1;
 }
 
 int trade_system::getCountBuyersSellers()
@@ -100,7 +95,14 @@ const char * trade_system::getName() const
 }
 
 //------------------------------add users to system functions-------------------------------//
-
+//const user**& trade_system::operator+=(const buyer & other)
+//{
+//	usersArr[i] = other;
+//}
+//const user **& trade_system::operator+=(const seller & other)
+//{
+//	// TODO: insert return statement here
+//}
 bool trade_system::addUser(user& newUser)
 {
 	int i = count_users - 1;
@@ -114,7 +116,6 @@ bool trade_system::addUser(user& newUser)
 		}
 		i++;
 		usersArr[i] = &newUser;
-		count_users =i + 1;
 		return true;
 	}
 	return false;
@@ -159,7 +160,8 @@ void trade_system::showProductWithIdenticalName(const char *nameProduct) const
 				if ((strcmp(nameProduct, temp->getProductArr()[productIndex]->getName())) == 0)
 				{
 					cout << "ProductNumber is: " << sellerIndex << "." << productIndex << endl;
-					temp->getProductArr()[productIndex]->show();
+					cout<<*temp->getProductArr()[productIndex];
+					cout << "-------------------------------------" << endl;
 				}
 			}
 		}

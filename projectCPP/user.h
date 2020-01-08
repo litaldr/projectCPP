@@ -8,7 +8,6 @@ class user
 public:
 	user()=delete;
 	virtual ~user();
-	void showUserBasicDeatelis() const;
 	bool setName(const char* name);
 	const char * getName()     const;
 	
@@ -18,7 +17,8 @@ public:
 	const address_user& getAddress()  const;
 	bool setPassword(const char* newPassword);
 	
-	
+	virtual void toOs(ostream& os) const {}
+	friend ostream& operator<<(ostream& os, const user& theUser);
 
 protected:
 	char* user_name;

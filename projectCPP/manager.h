@@ -2,9 +2,10 @@
 #define __MANAGER_H
 #pragma warning (disable: 4996) 
 
+#include <typeinfo.h>
 #include "trade_system.h"
 
-#define EXIT 13 //define the input of exiting interactive shell
+#define EXIT 12 //define the input of exiting interactive shell
 class manager // class Intended to contact with the user of the system which gives commands to the system manager 
 {
 public:
@@ -21,7 +22,7 @@ public:
 
 	//----------------------------------related to option 1&2 -add new buyer\seller---------------// 
 	user* createUser(int num);
-	const address_user*& createAddress();
+	address_user* createAddress();
 	void addUserToTradeSystem();// function adds user to users array in attributes of trade system
 	
 	//----------------------------------related to option 3 -add new Product---------------// 
@@ -52,8 +53,13 @@ public:
 	//----------------------------------related to option 9 print sellers---------------// 
 	void printSellers();
 	
+	void printBuyersSellers();
+
 	//----------------------------------related to option 10 (and 5) - print products---------------// 
 	void printProductsByName();
+
+	void compreBuyers(const buyer & buyer1, const buyer & buyer2)  const;
+	void compareBetweenTwoBuyersCartPrice();
 
 private:
 //----------------attributes: manager manage the trade system-----------------//

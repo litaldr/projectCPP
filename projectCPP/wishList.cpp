@@ -1,7 +1,5 @@
 #include "wishList.h"
 
-int wishList::countSerialNumber = 0;
-
 
 wishList::wishList(Product * product, seller * seller) : product(product), theSeller(seller) {} // constructor
 
@@ -24,4 +22,9 @@ seller * wishList::getseller() const
 	return theSeller;
 }
 
-
+ostream & operator<<(ostream & os, const wishList & theItemInWishList)
+{
+	os <<theItemInWishList.product<<endl;
+	
+	return os;
+}

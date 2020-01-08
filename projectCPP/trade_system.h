@@ -21,7 +21,7 @@ public:
 
 //--------not in use---------//
 	trade_system(const char *name); // constructor
-	trade_system(const trade_system & other); // copy constructor
+	
 //--------not in use---------//
 
  //------------------------------set & get function-------------------------------//
@@ -41,6 +41,9 @@ public:
 	//-------- not in use----------//
 	const char * getName()  const;
 	//-------- not in use----------//
+
+	/*const user**& operator+=(const buyer& other);
+	const user**& operator+=(const seller& other);*/
 
 //------------------------------add users to system functions-------------------------------//
 	bool addUser(user& user);

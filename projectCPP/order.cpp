@@ -19,10 +19,10 @@ order::order(const order & myOrder) //copy constructor
 		this->productArr[i] = new Product(*(myOrder.getProductArr()[i]));
 	}
 	int sizeSellers = myOrder.CountSellersInSellersArr;
-	this->sellersArr = new sellers*[sizeSellers];
+	this->sellersArr = new seller*[sizeSellers];
 	for (int i = 0; i < sizeSellers; i++)
 	{
-		this->sellersArr[i] = new sellers(*(myOrder.getsellersArr()[i]));
+		this->sellersArr[i] = new seller(*(myOrder.getsellersArr()[i]));
 	}
 
 	this->totalPrice = myOrder.totalPrice;
@@ -174,4 +174,15 @@ void order::showSellersByCurrOrder() const // print sellers of specific order
 		cout << "Seller number " << i + 1 <<" :"<< endl;
 		cout << sellersArr[i]->getName() << endl;
 	}
+}
+
+ostream & operator<<(ostream & os, const order & theOrder)
+{
+	for (int i = 0; i < theOrder.getCountProductInProductArr(); i++)
+	{
+		os << "product " <<i + 1 << ":"<< endl;
+		os << *theOrder.getProductArr()[i] << endl;
+	}
+	os << "the total price is:" << theOrder.getTotalPrice() << endl;
+	return os;
 }

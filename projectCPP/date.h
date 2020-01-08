@@ -8,19 +8,14 @@ using namespace std;
 
 class date
 {
-
-private:
-//-----------------------attributes----------------------//
-	int day;
-	int month;
-	int year;
-
 public:
 
 	date(int day = 1, int month = 1, int year = 2001); // default constructor
 	//not interested in copy constructor - each date is set for a specific feedback
 	~date(); // destructor
-	
+	friend ostream& operator<<(ostream& os, const date& date);
+
+
 //---------------------set & get functions-----------------------//
 	bool setDay(int day);
 	bool setMonth(int month);
@@ -30,6 +25,12 @@ public:
 	int getDay()   const;
 	int getMonth() const;
 	int getYear()  const;
+
+private:
+	//-----------------------attributes----------------------//
+	int day;
+	int month;
+	int year;
 };
 
 #endif

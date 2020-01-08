@@ -24,11 +24,10 @@ public:
 	address_user(const address_user& other); //copy constructor
 	~address_user();// default destructor because all names strings are allocated static
     
-	void show()  const;
-
+	friend ostream& operator<<(ostream& os, const address_user& address);
 //------------------------------not in use yet------------------------------//
 
-	address_user(const address_user&& other); //move constructor- we know it is not in use in this stage of the project
+	address_user( address_user&& other); //move constructor- we know it is not in use in this stage of the project
 
 //--------------------set attributes---------------------------//
 	bool setCountry(const char *c);

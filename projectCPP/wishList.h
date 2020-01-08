@@ -9,9 +9,6 @@ class seller;
 class wishList
 {
 
-private:
-	static int countSerialNumber;// static variable initialized with 0
-
 public:
 	//enum eCategory { CHILDREN, ELECTRONICS, OFFICE, CLOTHING };
 
@@ -19,6 +16,8 @@ public:
 	wishList(Product * product, seller * seller); //constructor
 	wishList(const wishList& other); //copy constructor
 	
+	friend ostream& operator<<(ostream& os, const wishList& theItemInWishList);
+
  //-------------not in use---------------//
 	wishList(Product * product);//constructor product only 	
 //-------------not in use---------------//
