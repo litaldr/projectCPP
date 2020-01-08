@@ -1,22 +1,22 @@
-﻿#ifndef __BUYERS_H
-#define __BUYERS_H
+﻿#ifndef __BUYER_H
+#define __BUYER_H
 
 #include "user.h"
 #include "wishList.h"
 #include "order.h"
-class buyers : virtual public user
+class buyer : virtual public user
 {
 public:
 	
-	buyers() = delete; //delete constructor- we don't allow default constructor of buyer
-	buyers(char *user_name, char *password,const address_user & address); //constructor
+	buyer() = delete; //delete constructor- we don't allow default constructor of buyer
+	buyer(char *user_name, char *password,const address_user & address); //constructor
 	//not interested in copy constructor- we don't copy a buyer(person)
-	virtual ~buyers(); //  destructor 
+	virtual ~buyer(); //  destructor 
 
 	// ------------------------functions of wish list's buyer-----------------//
 
 	void addProductSellerToWishlist(Product * newProduct, sellers * newSeller); // add a new product and seller to a wish list array of specific buyer
-	wishList **reallocWishList(wishList **oldWishListArr, int size); // using this function in "addProductSellerToWishlist" for increasing the wish list array 
+	const wishList **reallocWishList(wishList **oldWishListArr, int size); // using this function in "addProductSellerToWishlist" for increasing the wish list array 
 	
 	void showWishList() const;
 	wishList **getWishListArr() const;
@@ -28,7 +28,7 @@ public:
 	// --------------------------functions of orders's buyer-----------------//
 	
 	void addOrderToOrdersArr(order *newOrder) ; // add a new order to a order array of specific buyer
-	order **reallocOrdersArr(order **oldOrdersArr, int size); // using this function in "addOrderToOrdersArr" for increasing the orders array
+	const order **reallocOrdersArr(order **oldOrdersArr, int size); // using this function in "addOrderToOrdersArr" for increasing the orders array
 	
 	void showBuyerorderByIndex(int index) const;//shows a specific order for a specific buyer
 	void showAllSellersInBuyerorder() const ; // show all the sellers that the buyer has bought from

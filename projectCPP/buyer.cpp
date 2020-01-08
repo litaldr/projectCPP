@@ -1,6 +1,6 @@
-﻿#include "buyers.h"
+﻿#include "buyer.h"
 
-buyers::buyers(char *user_name, char *password, const address_user & address) : user(user_name, password, address) //constructor
+buyer::buyer(char *user_name, char *password, const address_user & address) : user(user_name, password, address) //constructor
 {	
 	
 	this->WishListArr = nullptr;
@@ -8,7 +8,7 @@ buyers::buyers(char *user_name, char *password, const address_user & address) : 
 	this->CountOrders = 0;
 	this->CountProductInWishList = 0;
 }
-buyers::~buyers() //destructor
+buyer::~buyer() //destructor
 {
 	if (CountProductInWishList)//if wish list is empty it means we didn't allocate it, so no need to delete it
 	{
@@ -28,22 +28,22 @@ buyers::~buyers() //destructor
 
 //-----------------------------wish list functions---------------------------//
 
-int buyers::getCountProductInWishList() const
+int buyer::getCountProductInWishList() const
 {
 	return CountProductInWishList;
 }
 
-void  buyers::addOneToWishListArr()
+void  buyer::addOneToWishListArr()
 {
 	this->CountProductInWishList+=1;
 }
 
-wishList **buyers::getWishListArr() const
+wishList **buyer::getWishListArr() const
 {
 	return WishListArr;
 }
 
-void buyers::addProductSellerToWishlist(Product *newProduct, sellers * newSeller) // function adds product ansd seller(=wish list object) to wish list array's buyer
+void buyer::addProductSellerToWishlist(Product *newProduct, sellers * newSeller) // function adds product ansd seller(=wish list object) to wish list array's buyer
 {
 	int i = CountProductInWishList - 1;
 	if (CountProductInWishList == 0) //if it's the first wish list object for the buyer
@@ -56,7 +56,7 @@ void buyers::addProductSellerToWishlist(Product *newProduct, sellers * newSeller
 	WishListArr[i] = new wishList(newProduct, newSeller);// constructor wish list objet- both attributs: product and selller
 }
 
-wishList ** buyers::reallocWishList(wishList **oldWishListArr, int size) // function incraeses wish list array for one new wish list objet
+const wishList ** buyer::reallocWishList(wishList **oldWishListArr, int size) // function incraeses wish list array for one new wish list objet
 {
 	wishList **newWishListArr = new wishList*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -67,7 +67,7 @@ wishList ** buyers::reallocWishList(wishList **oldWishListArr, int size) // func
 	return newWishListArr;
 }
 
-void buyers::showWishList() const
+void buyer::showWishList() const
 {
 	int productIndex;
 	cout << "This is your current wish list:" << endl;
@@ -78,7 +78,7 @@ void buyers::showWishList() const
 	}
 }
 
-void buyers::deleteProductFromBuyerWishList(int OrderIndex) //this function will  delete the products that the buyer purchase from his wish list in the latest order
+void buyer::deleteProductFromBuyerWishList(int OrderIndex) //this function will  delete the products that the buyer purchase from his wish list in the latest order
 {
 	int i, j, countNewSizeWishList = this->CountProductInWishList;
 
@@ -121,28 +121,28 @@ void buyers::deleteProductFromBuyerWishList(int OrderIndex) //this function will
 		for (i = 0; i < this->CountProductInWishList; i++) // free memory of old wish list
 			WishListArr[i] = NULL;
 		delete[]WishListArr;
-		this->CountProductInWishList = 0; // no producr\ wish list object in wish list array 
+		this->CountProductInWishList = 0; // no product\ wish list object in wish list array 
 	}
 }
 
 //-----------------------------order functions------------------------------//
 
-int buyers::getCountOrders() const
+int buyer::getCountOrders() const
 {
 	return CountOrders;
 }
 
-void buyers::addOneToCountOrders()
+void buyer::addOneToCountOrders()
 {
 	this->CountOrders += 1;
 }
 
-order** buyers::getOrdersArr() const
+order** buyer::getOrdersArr() const
 {
 	return ordersArr;
 }
 
-void buyers::addOrderToOrdersArr(order *newOrder) // function adds order object to orders array's buyer
+void buyer::addOrderToOrdersArr(order *newOrder) // function adds order object to orders array's buyer
 {
 	int i = getCountOrders() - 1;
 	if (getCountOrders() == 0) //if it's the first order in the order array
@@ -155,7 +155,7 @@ void buyers::addOrderToOrdersArr(order *newOrder) // function adds order object 
 	ordersArr[i] = new order(*newOrder);//order constructor 
 }
 
-order ** buyers::reallocOrdersArr(order **oldOrdersArr, int size) // function increases orders array for one new order object
+const order ** buyer::reallocOrdersArr(order **oldOrdersArr, int size) // function increases orders array for one new order object
 {
 	order **newOrdersArr = new order*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -166,7 +166,7 @@ order ** buyers::reallocOrdersArr(order **oldOrdersArr, int size) // function in
 	return newOrdersArr;
 }
 
-void buyers::showBuyerorderByIndex(int index) const //print the products of order at index "i" in orders array 
+void buyer::showBuyerorderByIndex(int index) const //print the products of order at index "i" in orders array 
 {
 	cout << "The products in order number " << index + 1 << " are:" << endl;
 	for (int i = 0; i < ordersArr[index]->getCountProductInProductArr(); i++)
@@ -175,7 +175,7 @@ void buyers::showBuyerorderByIndex(int index) const //print the products of orde
 	}
 }
 
-void buyers::showAllSellersInBuyerorder() const //print the sellers of order at index "i" in orders array 
+void buyer::showAllSellersInBuyerorder() const //print the sellers of order at index "i" in orders array 
 {
 	int orderIndex;
 	cout << "This is all of the sellers you bought from by the orders you have made:" << endl;
@@ -186,7 +186,7 @@ void buyers::showAllSellersInBuyerorder() const //print the sellers of order at 
 
 }
 
-bool buyers::checkIfSellerExistsInAllOrders(const sellers *seller) // function return false if the seller isn't exists in the buyer previous orders
+bool buyer::checkIfSellerExistsInAllOrders(const sellers *seller) // function return false if the seller isn't exists in the buyer previous orders
 {
 	int i;
 	for(i=0;i < getCountOrders(); i++)

@@ -20,10 +20,8 @@ public:
 	void cleanBuffer();
 
 	//----------------------------------related to option 1&2 -add new buyer\seller---------------// 
-	buyers* createBuyer();
 	user* createUser(int num);
-	address_user* createAddress();
-	buyerAndSeller *createBuyerSeller();
+	const address_user*& createAddress();
 	void addUserToTradeSystem();// function adds user to users array in attributes of trade system
 	
 	//----------------------------------related to option 3 -add new Product---------------// 
@@ -33,7 +31,7 @@ public:
 	
 	//----------------------------------related to option 4 -create a feedback---------------// 
 	bool findBuyerInSystem(int &indexBuyerArr); // function finds in system the buyer who wants to give a feedback
-	sellers *chooseSeller(int & indexBuyersArr); // function gives the name of the seller who will receive feedback
+	seller *chooseSeller(int & indexBuyersArr); // function gives the name of the seller who will receive feedback
 	bool initializeDate(date & feedbackDate); // date of given feedback
 	void addFeedbackToASeller();
 	//void insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback); // function insert feedback to feedback array's seller

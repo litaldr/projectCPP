@@ -19,9 +19,7 @@ trade_system::~trade_system() //destructor
 //-----------------------not in use----------------------//
 trade_system::trade_system(const char *name) //constructor
 {
-	this->system_name = new char[strlen(name) + 1];
-	strncpy(this->system_name, name,strlen(name));
-	this->system_name[strlen(system_name)] = '\0';
+	this->system_name = strdup(name);
 }
 
 trade_system::trade_system(const trade_system & other)//copy constructor
@@ -96,7 +94,7 @@ user** trade_system::getUsersArr()
 
 
 //-----------------------not in use----------------------//
-char * trade_system::getName() const
+const char * trade_system::getName() const
 {
 	return system_name;
 }
@@ -135,7 +133,7 @@ user ** trade_system::reallocUsersArr(user **oldUsersArr, int size) // function 
 }
 
 
-bool trade_system::nameAvailable(char *comperdName) // function checks that all buyers and sellers in the system have different name
+bool trade_system::nameAvailable(const char *comperdName) // function checks that all buyers and sellers in the system have different name
 {
 		for (int i = 0; i < count_users; i++)
 		{
@@ -152,7 +150,7 @@ void trade_system::showProductWithIdenticalName(const char *nameProduct) const
 	int sellerIndex, productIndex, countTotalSellers=0;
 	for (sellerIndex = 0; sellerIndex < count_users && countTotalSellers<count_sellers+count_sellersAndBuyers; sellerIndex++)
 	{
-		sellers *temp= dynamic_cast<sellers*>(usersArr[sellerIndex]);
+		seller *temp= dynamic_cast<seller*>(usersArr[sellerIndex]);
 		if (temp)
 		{	
 			countTotalSellers++;

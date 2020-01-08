@@ -1,22 +1,19 @@
 #include "Product.h"
 
-int Product::countSerialNumber = 0; // init
+int Product::countSerialNumber = 0; 
 
 Product::Product(const char *productName, eCategory category, double price)  //constructor
 {
-	this->productName = new char[strlen(productName) + 1];
-	strncpy(this->productName, productName, strlen(productName));
-	this->productName[strlen(productName) ] = '\0';
-
+	this->productName = strdup(productName);
 	serialNumber = ++countSerialNumber;
-	this->category = category;
+	this->category = categoryStr[category];
 	this->price = price;
 }
 
 Product::Product(const Product & other) //copy constructor
 {
 	this->productName = strdup(other.productName);
-	this->category = other.category;
+	this->category = strdup(category);
 	this->serialNumber = other.serialNumber;
 	this->price = other.price;
 
@@ -31,7 +28,7 @@ Product::~Product() //destructor
 void Product::show()  const // function prints product details
 {
 	cout << "Product name is: " << productName << endl;
-	cout << "Product category is: " << categoryStr[category] << endl;
+	cout << "Product category is: " << category << endl;
 	cout << "Product serial number is: " << serialNumber << endl;
 	cout << "Product price is: " << price << endl;
 	cout << "---------------------------------" << endl;
@@ -39,17 +36,17 @@ void Product::show()  const // function prints product details
 
 
 //---------------------------------set & get functions------------------------------//
-char * Product::getName()  const
+const char * Product::getName()  const
 {
 	return productName;
 }
 
-double Product::getPrice()  const
+const double Product::getPrice()  const
 {
 	return price;
 }
 
-int Product::getItemSerialNumber() const
+const int Product::getItemSerialNumber() const
 {
 	return serialNumber;
 }
@@ -69,20 +66,14 @@ bool Product::setName(const char* n)
 	return true;
 }
 
-bool Product::setCategory(int i)
+bool Product::setCategory(eCategory type)
 {
-	if (i == 0)
-		eCategory category = CHILDREN;
-	else if (i == 1)
-		eCategory category = ELECTRONICS;
-	else if (i == 2)
-		eCategory category = OFFICE;
-	else if (i == 3)
-		eCategory category = CLOTHING;
-	else
+	if (type >= 0 && type <= 3)
+	{
+		category = categoryStr[type];
+		return true;
+	}
 		return false;
-
-	return true;
 }
 
 void Product::setPrice(double p)
@@ -90,7 +81,7 @@ void Product::setPrice(double p)
 	this->price = p;
 }
 
-Product::eCategory Product::getCategory()  const
+const char* Product::getCategory()  const
 {
 	return category;
 }

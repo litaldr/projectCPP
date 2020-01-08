@@ -168,7 +168,7 @@ void manager::doAction(int *num) // function do the wanted action
 
 //----------------------------------related to option 1&2 -add new buyer\seller---------------// 
 
-address_user* manager::createAddress()
+const address_user*& manager::createAddress()
 {
 	char country[MAX_NAME_SIZE] = { 0 };
 	char city[MAX_NAME_SIZE] = { 0 };
@@ -196,28 +196,6 @@ void manager::addUserToTradeSystem()
 	cout << "type 1 to add buyer, type 2 to add seller, type 3 to add buyer which is also a seller:" << endl;
 	cin >> type;
 	user * newUser = createUser(type);
-	while (!(system.addUser(*newUser)))
-	{//we want to make sure the user didn't enter a user name that is already in use
-		cout << "The user name you entered is in use, please type a new name" << endl;
-		cleanBuffer();// we will ask from him to change it to a new available name
-		cin.getline(newUser->getName(), MAX_NAME_SIZE);
-		while (!newUser->setName(newUser->getName()))
-		{
-			cout << "The user name you entered is not valid, please type a new name" << endl;
-			cin.getline(newUser->getName(), MAX_NAME_SIZE);//receive a new user name from the user
-		}
-		cout << "Your user name changed successfully" << endl;
-	}
-	switch (type)
-	{
-	case 1: system.setCountBuyers();
-	case 2: system.setCountSellers();
-	case 3: system.setCountBuyersSellers();
-
-	default:
-		break;
-	}
-
 }
 
 
@@ -232,15 +210,33 @@ user* manager::createUser(int num)
 
 	cout << "Please enter new user password:" << endl;
 	cin.getline(password, MAX_PASSWORD_SIZE);
-
-	address_user *address = createAddress();
+	
+	while (!system.nameAvailable(name))
+	{//we want to make sure the user didn't enter a user name that is already in use
+		cout << "The user name you entered is in use, please type a new name" << endl;
+		cleanBuffer();// we will ask from him to change it to a new available name
+		cin.getline(name, MAX_NAME_SIZE);
+	}
+	const address_user *address = createAddress();
 	switch (num)
 	{
-	case 1:return new sellers(name, password, *address);
-	case 2:return new buyers(name, password, *address);
-	case 3:return new buyerAndSeller(name, password, *address);
-	default: cout << "invalid option" << endl;
-		break;
+		case 1:
+		{
+			system.setCountBuyers();
+			return new seller(name, password, *address);
+		}
+		case 2: 
+		{
+			system.setCountSellers();
+			return new buyer(name, password, *address);
+		}
+		case 3:
+		{
+			system.setCountBuyersSellers();
+			return new buyerAndSeller(name, password, *address);
+		}
+		default: cout << "invalid option" << endl;
+			break;
 	}
 }
 
@@ -279,7 +275,7 @@ bool manager::findSellerInSystem(int &indexUsersArr)
 	cin.getline(userName, MAX_NAME_SIZE);
 	for (indexUsersArr = 0; indexUsersArr < system.getCountUsers(); indexUsersArr++)
 	{
-		sellers *temp = dynamic_cast<sellers*>(system.getUsersArr()[indexUsersArr]);
+		seller *temp = dynamic_cast<seller*>(system.getUsersArr()[indexUsersArr]);
 			if (temp)
 			{
 				if (strcmp(userName,temp->getName()) == 0) // indicate user is find
@@ -301,7 +297,7 @@ void manager::addProductToSeller()
 	if (findSellerInSystem(indexUsersArr)) // "findSellerInSystem" function returns true when finding the seller\buyer and seller for adding him a new product to products array
 		//the value indexUsersArr returns by reference, להוסיף דגל שאומר אם קונה או קונה מוכר
 	{
-		sellers *temp = dynamic_cast<sellers*>(system.getUsersArr()[indexUsersArr]);
+		seller *temp = dynamic_cast<seller*>(system.getUsersArr()[indexUsersArr]);
 		if (temp)
 			temp->addProduct(*newProduct);
 	}
@@ -316,7 +312,7 @@ void  manager::addFeedbackToASeller()
 	int indexUsersArr = 0;
 	if (findBuyerInSystem(indexUsersArr)) // "findBuyerInSystem" function returns true when finding the buyer who demanded to write the feedback
 	{//findBuyerInSystem returns by refrence the index of the buyer in the users array- so for sure the user in this index is a buyer
-		sellers *tempSeller = chooseSeller(indexUsersArr); // "chooseSeller" function returns seller name to give for the feedback
+		seller *tempSeller = chooseSeller(indexUsersArr); // "chooseSeller" function returns seller name to give for the feedback
 
 		// enter feedback
 		char feedbackString[MAX_FEEDBACK_SIZE] = { 0 };
@@ -330,8 +326,8 @@ void  manager::addFeedbackToASeller()
 		{
 			cout << "Please enter a valid date: " << endl;
 		} while (!initializeDate(feedbackDate)); // check valid date
-		buyers *temp = dynamic_cast<buyers*>(system.getUsersArr()[indexUsersArr]);
-		Feedback newFeedback(feedbackDate, temp, feedbackString); // constructor
+		buyer *tempBuyer = dynamic_cast<buyer*>(system.getUsersArr()[indexUsersArr]);
+		Feedback newFeedback(feedbackDate, tempBuyer, feedbackString); // constructor
 		tempSeller->addFeedback(newFeedback); // add new feedback to feedback array of the seller
 	}
 	else
@@ -346,40 +342,40 @@ bool manager::findBuyerInSystem(int &indexUserArr)
 	cin.getline(userName, MAX_NAME_SIZE);
 	for (indexUserArr = 0; indexUserArr < system.getCountUsers(); indexUserArr++)
 	{
-		buyers *temp = dynamic_cast<buyers*>(system.getUsersArr()[indexUserArr]);
-		if (temp)
+		buyer *tempBuyer = dynamic_cast<buyer*>(system.getUsersArr()[indexUserArr]);
+		if (tempBuyer)
 		{
-			if (strcmp(userName, temp->getName()) == 0) // indicate user is find
+			if (strcmp(userName, tempBuyer->getName()) == 0) // indicate user is find
 			return true;
 		}
 	}
 	return false;
 }
 
-sellers * manager::chooseSeller(int & indexUsersArr)
+seller * manager::chooseSeller(int & indexUsersArr)
 {
 	int  numberOfOrdersPerBuyer, numberOfSellersPerOrder, orderChoosen, sellerChoosen;
-	buyers *temp = dynamic_cast<buyers*>(system.getUsersArr()[indexUsersArr]);
-	temp->showAllSellersInBuyerorder(); // show sellers that buyer had bought from
-	numberOfOrdersPerBuyer = temp->getCountOrders(); // get counter orders of the buyer
+	buyer *tempBuyer = dynamic_cast<buyer*>(system.getUsersArr()[indexUsersArr]);
+	tempBuyer->showAllSellersInBuyerorder(); // show sellers that buyer had bought from
+	numberOfOrdersPerBuyer = tempBuyer->getCountOrders(); // get counter orders of the buyer
 	cout << "To which one of them would you like to give feedback ? " << endl;
 	cout << "Enter the order number:" << endl;
 	cin >> orderChoosen;
-	while (!(orderChoosen <= numberOfOrdersPerBuyer))// check the order exists in orders arr for this buyer
+	while (orderChoosen > numberOfOrdersPerBuyer)// check the order exists in orders arr for this buyer
 	{
 		cout << "The order number you entered is not exists, please enter a valid order number:" << endl;
 		cin >> orderChoosen;
 	}
 	cout << "Enter the seller number: " << endl;
 	cin >> sellerChoosen;
-	numberOfSellersPerOrder = temp->getOrdersArr()[orderChoosen - 1]->getCountSellersInSellersArr(); // get counter sellers that the buyer bought from 
-	while (!(sellerChoosen <= numberOfSellersPerOrder))//check seller exists in the order the user choose
+	numberOfSellersPerOrder = tempBuyer->getOrdersArr()[orderChoosen - 1]->getCountSellersInSellersArr(); // get counter sellers that the buyer bought from 
+	while (sellerChoosen > numberOfSellersPerOrder)//check seller exists in the order the user choose
 	{
 		cout << "The seller number you entered is not exists, please enter a valid seller number:" << endl;
 		cin >> sellerChoosen;
 	}
 //return the seller name
-	return temp->getOrdersArr()[orderChoosen - 1]->getsellersArr()[sellerChoosen - 1];
+	return tempBuyer->getOrdersArr()[orderChoosen - 1]->getsellersArr()[sellerChoosen - 1];
 }
 
 bool manager::initializeDate(date & feedbackDate)// use in option 4
@@ -409,24 +405,6 @@ bool manager::initializeDate(date & feedbackDate)// use in option 4
 	return true;
 }
 
-//void manager::insertFeedbackToSellerInSystem(char *tempSeller, Feedback &newFeedback)
-//{
-//	bool sellerNotFound = true; // flag for the "for" loop
-//	for (int i = 0; sellerNotFound && i < system.getCountUsers(); i++)
-//	{
-//		sellers *temp = dynamic_cast<sellers*>(system.getUsersArr()[i]);
-//		//temp1 & temp2 indicate if the user is either a seller or a buyer which is also a seller
-//		if (temp)
-//		{
-//			if (!strcmp(system.getUsersArr()[i]->getName(), tempSeller)) // search the relevence seller to give feedback for
-//			{
-//				system.getUsersArr()[i]->addFeedback(newFeedback); // add feedback to feedback array's seller
-//				sellerNotFound = false;
-//			}
-//		}
-//
-//	}
-//}
 
 //----------------------------------related to option 6 -create a wish list---------------// 
 
@@ -441,10 +419,10 @@ void manager::addToWishlist()
 		cout << "Please enter the Product number you wish to add to your wish list: \n(as it written in screen on the first line) " << endl;
 		 
 		checkValidIndex(sellerIndex,productIndex);
-		sellers *tempSeller = dynamic_cast<sellers*>(system.getUsersArr()[sellerIndex]);
+		seller *tempSeller = dynamic_cast<seller*>(system.getUsersArr()[sellerIndex]);
 		// enter the product that the buyer choose to his wish list
 		Product *tempProduct = tempSeller->getProductArr()[productIndex];
-		buyers *tempBuyer = dynamic_cast<buyers*>(system.getUsersArr()[indexUsersArr]);
+		buyer *tempBuyer = dynamic_cast<buyer*>(system.getUsersArr()[indexUsersArr]);
 
 		tempBuyer->addProductSellerToWishlist(tempProduct, tempSeller);
 		tempBuyer->addOneToWishListArr();
@@ -460,10 +438,10 @@ void manager::checkValidIndex(int &sellerIndex, int& productIndex)
 	cin >> sellerIndex >> ch >> productIndex;
 	while (!flag)
 	{
-		sellers *temp = dynamic_cast<sellers*>(system.getUsersArr()[sellerIndex]);
-		if (temp)//the seller exists
+		seller *tempSeller = dynamic_cast<seller*>(system.getUsersArr()[sellerIndex]);
+		if (tempSeller)//the seller exists
 		{
-			if (!(productIndex < temp->getCountProduct() && productIndex >= 0))//the product isn't exists
+			if (productIndex >= tempSeller->getCountProduct() || productIndex < 0)//the product isn't exists
 			{
 				cout << "The number you entered isn't valid. \nPlease enter the Product number you wish to add to your wish list: \n(as it written in screen on the first line) " << endl;
 				cin >> sellerIndex >> ch >> productIndex;
@@ -484,10 +462,10 @@ void manager::checkValidIndex(int &sellerIndex, int& productIndex)
 order* manager::createNewOrder(int &indexBuyersArr)
 {
 	Product *tempProduct;//we will save a temporary product that we will insert to the products arr in a specific order
-	sellers *tempSeller;//we will save a temporary seller that we will insert to the sellers arr in a specific order
+	seller *tempSeller;//we will save a temporary seller that we will insert to the sellers arr in a specific order
 	double productPrice = 0;
 	int choosenItems;
-	buyers *tempBuyer = dynamic_cast<buyers*>(system.getUsersArr()[indexBuyersArr]);
+	buyer *tempBuyer = dynamic_cast<buyer*>(system.getUsersArr()[indexBuyersArr]);
 
 	int countProductInWishList = tempBuyer->getCountProductInWishList();
 
@@ -503,7 +481,7 @@ order* manager::createNewOrder(int &indexBuyersArr)
 		newOrder->addProductToProductArr(*tempProduct);//adding product to the current order product array
 
 		productPrice = tempBuyer->getWishListArr()[choosenItems - 1]->getProduct()->getPrice();
-		newOrder->setTotalPrice(productPrice);
+		newOrder->setTotalPrice(productPrice);// adding the product price to the total order price
 
 		tempSeller = tempBuyer->getWishListArr()[choosenItems - 1]->getseller();
 
@@ -531,12 +509,11 @@ void manager::checkValidChoosenItem(int &choosenItem, int countProductInWishList
 void manager::addOrderToBuyer()
 {
 	int indexBuyersArr = 0;
-	int theLatestOrderForASpacificBuyer;//index the last order the buyer made
 	if (findBuyerInSystem(indexBuyersArr)) // "findBuyerInSystem" function returns true is buyer is found and his index in buyer array's system
 	{
-		buyers *tempBuyer = dynamic_cast<buyers*>(system.getUsersArr()[indexBuyersArr]);
+		buyer *tempBuyer = dynamic_cast<buyer*>(system.getUsersArr()[indexBuyersArr]);
 
-		theLatestOrderForASpacificBuyer = tempBuyer->getCountOrders() - 1;//index the last order the buyer made
+		int theLatestOrderForASpacificBuyer = tempBuyer->getCountOrders() - 1;//index the last order the buyer made
 		if (theLatestOrderForASpacificBuyer == -1 || tempBuyer->getOrdersArr()[theLatestOrderForASpacificBuyer]->getOrderPayed())
 		{
 		  // the check for theLatestOrderForASpacificBuyer to be -1 is for the first order the buyer will make 
@@ -570,7 +547,7 @@ bool approvepurchase;
 
 	if (findBuyerInSystem(indexBuyersArr)) // "findBuyerInSystem" function returns true is buyer is found and his index in buyer array's system
 	{
-		buyers *tempBuyer = dynamic_cast<buyers*>(system.getUsersArr()[indexBuyersArr]);
+		buyer *tempBuyer = dynamic_cast<buyer*>(system.getUsersArr()[indexBuyersArr]);
 		int theLatestOrderForASpacificBuyer = tempBuyer->getCountOrders() - 1; // last order to pay for now
 		cout << "The items below are the last order you made: " << endl;
 		tempBuyer->showBuyerorderByIndex(theLatestOrderForASpacificBuyer);

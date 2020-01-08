@@ -18,9 +18,6 @@
     <ClInclude Include="address_user.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="buyers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="date.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -31,9 +28,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="product.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sellers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="trade_system.h">
@@ -51,12 +45,15 @@
     <ClInclude Include="buyerAndSeller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="seller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="buyer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="address_user.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="buyers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="date.cpp">
@@ -69,9 +66,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="product.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sellers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trade_system.cpp">
@@ -90,6 +84,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="buyerAndSeller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="seller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="buyer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

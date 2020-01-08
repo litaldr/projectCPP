@@ -10,27 +10,27 @@ private:
 	static int countSerialNumber;// static variable initialized  with 0 - gives serial number to each new product added to the whole system
 
 public:
-	enum eCategory { CHILDREN, ELECTRONICS, OFFICE, CLOTHING };
+	enum eCategory { CHILDREN=0, ELECTRONICS, OFFICE, CLOTHING };
 	const char* categoryStr[4] = { "Children", "Electronics" , "Office", "Clothing" }; // define here the string category enum of product to use in print products with identical name #10
 
 	Product() = delete;// we don't allowed to create a new product without the details in the constructor below 
-	Product(const char *productName, eCategory category, double price);//constructor
+	Product(const char *productName,  eCategory category, double price);//constructor
 	Product(const Product& other);// copy constructor
 	~Product(); //destructor 
 
 	void show()  const; // function show all product details
 
  //---------------------------------set & get functions------------------------------//
-	char * getName()  const;
-	int getItemSerialNumber()  const;
-	double getPrice()  const;
+	const char * getName()  const;
+	const int getItemSerialNumber()  const;
+	const double getPrice()  const;
 
  //--------------------not in use--------------------//
 	bool setName(const char *n);
-	bool setCategory(int i);
+	bool setCategory(eCategory type);
     void setPrice(double p);
 			
-	eCategory getCategory()  const;
+	const char * getCategory()  const;
 //-------------------------------------------------//
 
 	
@@ -39,7 +39,7 @@ public:
 private:
 	//--------------------attributes--------------------//
 	char *productName;
-	eCategory category;
+	const char * category;
 	double price;
 	int serialNumber;
 

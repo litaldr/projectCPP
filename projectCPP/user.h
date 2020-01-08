@@ -10,12 +10,12 @@ public:
 	virtual ~user();
 	void showUserBasicDeatelis() const;
 	bool setName(const char* name);
-	char * getName()     const;
+	const char * getName()     const;
 	
 	//----------------not in use-----------------//
 	
-	char * getPassword() const;
-	address_user getAddress()  const;
+	const char * getPassword() const;
+	const address_user& getAddress()  const;
 	bool setPassword(const char* newPassword);
 	
 	

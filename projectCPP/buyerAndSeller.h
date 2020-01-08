@@ -4,13 +4,11 @@
 #include "trade_system.h"
 
 
-class buyerAndSeller: public sellers, public buyers 
+class buyerAndSeller: public seller, public buyer 
 {
 public:
-	buyerAndSeller(const buyers &buyer, const sellers &seller);
+	buyerAndSeller(const buyer &buyer, const seller &seller);
 	buyerAndSeller(char *user_name, char *password, const address_user & address);
-
-	virtual ~buyerAndSeller();
 };
 
-#endif
+#endif 

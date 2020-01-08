@@ -1,6 +1,6 @@
-#include "sellers.h"
+#include "seller.h"
 
-sellers::sellers(const char *user_name, const char *password, const address_user &address) : user(user_name,password,address) // constructor
+seller::seller(const char *user_name, const char *password, const address_user &address) : user(user_name,password,address) // constructor
 {
 	this->ProductArr = nullptr;
 	this->feedbackArr = nullptr;
@@ -8,7 +8,7 @@ sellers::sellers(const char *user_name, const char *password, const address_user
 	this->CountFeedback = 0;
 }
 
-sellers::~sellers() //destructor
+seller::~seller() //destructor
 {	
 	for (int i = 0; i < CountFeedback; i++)
 	{
@@ -24,40 +24,40 @@ sellers::~sellers() //destructor
 
 //------------------------------set & get function-------------------------------//
 
-void  sellers::setCountProduct(int n)
+void  seller::setCountProduct(int n)
 {
 	this->CountProduct = n;
 }
 
-void  sellers::setCountFeedback(int n)
+void  seller::setCountFeedback(int n)
 {
 	this->CountFeedback = n;
 }
 
-int sellers::getCountProduct() const
+int seller::getCountProduct() const
 {
 	return CountProduct;
 }
 
-int sellers::getCountFeedback() const
+int seller::getCountFeedback() const
 {
 	return CountFeedback;
 }
 
-Product ** sellers::getProductArr() const
+Product ** seller::getProductArr() const
 {
 	return ProductArr;
 }
 
 //----------------not in use-----------------//
-Feedback ** sellers::getFeedbackArr() const
+Feedback ** seller::getFeedbackArr() const
 {
 	return feedbackArr;
 }
 
 //------------------------------add product and feedback functions-------------------------------//
 
-void sellers::addProduct(Product &newProduct)
+void seller::addProduct(Product &newProduct)
 {
 	int i = CountProduct - 1;
 	if (CountProduct == 0) //if it is the first buyer
@@ -74,7 +74,7 @@ void sellers::addProduct(Product &newProduct)
 
 
 
-void sellers::addFeedback(Feedback &newFeedback)  
+void seller::addFeedback(Feedback &newFeedback)  
 {
 	int i = getCountFeedback() - 1;
 	if (getCountFeedback() == 0) //if it is the first buyer
@@ -89,7 +89,7 @@ void sellers::addFeedback(Feedback &newFeedback)
 	CountFeedback = i + 1; // increase the counter of feedback in feedback array
 }
 
-Feedback ** sellers::reallocFeedbackArr(Feedback **oldFeedbackArr, int size) // function increase by one the feedback array for the new feedback
+Feedback ** seller::reallocFeedbackArr(Feedback **oldFeedbackArr, int size) // function increase by one the feedback array for the new feedback
 {
 	Feedback **newFeedbackArr = new Feedback*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -99,7 +99,7 @@ Feedback ** sellers::reallocFeedbackArr(Feedback **oldFeedbackArr, int size) // 
 	delete[]oldFeedbackArr;
 	return newFeedbackArr;
 }
-Product ** sellers::reallocProductArr(Product **oldProductArr, int size) // function increase by one the products array for the new product
+Product ** seller::reallocProductArr(Product **oldProductArr, int size) // function increase by one the products array for the new product
 {
 	Product **newProductArr = new Product*[size + 1];
 	for (int i = 0; i <= size; i++)

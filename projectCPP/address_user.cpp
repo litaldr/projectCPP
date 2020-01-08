@@ -161,22 +161,22 @@ void address_user::setHouse_number(int n)
 	this->house_number = n;
 }
 
-char * address_user::getCountry() const
+const char * address_user::getCountry() const
 {
 	return country;
 }
 
-char * address_user::getCity() const
+const char * address_user::getCity() const
 {
 	return city;
 }
 
-char * address_user::getStreet() const
+const char * address_user::getStreet() const
 {
 	return street;
 }
 
-int address_user::getHouse_number() const
+const int address_user::getHouse_number() const
 {
 	return house_number;
 }

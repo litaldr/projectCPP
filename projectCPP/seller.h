@@ -1,19 +1,19 @@
-#ifndef __SELLERS_H
-#define __SELLERS_H
+#ifndef __SELLER_H
+#define __SELLER_H
 
-class buyers;
+class buyer;
 #include "feedback.h"
 #include "Product.h"
 #include "user.h"
 
-class sellers: virtual public user
+class seller: virtual public user
 {
 
 public:
-	sellers() = delete; //delete constructor- we don't allow default constructor of seller
-	sellers(const char *user_name, const char *password, const address_user &address); // constructor
+	seller() = delete; //delete constructor- we don't allow default constructor of seller
+	seller(const char *user_name, const char *password, const address_user &address); // constructor
 	 //not interested in copy constructor- we don't copy a seller(person)
-	virtual ~sellers(); //destructor 
+	virtual ~seller(); //destructor 
 
 
 //------------------------------set & get function-------------------------------//

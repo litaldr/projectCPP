@@ -46,12 +46,12 @@ order::~order() // destructor
 
 //----------------------set & get functions------------------------------//
 
-Product** order::getProductArr()  const
+ Product** order::getProductArr()  const
 {
 	return productArr;
 }
 
-sellers ** order::getsellersArr() const
+ seller ** order::getsellersArr() const
 {
 	return sellersArr;
 
@@ -114,7 +114,7 @@ void order::addProductToProductArr(Product &newProduct)// function add product t
 	setCountProductInProductArr(i + 1); // increase counter of product in product array
 }
 
-Product ** order::reallocProductArr(Product **oldProductArr, int size) // function increase product array by one for the new product buyer wants to buy
+ Product ** order::reallocProductArr(Product **oldProductArr, int size) // function increase product array by one for the new product buyer wants to buy
 {
 	Product **newProductArr = new Product*[size + 1];
 	for (int i = 0; i <= size; i++)
@@ -125,27 +125,27 @@ Product ** order::reallocProductArr(Product **oldProductArr, int size) // functi
 	return newProductArr;
 }
 
-void order::addSellerToSellersArr(sellers &newSeller) // function add seller to sellers array in order object of buayer
+void order::addSellerToSellersArr(seller &newSeller) // function add seller to sellers array in order object of buayer
 {
 	if (!checkIfSellerExists(&newSeller))
 	{
 		int i = getCountSellersInSellersArr() - 1;
 		if (getCountSellersInSellersArr() == 0) //if it is the first seller
-			this->sellersArr = new sellers*;
+			this->sellersArr = new seller*;
 		else
 		{
 			sellersArr = reallocsellersArr(sellersArr, i + 1);//if it isn't the first seller
 		}
 		i++;
-		sellersArr[i] = new sellers(newSeller);// constructor
+		sellersArr[i] = new seller(newSeller);// constructor
 
 		setCountSellersInSellersArr(i + 1); // increase counter of seller in sellers array
 	}
 }
 
-sellers ** order::reallocsellersArr(sellers **oldsellersArr, int size) // function increase seller array by one, for the new seller that the buyer wants to buy from 
+seller ** order::reallocsellersArr(seller **oldsellersArr, int size) // function increase seller array by one, for the new seller that the buyer wants to buy from 
 {
-	sellers **newSellersArr = new sellers*[size + 1];
+	seller **newSellersArr = new seller*[size + 1];
 	for (int i = 0; i <= size; i++)
 	{
 		newSellersArr[i] = oldsellersArr[i];
@@ -154,7 +154,7 @@ sellers ** order::reallocsellersArr(sellers **oldsellersArr, int size) // functi
 	return newSellersArr;
 }
 
-bool order::checkIfSellerExists(const sellers *seller) // function checks that seller is adding only one time to sellers array of order to prevent duplicates
+bool order::checkIfSellerExists(const seller *seller) // function checks that seller is adding only one time to sellers array of order to prevent duplicates
 {
 	int i;
 	for (i = 0; i < CountSellersInSellersArr; i++)

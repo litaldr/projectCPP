@@ -1,8 +1,8 @@
 #ifndef __TRADE_SYSTEM_H
 #define __TRADE_SYSTEM_H
 
-#include "buyers.h"
-#include "sellers.h"
+#include "buyer.h"
+#include "seller.h"
 #include "buyerAndSeller.h"
 
 #pragma warning (disable: 4996)
@@ -39,14 +39,14 @@ public:
 	
 	
 	//-------- not in use----------//
-	char * getName()  const;
+	const char * getName()  const;
 	//-------- not in use----------//
 
 //------------------------------add users to system functions-------------------------------//
 	bool addUser(user& user);
 	
 	user ** reallocUsersArr(user **oldUsersArr, int size); // function increases by one the buyers array for a new buyer in the system
-	bool nameAvailable(char *comperdName); // function checks that all buyers and sellers in the system have different name
+	bool nameAvailable(const char *comperdName); // function checks that all buyers and sellers in the system have different name
 
  //------------------------------show products in the system functions-------------------------------//
 	void showProductWithIdenticalName(const char *nameProduct) const; // function prints all product with identical name

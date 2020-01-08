@@ -22,7 +22,7 @@
     <ProjectGuid>{C46999AC-8267-493A-8155-3DC40D76EA64}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>projectCPP</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -148,13 +148,13 @@
   <ItemGroup>
     <ClInclude Include="address_user.h" />
     <ClInclude Include="buyerAndSeller.h" />
-    <ClInclude Include="buyers.h" />
+    <ClInclude Include="buyer.h" />
     <ClInclude Include="date.h" />
     <ClInclude Include="feedback.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="order.h" />
     <ClInclude Include="product.h" />
-    <ClInclude Include="sellers.h" />
+    <ClInclude Include="seller.h" />
     <ClInclude Include="trade_system.h" />
     <ClInclude Include="user.h" />
     <ClInclude Include="wishList.h" />
@@ -162,14 +162,14 @@
   <ItemGroup>
     <ClCompile Include="address_user.cpp" />
     <ClCompile Include="buyerAndSeller.cpp" />
-    <ClCompile Include="buyers.cpp" />
+    <ClCompile Include="buyer.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="feedback.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="order.cpp" />
     <ClCompile Include="product.cpp" />
-    <ClCompile Include="sellers.cpp" />
+    <ClCompile Include="seller.cpp" />
     <ClCompile Include="trade_system.cpp" />
     <ClCompile Include="user.cpp" />
     <ClCompile Include="wishList.cpp" />

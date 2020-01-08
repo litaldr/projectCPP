@@ -1,5 +1,5 @@
-#ifndef __ADDRESS_USERS_H
-#define __ADDRESS_USERS_H
+#ifndef __ADDRESS_USER_H
+#define __ADDRESS_USER_H
 
 #include <iostream>
 #include <string.h>
@@ -41,10 +41,10 @@ public:
 	bool validString_street(const char *s);
 
 // ---------------------get attributes-------------------//
-	char * getCountry()    const;
-	char * getCity()       const;
-	char * getStreet()     const;
-	int getHouse_number() const;
+	const char * getCountry()    const;
+	const char * getCity()       const;
+	const char * getStreet()     const;
+	const int getHouse_number() const;
 
 private:
 //-----------------------attributes----------------------//

@@ -6,8 +6,6 @@ user::user(const char *user_name, const char *password, const address_user &addr
 {
 	this->user_name = strdup(user_name);
 	this->password = strdup(password);
-
-
 }
 user::~user()
 {
@@ -33,11 +31,11 @@ bool user::setName(const char* name)
 		return false;
 	return true;
 }
-char* user::getName() const
+const char* user::getName() const
 {
 	return user_name;
 }
-char * user::getPassword() const
+const char * user::getPassword() const
 {
 	return password;
 }
@@ -54,7 +52,7 @@ bool user::setPassword(const char* newPassword)
 	return true;
 	
 }
-address_user user::getAddress()  const
+const address_user& user::getAddress()  const
 {
 	return address;
 }
